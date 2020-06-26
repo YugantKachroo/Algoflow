@@ -1,6 +1,8 @@
 import React from 'react';
-import { Tab, Container, Header } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import NQueen from './algorithms/NQueen.js';
+import Sorting from './algorithms/Sorting/Sorting.js';
+import Searching from './algorithms/Searching/Searching.js';
 import './css/MainRouter.css';
 
 const panes = [
@@ -12,25 +14,31 @@ const panes = [
       </Tab.Pane>
     ),
   },
+  {
+    menuItem: 'Searching',
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Searching />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Sorting',
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Sorting />
+      </Tab.Pane>
+    ),
+  },
 ];
 
 const MainRouter = () => (
   <fragment>
-    <div className='root'>
-      <Container>
-        <center>
-          <div>
-            <Header as='h1'>Algoflow</Header>
-          </div>
-        </center>
-        <br />
-        <div>
-          <Tab
-            menu={{ borderless: true, attached: false, tabular: false }}
-            panes={panes}
-          />
-        </div>
-      </Container>
+    <div>
+      <Tab
+        menu={{ borderless: true, attached: false, tabular: false }}
+        panes={panes}
+      />
     </div>
   </fragment>
 );
