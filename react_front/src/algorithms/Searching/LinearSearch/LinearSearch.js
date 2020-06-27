@@ -1,94 +1,46 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { Component, useState, useEffect } from 'react';
+import './LinearTiles.css';
+import LinearTiles from './LinearTiles';
 import './LinearSearch.css';
 import { Button, Input, Divider } from 'semantic-ui-react';
+import RandomInt from '../../../components/RandomInt';
+import Header from '../../../components/Header';
 
-const LinearSearch = () => {
-  const [array, setArray] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [target, setTarget] = useState(-1);
-  const [resultIndex, setResultIndex] = useState(-1);
+const ARRAY_BARS = 20;
+const D_COLOR = '#63eaf1';
+const FOUND_COLOR = '#6eb428';
+const NOT_FOUND_COLOR = '#f16363';
+const ANIMATION_SPEED_SECONDS = 0.4;
 
-  const generateArray = () => {
-    var tempArray = [];
-    for (var i = 0; i < 20; i++) {
-      var number = Math.floor(Math.random() * 100 + 1);
-      tempArray.push(number);
-    }
-    setArray(tempArray);
-  };
+class LinearSearch extends Component {
+  constructor(props) {
+    super(props);
+    this.setState = {
+      array: [],
+      found: false,
+      message: '',
+      disabled: false,
+      findex: 0,
+      target: null,
+    };
+  }
 
-  // Component Did Mount
-  useEffect(() => {
-    generateArray();
-  }, []);
+  //   componentDidMount() {
+  //     this.Arrayreset();
+  //   }
 
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
+  //   Arrayreset = () => {
+  //     const array = [];
+  //     const found = false;
+  //     document.getElementById('target').value = '';
+  //     const disabled = false;
+  //     const prevArray = document.getElementsByClassName('linear-array-bar');
+  //   };
 
-  const handleChange = (e) => {
-    setTarget(e.target.value);
-  };
-
-  const linearSearch = async () => {
-    for (var i = 0; i < array.length; i++) {
-      setCurrentIndex(i);
-      await sleep(1000);
-      setCurrentIndex(i + 1);
-      if (array[i] === parseInt(target)) {
-        setCurrentIndex(i);
-        setResultIndex(i);
-        break;
-      }
-    }
-  };
-  return (
-    <div>
-      <Button primary onClick={generateArray}>
-        Generate new array
-      </Button>
-      <div className='formWrapper'>
-        <Input
-          focus
-          placeholder='Element to be found'
-          className='inputField'
-          onChange={handleChange}
-        />
-        <Button color='green' onClick={linearSearch}>
-          Visualize
-        </Button>
-      </div>
-      <div className='node-wrapper'>
-        {array.map((value, index) => {
-          return (
-            <div
-              key={index}
-              className={index === currentIndex ? 'node currentNode' : 'node'}
-            >
-              {value}
-            </div>
-          );
-        })}
-      </div>
-
-      {resultIndex === -1 ? (
-        <div>
-          <Divider />
-          <p>
-            <b>Result</b> : Not Found
-          </p>
-        </div>
-      ) : (
-        <div>
-          <Divider />
-          <p>
-            <b>Result</b> : Found at index {resultIndex}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-};
+  render() {
+    //const { message, disabled, array, found } = this.state;
+    return <div className='jumbotron jumbotron-fluid bg-light'>hghjghj</div>;
+  }
+}
 
 export default LinearSearch;
