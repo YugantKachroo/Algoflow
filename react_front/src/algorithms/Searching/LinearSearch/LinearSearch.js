@@ -7,7 +7,7 @@ import Header from '../../../components/Header';
 const ARRAY_BARS = 20;
 const BASE_COLOR = 'purple';
 const FOUND_COLOR = '#32CD32';
-const NOT_FOUND_COLOR = '#6384f1';
+const NOT_FOUND_COLOR = 'red';
 const ANIMATION_SPEED_SECONDS = 0.4;
 
 class LinearSearch extends Component {
@@ -21,6 +21,7 @@ class LinearSearch extends Component {
       findex: 0,
       target: null,
       start: false,
+      completed: false,
     };
   }
   linearSearchAnimations = (array, target) => {
@@ -47,6 +48,7 @@ class LinearSearch extends Component {
     const message = '';
     const found = false;
     const start = false;
+    const completed = false;
     document.getElementById('target').value = '';
     const disabled = false;
     const previousArray = document.getElementsByClassName('linear-array-bar');
@@ -58,10 +60,10 @@ class LinearSearch extends Component {
     for (let i = 0; i < ARRAY_BARS; i++) {
       array.push(RandomInt(3, 1000));
     }
-    this.setState({ array, found, disabled, message, start });
+    this.setState({ array, found, disabled, message, start, completed });
   };
 
-  LinearSearch = async () => {
+  LinearSearch() {
     var msg = '';
     const target = document.getElementById('target').value;
     if (target === '') {
@@ -86,6 +88,7 @@ class LinearSearch extends Component {
             findex: index,
             target: currentElement,
             start: true,
+            completed: true,
           });
 
           arraybarStyle.backgroundColor = FOUND_COLOR;
@@ -93,29 +96,32 @@ class LinearSearch extends Component {
           arraybar.classList.add('highlight');
         }, i * ANIMATION_SPEED_SECONDS * 500);
       } else {
-        msg = `${target} not found`;
+        msg = `${target} not found in the array`;
         setTimeout(() => {
           this.setState({
             disabled: true,
             found: false,
             start: true,
+            completed: false,
           });
           arraybarStyle.backgroundColor = NOT_FOUND_COLOR;
           arraybar.classList.add('growFind');
         }, i * ANIMATION_SPEED_SECONDS * 500);
       }
-      await setTimeout(() => {
+      // eslint-disable-next-line
+      setTimeout(() => {
         this.setState({
           disabled: false,
           message: msg,
           start: true,
+          completed: true,
         });
       }, count * ANIMATION_SPEED_SECONDS * 500);
     }
-  };
+  }
 
   render() {
-    const { message, disabled, array, found, start } = this.state;
+    const { message, disabled, array, found, start, completed } = this.state;
     return (
       <div className='jumbotron jumbotron-fluid bg-light'>
         <center>
@@ -128,14 +134,14 @@ class LinearSearch extends Component {
                 <input
                   type='number'
                   id='target'
-                  className='mr-1 form-control'
+                  className='mr-2 form-control'
                   placeholder='Element to be searched'
                 />
 
                 <div className='input-group-append'>
                   <button
                     onClick={() => this.LinearSearch()}
-                    className='ui inverted brown button'
+                    className='ui olive button'
                     type='button'
                     id='button-addon2'
                     disabled={!start ? false : true}
@@ -144,8 +150,8 @@ class LinearSearch extends Component {
                   </button>
                   <button
                     onClick={() => this.Arrayreset()}
-                    className='ui inverted red button'
-                    id='resetArray'
+                    className='ui violet button'
+                    id='Arrayreset'
                     type='button'
                     disabled={found ? '' : disabled}
                   >
@@ -156,8 +162,8 @@ class LinearSearch extends Component {
               <div className='col-sm-1 '></div>
             </div>
           </div>
+
           <br />
-          {found ? <p className='found growFind'>{message}</p> : null}
           <div className='container'>
             {array.map((value, index) => (
               <LinearTiles
@@ -168,6 +174,13 @@ class LinearSearch extends Component {
               />
             ))}
           </div>
+          {completed ? (
+            found ? (
+              <p className='textmessage'>{message}</p>
+            ) : (
+              <p className='textmessage'>{message}</p>
+            )
+          ) : null}
         </center>
       </div>
     );
