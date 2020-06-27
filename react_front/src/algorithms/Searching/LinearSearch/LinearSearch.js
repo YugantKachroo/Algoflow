@@ -88,7 +88,7 @@ class LinearSearch extends Component {
           arraybarStyle.backgroundColor = FOUND_COLOR;
           arraybar.classList.add('growFind');
           arraybar.classList.add('highlight');
-        }, i * ANIMATION_SPEED_SECONDS * 1000);
+        }, i * ANIMATION_SPEED_SECONDS * 500);
       } else {
         msg = `${target} not found`;
         setTimeout(() => {
@@ -98,7 +98,7 @@ class LinearSearch extends Component {
           });
           arraybarStyle.backgroundColor = NOT_FOUND_COLOR;
           arraybar.classList.add('growFind');
-        }, i * ANIMATION_SPEED_SECONDS * 1000);
+        }, i * ANIMATION_SPEED_SECONDS * 500);
       }
       await setTimeout(() => {
         this.setState({
