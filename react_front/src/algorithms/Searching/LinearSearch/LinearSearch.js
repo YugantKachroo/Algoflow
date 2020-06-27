@@ -1,8 +1,8 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import './LinearTiles.css';
 import LinearTiles from './LinearTiles';
 import './LinearSearch.css';
-import { Button, Input, Divider } from 'semantic-ui-react';
+import { Button, Input, Segment, Divider } from 'semantic-ui-react';
 import RandomInt from '../../../components/RandomInt';
 import Header from '../../../components/Header';
 
@@ -38,9 +38,94 @@ class LinearSearch extends Component {
   //   };
 
   render() {
-    //const { message, disabled, array, found } = this.state;
-    return <div className='jumbotron jumbotron-fluid bg-light'>hghjghj</div>;
+    //const { message, disabled, array, found, findex } = this.state;
+    return (
+      <div className='jumbotron jumbotron-fluid bg-light'>
+        <center>
+          <Header title='Linear Search' />
+          <div className='container'>
+            <div className='row'>
+              <div className='col-sm-3'></div>
+              <div className='input-group col-sm-6'>
+                <input
+                  type='number'
+                  id='targetVal'
+                  className='mr-1 form-control'
+                  placeholder='Find Element'
+                />
+
+                <div className='input-group-append'>
+                  <button
+                    onClick={() => this.linearSearch()}
+                    className='ui inverted yellow button'
+                    type='button'
+                    id='button-addon2'
+                    //  disabled={disabled}
+                  >
+                    Search
+                  </button>
+                  <button
+                    onClick={() => this.resetArray()}
+                    className='ui inverted red button'
+                    id='resetArray'
+                    type='button'
+                    //  disabled={disabled}
+                  >
+                    Reset Array
+                  </button>
+                </div>
+              </div>
+              <div className='col-sm-1 '></div>
+            </div>
+          </div>
+        </center>
+      </div>
+    );
   }
 }
 
 export default LinearSearch;
+
+{
+  /* // <div className='jumbotron jumbotron-fluid bg-light'>
+      //   <center>
+      //     <Header title='Linear Search' />
+      //     <div className='container'>
+      //       <div className='row'>
+      //         <div className='col-sm-10'></div>
+      //         <div className='input-group col-sm-10'>
+      //           {/* //<div class='ui input'> */
+}
+//           <input */}
+//             type='number'
+//             id='targetVal'
+//             className='form-control'
+//             placeholder='Find Element'
+//           />
+//           {/* // </div> */}
+//           <div className='input-group-append'>
+//             <button
+//               onClick={() => this.linearSearch()}
+//               className='ui inverted yellow button'
+//               type='button'
+//               id='button-addon2'
+//               // disabled={disabled}
+//             >
+//               Search
+//             </button>
+//             <button
+//               onClick={() => this.resetArray()}
+//               className='ui inverted red button'
+//               id='resetArray'
+//               type='button'
+//               //disabled={disabled}
+//             >
+//               Reset Array
+//             </button>
+//           </div>
+//         </div>
+//         <div className='col-sm-1 '></div>
+//       </div>
+//     </div>
+//   </center>
+// </div>
