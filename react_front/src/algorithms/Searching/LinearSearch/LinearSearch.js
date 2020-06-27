@@ -166,12 +166,7 @@ class LinearSearch extends Component {
           <br />
           <div className='container'>
             {array.map((value, index) => (
-              <LinearTiles
-                type={`linearSearch`}
-                key={index}
-                index={index}
-                value={value}
-              />
+              <LinearTiles index={index} value={value} />
             ))}
           </div>
           {completed ? (
