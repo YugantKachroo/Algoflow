@@ -3,11 +3,11 @@ import './LinearTiles.css';
 import LinearTiles from './LinearTiles';
 import './LinearSearch.css';
 import { Button, Input, Segment, Divider } from 'semantic-ui-react';
-import RandomInt from '../../../components/RandomInt';
+import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
 
 const ARRAY_BARS = 20;
-const D_COLOR = '#63eaf1';
+const BASE_COLOR = '#63eaf1';
 const FOUND_COLOR = '#6eb428';
 const NOT_FOUND_COLOR = '#f16363';
 const ANIMATION_SPEED_SECONDS = 0.4;
@@ -25,17 +25,27 @@ class LinearSearch extends Component {
     };
   }
 
-  //   componentDidMount() {
-  //     this.Arrayreset();
-  //   }
+  componentDidMount() {
+    this.Arrayreset();
+  }
 
-  //   Arrayreset = () => {
-  //     const array = [];
-  //     const found = false;
-  //     document.getElementById('target').value = '';
-  //     const disabled = false;
-  //     const prevArray = document.getElementsByClassName('linear-array-bar');
-  //   };
+  Arrayreset = () => {
+    const array = [];
+    const message = '';
+    const found = false;
+    document.getElementById('target').value = '';
+    const disabled = false;
+    const previousArray = document.getElementsByClassName('linear-array-bar');
+    for (let index = 0; index < previousArray.length; index++) {
+      previousArray[index].style.backgroundColor = BASE_COLOR;
+      previousArray[index].classList.remove('growFind');
+      previousArray[index].classList.remove('highlight');
+    }
+    for (let i = 0; i < ARRAY_BARS; i++) {
+      array.push(RandomInt(3, 1000));
+    }
+    this.setState({ array, found, disabled, message });
+  };
 
   render() {
     //const { message, disabled, array, found, findex } = this.state;
@@ -50,7 +60,7 @@ class LinearSearch extends Component {
               <div className=' input-group col-sm-4'>
                 <input
                   type='number'
-                  id='targetVal'
+                  id='target'
                   className='mr-1 form-control'
                   placeholder='Element to be searched'
                 />
@@ -66,7 +76,7 @@ class LinearSearch extends Component {
                     Search
                   </button>
                   <button
-                    onClick={() => this.resetArray()}
+                    onClick={() => this.Arrayreset()}
                     className='ui inverted red button'
                     id='resetArray'
                     type='button'
