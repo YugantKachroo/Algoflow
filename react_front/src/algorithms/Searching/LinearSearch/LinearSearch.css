@@ -1,0 +1,19 @@
+.node {
+  display: inline;
+  margin-right: 1px;
+  border: 1px solid #34495e;
+  padding: 10px;
+}
+.node-wrapper {
+  margin-top: 50px;
+}
+.currentNode {
+  background-color: red;
+  color: #fff;
+}
+.formWrapper {
+  margin-top: 20px;
+}
+.inputField {
+  margin-right: 10px;
+}
