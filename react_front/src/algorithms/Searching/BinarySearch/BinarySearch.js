@@ -18,26 +18,31 @@ class BinarySearch extends Component {
       found: false,
       message: '',
       disabled: false,
-      findex: 0,
+      previousLength: 0,
       target: null,
+      animations: [],
       start: false,
       completed: false,
+      findex: 0,
     };
   }
-  BinarySearchAnimations = (array, target) => {
-    let animations = [];
-    for (let i = 0; i < array.length; i++) {
-      const ele = array[i];
-      const tar = parseInt(target);
-      if (ele === tar) {
-        animations.push([i, ele, true]);
-        break;
+
+  binarySearchAnimations(array, left, right, element, animations = []) {
+    while (left <= right) {
+      let mid = parseInt(left + (right - left) / 2);
+      if (array[mid] === element) {
+        animations.push([left, right, mid, true]);
+        return true;
+      } else if (array[mid] > element) {
+        animations.push([left, right, mid, false]);
+        right = mid - 1;
       } else {
-        animations.push([i, ele, false]);
+        animations.push([left, right, mid, false]);
+        left = mid + 1;
       }
+      return false;
     }
-    return animations;
-  };
+  }
 
   componentDidMount() {
     this.Arrayreset();

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Tab } from 'semantic-ui-react';
-import NQueen from './algorithms/NQueen.js';
+import NQueen from './algorithms/Backtracking/NQueen.js';
 import Sorting from './algorithms/Sorting/Sorting.js';
 import Searching from './algorithms/Searching/Searching.js';
 import './css/MainRouter.css';
 
 const panes = [
   {
-    menuItem: 'N Queen',
+    menuItem: 'Backtracking',
     render: () => (
       <Tab.Pane attached={false}>
         <NQueen />
