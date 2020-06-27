@@ -20,6 +20,7 @@ class LinearSearch extends Component {
       disabled: false,
       findex: 0,
       target: null,
+      start: false,
     };
   }
   linearSearchAnimations = (array, target) => {
@@ -45,6 +46,7 @@ class LinearSearch extends Component {
     const array = [];
     const message = '';
     const found = false;
+    const start = false;
     document.getElementById('target').value = '';
     const disabled = false;
     const previousArray = document.getElementsByClassName('linear-array-bar');
@@ -56,7 +58,7 @@ class LinearSearch extends Component {
     for (let i = 0; i < ARRAY_BARS; i++) {
       array.push(RandomInt(3, 1000));
     }
-    this.setState({ array, found, disabled, message });
+    this.setState({ array, found, disabled, message, start });
   };
 
   LinearSearch = async () => {
@@ -83,6 +85,7 @@ class LinearSearch extends Component {
             found: true,
             findex: index,
             target: currentElement,
+            start: true,
           });
 
           arraybarStyle.backgroundColor = FOUND_COLOR;
@@ -95,6 +98,7 @@ class LinearSearch extends Component {
           this.setState({
             disabled: true,
             found: false,
+            start: true,
           });
           arraybarStyle.backgroundColor = NOT_FOUND_COLOR;
           arraybar.classList.add('growFind');
@@ -104,13 +108,14 @@ class LinearSearch extends Component {
         this.setState({
           disabled: false,
           message: msg,
+          start: true,
         });
       }, count * ANIMATION_SPEED_SECONDS * 500);
     }
   };
 
   render() {
-    const { message, disabled, array, found } = this.state;
+    const { message, disabled, array, found, start } = this.state;
     return (
       <div className='jumbotron jumbotron-fluid bg-light'>
         <center>
@@ -133,7 +138,7 @@ class LinearSearch extends Component {
                     className='ui inverted brown button'
                     type='button'
                     id='button-addon2'
-                    disabled={disabled}
+                    disabled={!start ? false : true}
                   >
                     Search
                   </button>
