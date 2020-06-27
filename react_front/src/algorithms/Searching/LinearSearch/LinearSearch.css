@@ -18,7 +18,7 @@
 }
 
 .linear-array-bar {
-  background-color: #6376f1;
+  background-color: purple;
   display: inline-block;
   margin: 5px;
   color: #fff;
@@ -30,7 +30,7 @@
 
 .linear-array-bar span {
   padding: 3px;
-  background-color: aquamarine;
+  background-color: white;
   color: #000;
   margin-top: 10px;
   border-radius: 3px;
