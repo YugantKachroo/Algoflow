@@ -123,9 +123,9 @@ class LinearSearch extends Component {
   render() {
     const { message, disabled, array, found, start, completed } = this.state;
     return (
-      <div className='jumbotron jumbotron-fluid bg-light'>
+      <div className='jumbotron jumbotron-fluid bg-dark'>
         <center>
-          <Header title='Linear Search' />
+          <Header title='LINEAR SEARCH' />
           <br />
           <div className='container'>
             <div className='row'>

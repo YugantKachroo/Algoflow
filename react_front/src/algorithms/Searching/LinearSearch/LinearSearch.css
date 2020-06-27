@@ -51,10 +51,15 @@
   color: #b61717;
 }
 .textmessage {
-  color: black;
+  color: white;
   font-size: 20px;
   font-family: frontage outline;
   margin-top: 35px;
+}
+.title {
+  color: white;
+  font-size: 20px;
+  font-family: frontage outline;
 }
 
 .row {
