@@ -3,162 +3,155 @@ import BinaryTiles from './BinaryTiles';
 import './BinarySearch.css';
 import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
+import { binarySearchAnimations } from './BinaryAlgorithm';
 
-const ARRAY_BARS = 20;
-const BASE_COLOR = 'purple';
-const FOUND_COLOR = '#32CD32';
-const NOT_FOUND_COLOR = 'red';
-const ANIMATION_SPEED_SECONDS = 0.4;
+const NUMBER_OF_ARRAY_BARS = 15;
+const DEFAULT_COLOR = '#6376f1';
+const FOUND_COLOR = '#28B463';
+const NOT_FOUND_COLOR = '#F16388';
+const ANIMATION_SPEED_SECONDS = 3;
 
-class BinarySearch extends Component {
+class BinarySearch extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       array: [],
       found: false,
-      message: '',
       disabled: false,
-      previousLength: 0,
+      elementFoundAt: 0,
       target: null,
+      msgAfterExecution: null,
+      previousLength: 0,
       animations: [],
-      start: false,
-      completed: false,
-      findex: 0,
     };
   }
 
-  binarySearchAnimations(array, left, right, element, animations = []) {
-    while (left <= right) {
-      let mid = parseInt(left + (right - left) / 2);
-      if (array[mid] === element) {
-        animations.push([left, right, mid, true]);
-        return true;
-      } else if (array[mid] > element) {
-        animations.push([left, right, mid, false]);
-        right = mid - 1;
-      } else {
-        animations.push([left, right, mid, false]);
-        left = mid + 1;
-      }
-      return false;
-    }
-  }
-
   componentDidMount() {
-    this.Arrayreset();
+    this.resetArray();
   }
 
-  Arrayreset = () => {
-    const array = [];
-    const message = '';
-    const found = false;
-    const start = false;
-    const completed = false;
-    document.getElementById('target').value = '';
-    const disabled = false;
-    const previousArray = document.getElementsByClassName('binary-array-bar');
-    for (let index = 0; index < previousArray.length; index++) {
-      previousArray[index].style.backgroundColor = BASE_COLOR;
-      previousArray[index].classList.remove('growFind');
-      previousArray[index].classList.remove('highlight');
+  resetArray() {
+    let array = [];
+    const prevArray = document.getElementsByClassName('binary-array-bar');
+    document.getElementById('binarySearchTargetVal').value = '';
+    for (let idx = 0; idx < prevArray.length; idx++) {
+      prevArray[idx].style.backgroundColor = DEFAULT_COLOR;
+      prevArray[idx].classList.remove('growFind');
+      prevArray[idx].classList.remove('highlight');
     }
-    for (let i = 0; i < ARRAY_BARS; i++) {
-      array.push(RandomInt(3, 1000));
+    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+      array.push(RandomInt(5, 850));
     }
-    this.setState({ array, found, disabled, message, start, completed });
-  };
+    let sortedArray = array.slice().sort((a, b) => a - b);
+    this.setState({
+      array: sortedArray,
+      found: false,
+      disabled: false,
+      msgAfterExecution: null,
+      previousLength: this.state.animations.length,
+    });
+  }
 
-  BinarySearch() {
-    var msg = '';
-    const target = document.getElementById('target').value;
-    if (target === '') {
-      return undefined;
-    }
-    const animations = this.BinarySearchAnimations(this.state.array, target);
-    console.log(animations);
-    let count = 0;
-
-    for (let i = 0; i < animations.length; i++) {
-      const [index, currentElement, found] = animations[i];
-      const arraybars = document.getElementsByClassName('binary-array-bar');
-      const arraybar = arraybars[index];
-      const arraybarStyle = arraybar.style;
-      count++;
-      if (found) {
-        msg = `${currentElement} found at index ${index}`;
-        setTimeout(() => {
-          this.setState({
-            disabled: true,
-            found: true,
-            findex: index,
-            target: currentElement,
-            start: true,
-            completed: true,
-          });
-
-          arraybarStyle.backgroundColor = FOUND_COLOR;
-          arraybar.classList.add('growFind');
-          arraybar.classList.add('highlight');
-        }, i * ANIMATION_SPEED_SECONDS * 500);
-      } else {
-        msg = `${target} not found in the array`;
-        setTimeout(() => {
-          this.setState({
-            disabled: true,
-            found: false,
-            start: true,
-            completed: false,
-          });
-          arraybarStyle.backgroundColor = NOT_FOUND_COLOR;
-          arraybar.classList.add('growFind');
-        }, i * ANIMATION_SPEED_SECONDS * 500);
-      }
-      // eslint-disable-next-line
+  hightlightWithinBounds(start, end, arrayTiles) {
+    for (let i = start; i <= end; i++) {
       setTimeout(() => {
-        this.setState({
-          disabled: false,
-          message: msg,
-          start: true,
-          completed: true,
-        });
-      }, count * ANIMATION_SPEED_SECONDS * 500);
+        arrayTiles[i].style.backgroundColor = NOT_FOUND_COLOR;
+      }, i * 100);
     }
+  }
+
+  resetAllTiles(arrayTiles) {
+    for (let i = 0; i < arrayTiles.length; i++) {
+      arrayTiles[i].style.backgroundColor = DEFAULT_COLOR;
+    }
+  }
+
+  binarySearch() {
+    const { array } = this.state;
+    const animations = [];
+    let count = 0;
+    const arrayTiles = document.getElementsByClassName('binary-array-bar');
+    const target = document.getElementById('binarySearchTargetVal').value;
+    if (target === '') return;
+
+    binarySearchAnimations(
+      array,
+      0,
+      array.length - 1,
+      parseInt(target),
+      animations
+    );
+
+    for (let k = 0; k < animations.length; k++) {
+      const [left, right, mid, found] = animations[k];
+      count++;
+
+      if (k === animations.length - 1 && found) {
+        setTimeout(() => {
+          this.setState({ disabled: true, found: true });
+          this.resetAllTiles(arrayTiles);
+          arrayTiles[mid].classList.add('highlight');
+          arrayTiles[mid].style.backgroundColor = FOUND_COLOR;
+        }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
+      }
+
+      if (left === 0 && right === 0 && mid === 0 && !found) {
+        setTimeout(() => {
+          console.log('ELement not found');
+          this.setState({
+            msgAfterExecution: `Element not found`,
+            found: false,
+          });
+          this.resetAllTiles(arrayTiles);
+        }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
+      }
+
+      setTimeout(() => {
+        this.setState({ disabled: true });
+        this.resetAllTiles(arrayTiles);
+        this.hightlightWithinBounds(left, right, arrayTiles);
+      }, k * 1000 * ANIMATION_SPEED_SECONDS);
+    }
+
+    setTimeout(() => {
+      this.setState({ disabled: false });
+    }, count * 1000 * ANIMATION_SPEED_SECONDS);
   }
 
   render() {
-    const { message, disabled, array, found, start, completed } = this.state;
+    const { array, found, disabled, msgAfterExecution } = this.state;
+
     return (
-      <div className='jumbotron jumbotron-fluid bg-dark'>
+      <div className='jumbotron jumbotron-fluid bg-light'>
         <center>
-          <Header title='BINARY SEARCH' />
-          <br />
+          <Header title='Binary Search' />
           <div className='container'>
             <div className='row'>
-              <div className='col-sm-4'></div>
-              <div className=' input-group col-sm-4'>
+              <div className='col-sm-1'></div>
+              <div className='input-group col-sm-10'>
                 <input
                   type='number'
-                  id='target'
-                  className='mr-2 form-control'
-                  placeholder='Element to be searched'
+                  id='binarySearchTargetVal'
+                  className='form-control'
+                  placeholder='Find Element'
                 />
-
                 <div className='input-group-append'>
                   <button
-                    onClick={() => this.BinarySearch()}
-                    className='ui olive button'
+                    onClick={() => this.binarySearch()}
+                    className='btn btn-success'
                     type='button'
-                    id='button-addon2'
-                    disabled={!start ? false : true}
+                    id='binarySearchBtn'
+                    disabled={disabled}
                   >
                     Search
                   </button>
                   <button
-                    onClick={() => this.Arrayreset()}
-                    className='ui violet button'
-                    id='Arrayreset'
+                    onClick={() => this.resetArray()}
+                    className='btn btn-danger'
+                    id='binarySearchResetArray'
                     type='button'
-                    disabled={found ? '' : disabled}
+                    disabled={disabled}
                   >
                     Reset Array
                   </button>
@@ -167,20 +160,18 @@ class BinarySearch extends Component {
               <div className='col-sm-1 '></div>
             </div>
           </div>
-
+          {!found ? <p className='not-found'>{msgAfterExecution}</p> : null}
           <br />
           <div className='container'>
-            {array.map((value, index) => (
-              <BinaryTiles index={index} value={value} />
+            {array.map((value, idx) => (
+              <BinaryTiles
+                type={'binarySearch'}
+                key={idx}
+                index={idx}
+                value={value}
+              />
             ))}
           </div>
-          {completed ? (
-            found ? (
-              <p className='textmessage'>{message}</p>
-            ) : (
-              <p className='textmessage'>{message}</p>
-            )
-          ) : null}
         </center>
       </div>
     );
