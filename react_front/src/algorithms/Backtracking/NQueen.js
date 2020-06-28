@@ -25,21 +25,22 @@ export default class NQueen extends Component {
               </div>
               <div className='Qbox Qboard mb-2' id='nQueensBoard'></div>
               <div className='row'>
-                <div className='input-group mt-1 container col-sm-6'>
-                  <div className='input-group-prepend'>
-                    <span className='input-group-text'>Board Size</span>
+                <div className='input-group mt-2 container col-sm-5'>
+                  <div class='ui labeled input'>
+                    <div class='ui label'>Board Size</div>
+                    <input
+                      type='number'
+                      id='boardInput'
+                      className='mr-3'
+                      placeholder='Board Size'
+                      defaultValue='8'
+                      readOnly={true}
+                    />
                   </div>
-                  <input
-                    type='number'
-                    id='boardInput'
-                    className='form-control'
-                    placeholder='Board Size'
-                    defaultValue='8'
-                    readOnly={true}
-                  />
+
                   <div className='input-group-append'>
                     <button
-                      className='btn btn-secondary'
+                      className='ui pink button'
                       disabled={disabled}
                       onClick={() => this.NQueensProblem()}
                     >
