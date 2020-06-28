@@ -175,7 +175,7 @@ class BinarySearch extends Component {
     } = this.state;
 
     return (
-      <div className='jumbotron jumbotron-fluid bg-dark'>
+      <div className='jumbotron jumbotron-fluid bg-light'>
         <center>
           <Header title='BINARY SEARCH' />
           <br />

@@ -79,6 +79,17 @@ body {
   overflow-y: scroll;
 }
 
-.alert-success {
-  background-color: #abebc6;
+.alert-success1 {
+  background-color: seagreen;
+  color: white;
+}
+
+.alert-danger1 {
+  background-color: darkred;
+  color: white;
+}
+
+.alert-primary1 {
+  background-color: #426cf5;
+  color: white;
 }
