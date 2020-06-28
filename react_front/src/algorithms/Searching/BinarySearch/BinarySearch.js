@@ -109,11 +109,6 @@ class BinarySearch extends Component {
       starti = midi + 1;
       endi = array.length - 1;
     }
-    // console.log(midi);
-    // console.log(target);
-    // console.log(array[midi]);
-    // console.log(starti);
-    // console.log(endi);
 
     this.binarySearchAnimations(
       array,
@@ -126,7 +121,6 @@ class BinarySearch extends Component {
     for (let k = 0; k < animations.length; k++) {
       const [left, right, mid, found] = animations[k];
       count++;
-
       if (k === animations.length - 1 && found) {
         msg = `${target} is present in the array at index ${mid}`;
         setTimeout(() => {
@@ -145,10 +139,7 @@ class BinarySearch extends Component {
 
       if (!found) {
         msg = `${target} not present in the array`;
-        // console.log(left);
-        // console.log(mid);
-        // console.log(right);
-        // console.log(found);
+
         setTimeout(() => {
           this.setState({
             found: false,
@@ -162,6 +153,7 @@ class BinarySearch extends Component {
       setTimeout(() => {
         this.setState({ disabled: true, start: true });
         this.tilesReset(arrayBars);
+
         this.boundHighlight(left, right, arrayBars);
       }, k * 1000 * ANIMATION_SPEED_SECONDS);
     }
