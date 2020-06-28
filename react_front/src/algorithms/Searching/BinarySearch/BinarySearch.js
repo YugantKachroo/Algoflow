@@ -91,7 +91,7 @@ class BinarySearch extends Component {
     const { array } = this.state;
     const animations = [];
     let count = 0;
-
+    let msg = '';
     const arrayBars = document.getElementsByClassName('binary-array-bar');
     const target = document.getElementById('binarySearchTargetVal').value;
     if (target === '') return;
@@ -128,6 +128,7 @@ class BinarySearch extends Component {
       count++;
 
       if (k === animations.length - 1 && found) {
+        msg = `${target} is present in the array at index ${mid}`;
         setTimeout(() => {
           this.setState({
             start: true,
@@ -142,12 +143,12 @@ class BinarySearch extends Component {
       }
 
       if (left === 0 && right === 0 && mid === 0 && !found) {
+        msg = `${target} not found in the array`;
         setTimeout(() => {
-          console.log('ELement not found');
           this.setState({
-            msgAfterExecution: `Element not found`,
             found: false,
             start: true,
+            completed: false,
           });
           this.tilesReset(arrayBars);
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
@@ -161,12 +162,19 @@ class BinarySearch extends Component {
     }
 
     setTimeout(() => {
-      this.setState({ disabled: false, start: true });
+      this.setState({ disabled: false, start: true, msgAfterExecution: msg });
     }, count * 1000 * ANIMATION_SPEED_SECONDS);
   }
 
   render() {
-    const { array, found, disabled, msgAfterExecution, start } = this.state;
+    const {
+      array,
+      found,
+      disabled,
+      msgAfterExecution,
+      start,
+      completed,
+    } = this.state;
 
     return (
       <div className='jumbotron jumbotron-fluid bg-dark'>
@@ -207,7 +215,7 @@ class BinarySearch extends Component {
               <div className='col-sm-1 '></div>
             </div>
           </div>
-          {!found ? <p className='not-found'>{msgAfterExecution}</p> : null}
+          {/* {!found ? <p className='not-found'>{msgAfterExecution}</p> : null} */}
           <br />
           <div className='container'>
             {array.map((value, idx) => (
@@ -219,6 +227,13 @@ class BinarySearch extends Component {
               />
             ))}
           </div>
+          {completed ? (
+            found ? (
+              <p className='textmessage'>{msgAfterExecution}</p>
+            ) : (
+              <p className='textmessage'>{msgAfterExecution}</p>
+            )
+          ) : null}
         </center>
       </div>
     );
