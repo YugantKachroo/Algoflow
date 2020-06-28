@@ -123,7 +123,7 @@ class BinarySearch extends Component {
       const [left, right, mid, found] = animations[k];
       count++;
       if (k === animations.length - 1 && found) {
-        msg = `${target} is present in the array at index ${mid}`;
+        msg = `${target} found at index ${mid}`;
         setTimeout(() => {
           this.setState({
             start: true,

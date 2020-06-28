@@ -18,3 +18,9 @@
   display: inline-block;
   width: 30px;
 }
+
+.highlight {
+  transition: ease-in 300ms;
+  transform: scale3d(1.25, 1.25, 1.25);
+  margin: 1.5rem;
+}
