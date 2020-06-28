@@ -23,6 +23,8 @@ class BinarySearch extends Component {
       msgAfterExecution: null,
       previousLength: 0,
       animations: [],
+      completed: false,
+      start: false,
     };
   }
 
@@ -66,6 +68,8 @@ class BinarySearch extends Component {
       disabled: false,
       msgAfterExecution: null,
       previousLength: this.state.animations.length,
+      start: false,
+      completed: false,
     });
   }
 
@@ -125,7 +129,12 @@ class BinarySearch extends Component {
 
       if (k === animations.length - 1 && found) {
         setTimeout(() => {
-          this.setState({ disabled: true, found: true });
+          this.setState({
+            start: true,
+            completed: true,
+            disabled: true,
+            found: true,
+          });
           this.tilesReset(arrayBars);
           arrayBars[mid].classList.add('highlight');
           arrayBars[mid].style.backgroundColor = FOUND_COLOR;
@@ -138,25 +147,26 @@ class BinarySearch extends Component {
           this.setState({
             msgAfterExecution: `Element not found`,
             found: false,
+            start: true,
           });
           this.tilesReset(arrayBars);
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
       }
 
       setTimeout(() => {
-        this.setState({ disabled: true });
+        this.setState({ disabled: true, start: true });
         this.tilesReset(arrayBars);
         this.boundHighlight(left, right, arrayBars);
       }, k * 1000 * ANIMATION_SPEED_SECONDS);
     }
 
     setTimeout(() => {
-      this.setState({ disabled: false });
+      this.setState({ disabled: false, start: true });
     }, count * 1000 * ANIMATION_SPEED_SECONDS);
   }
 
   render() {
-    const { array, found, disabled, msgAfterExecution } = this.state;
+    const { array, found, disabled, msgAfterExecution, start } = this.state;
 
     return (
       <div className='jumbotron jumbotron-fluid bg-dark'>
@@ -179,7 +189,7 @@ class BinarySearch extends Component {
                     className='ui olive button'
                     type='button'
                     id='binarySearchBtn'
-                    disabled={disabled}
+                    disabled={!start ? false : true}
                   >
                     Search
                   </button>
