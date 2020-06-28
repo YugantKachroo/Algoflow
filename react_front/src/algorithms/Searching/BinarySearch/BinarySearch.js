@@ -3,9 +3,8 @@ import BinaryTiles from './BinaryTiles';
 import './BinarySearch.css';
 import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
-import { binarySearchAnimations } from './BinaryAlgorithm';
 
-const ARRAY_BARS = 15;
+const ARRAY_BARS = 19;
 const BASE_COLOR = 'purple';
 const FOUND_COLOR = '#32CD32';
 const NOT_FOUND_COLOR = 'red';
@@ -25,6 +24,23 @@ class BinarySearch extends Component {
       previousLength: 0,
       animations: [],
     };
+  }
+
+  binarySearchAnimations(array, left, right, element, animations = []) {
+    if (right >= left) {
+      let mid = parseInt(left + (right - left) / 2);
+      if (array[mid] === element) {
+        animations.push([left, right, mid, true]);
+        return true;
+      } else if (array[mid] > element) {
+        animations.push([left, right, mid, false]);
+        this.binarySearchAnimations(array, left, mid - 1, element, animations);
+      } else {
+        animations.push([left, right, mid, false]);
+        this.binarySearchAnimations(array, mid + 1, right, element, animations);
+      }
+      return false;
+    }
   }
 
   componentDidMount() {
@@ -53,17 +69,17 @@ class BinarySearch extends Component {
     });
   }
 
-  hightlightWithinBounds(start, end, arrayTiles) {
+  boundHighlight(start, end, arrayBars) {
     for (let i = start; i <= end; i++) {
       setTimeout(() => {
-        arrayTiles[i].style.backgroundColor = NOT_FOUND_COLOR;
+        arrayBars[i].style.backgroundColor = NOT_FOUND_COLOR;
       }, i * 100);
     }
   }
 
-  resetAllTiles(arrayTiles) {
-    for (let i = 0; i < arrayTiles.length; i++) {
-      arrayTiles[i].style.backgroundColor = BASE_COLOR;
+  tilesReset(arrayBars) {
+    for (let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = BASE_COLOR;
     }
   }
 
@@ -71,14 +87,34 @@ class BinarySearch extends Component {
     const { array } = this.state;
     const animations = [];
     let count = 0;
-    const arrayTiles = document.getElementsByClassName('binary-array-bar');
+
+    const arrayBars = document.getElementsByClassName('binary-array-bar');
     const target = document.getElementById('binarySearchTargetVal').value;
     if (target === '') return;
+    let midi = Math.floor(array.length / 2);
+    let starti = 0;
+    let endi = array.length - 1;
+    // eslint-disable-next-line
+    if (array[midi] == target) {
+      starti = midi;
+      endi = midi;
+    } else if (array[midi] > target) {
+      starti = 0;
+      endi = midi - 1;
+    } else {
+      starti = midi + 1;
+      endi = array.length - 1;
+    }
+    // console.log(midi);
+    // console.log(target);
+    // console.log(array[midi]);
+    // console.log(starti);
+    // console.log(endi);
 
-    binarySearchAnimations(
+    this.binarySearchAnimations(
       array,
-      0,
-      array.length - 1,
+      starti,
+      endi,
       parseInt(target),
       animations
     );
@@ -90,9 +126,9 @@ class BinarySearch extends Component {
       if (k === animations.length - 1 && found) {
         setTimeout(() => {
           this.setState({ disabled: true, found: true });
-          this.resetAllTiles(arrayTiles);
-          arrayTiles[mid].classList.add('highlight');
-          arrayTiles[mid].style.backgroundColor = FOUND_COLOR;
+          this.tilesReset(arrayBars);
+          arrayBars[mid].classList.add('highlight');
+          arrayBars[mid].style.backgroundColor = FOUND_COLOR;
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
       }
 
@@ -103,14 +139,14 @@ class BinarySearch extends Component {
             msgAfterExecution: `Element not found`,
             found: false,
           });
-          this.resetAllTiles(arrayTiles);
+          this.tilesReset(arrayBars);
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
       }
 
       setTimeout(() => {
         this.setState({ disabled: true });
-        this.resetAllTiles(arrayTiles);
-        this.hightlightWithinBounds(left, right, arrayTiles);
+        this.tilesReset(arrayBars);
+        this.boundHighlight(left, right, arrayBars);
       }, k * 1000 * ANIMATION_SPEED_SECONDS);
     }
 
