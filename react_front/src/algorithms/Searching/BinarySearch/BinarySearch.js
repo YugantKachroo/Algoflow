@@ -138,17 +138,18 @@ class BinarySearch extends Component {
           });
           this.tilesReset(arrayBars);
           arrayBars[mid].classList.add('highlight');
+          arrayBars[mid].classList.add('growFind');
           arrayBars[mid].style.backgroundColor = FOUND_COLOR;
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
       }
 
       if (left === 0 && right === 0 && mid === 0 && !found) {
-        msg = `${target} not found in the array`;
+        msg = `${target} not present in the array`;
         setTimeout(() => {
           this.setState({
             found: false,
             start: true,
-            completed: false,
+            completed: true,
           });
           this.tilesReset(arrayBars);
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
@@ -215,7 +216,6 @@ class BinarySearch extends Component {
               <div className='col-sm-1 '></div>
             </div>
           </div>
-          {/* {!found ? <p className='not-found'>{msgAfterExecution}</p> : null} */}
           <br />
           <div className='container'>
             {array.map((value, idx) => (
