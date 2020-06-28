@@ -5,13 +5,13 @@ import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
 import { binarySearchAnimations } from './BinaryAlgorithm';
 
-const NUMBER_OF_ARRAY_BARS = 15;
-const DEFAULT_COLOR = '#6376f1';
-const FOUND_COLOR = '#28B463';
-const NOT_FOUND_COLOR = '#F16388';
+const ARRAY_BARS = 15;
+const BASE_COLOR = 'purple';
+const FOUND_COLOR = '#32CD32';
+const NOT_FOUND_COLOR = 'red';
 const ANIMATION_SPEED_SECONDS = 3;
 
-class BinarySearch extends React.Component {
+class BinarySearch extends Component {
   constructor(props) {
     super(props);
 
@@ -36,11 +36,11 @@ class BinarySearch extends React.Component {
     const prevArray = document.getElementsByClassName('binary-array-bar');
     document.getElementById('binarySearchTargetVal').value = '';
     for (let idx = 0; idx < prevArray.length; idx++) {
-      prevArray[idx].style.backgroundColor = DEFAULT_COLOR;
+      prevArray[idx].style.backgroundColor = BASE_COLOR;
       prevArray[idx].classList.remove('growFind');
       prevArray[idx].classList.remove('highlight');
     }
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+    for (let i = 0; i < ARRAY_BARS; i++) {
       array.push(RandomInt(5, 850));
     }
     let sortedArray = array.slice().sort((a, b) => a - b);
@@ -63,7 +63,7 @@ class BinarySearch extends React.Component {
 
   resetAllTiles(arrayTiles) {
     for (let i = 0; i < arrayTiles.length; i++) {
-      arrayTiles[i].style.backgroundColor = DEFAULT_COLOR;
+      arrayTiles[i].style.backgroundColor = BASE_COLOR;
     }
   }
 
@@ -123,23 +123,24 @@ class BinarySearch extends React.Component {
     const { array, found, disabled, msgAfterExecution } = this.state;
 
     return (
-      <div className='jumbotron jumbotron-fluid bg-light'>
+      <div className='jumbotron jumbotron-fluid bg-dark'>
         <center>
-          <Header title='Binary Search' />
+          <Header title='BINARY SEARCH' />
+          <br />
           <div className='container'>
             <div className='row'>
-              <div className='col-sm-1'></div>
-              <div className='input-group col-sm-10'>
+              <div className='col-sm-4'></div>
+              <div className='input-group col-sm-4'>
                 <input
                   type='number'
                   id='binarySearchTargetVal'
-                  className='form-control'
-                  placeholder='Find Element'
+                  className='mr-2 form-control'
+                  placeholder='Element to be searched'
                 />
                 <div className='input-group-append'>
                   <button
                     onClick={() => this.binarySearch()}
-                    className='btn btn-success'
+                    className='ui olive button'
                     type='button'
                     id='binarySearchBtn'
                     disabled={disabled}
@@ -148,7 +149,7 @@ class BinarySearch extends React.Component {
                   </button>
                   <button
                     onClick={() => this.resetArray()}
-                    className='btn btn-danger'
+                    className='ui violet button'
                     id='binarySearchResetArray'
                     type='button'
                     disabled={disabled}
