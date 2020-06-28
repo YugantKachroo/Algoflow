@@ -3,7 +3,7 @@ import { NQueenAlgorithm } from './NQueenAlgorithm';
 import Header from '../../components/Header';
 import './NQueen.css';
 
-const SIZE_OF_BOARD = 4;
+const SIZE_OF_BOARD = 6;
 var ANIMATION_SPEED_SECONDS = 1.5;
 const CELL_COLOR = '#BFC9CA';
 const SAFE_COLOR = '#DC143C';
@@ -126,7 +126,7 @@ export default class NQueen extends Component {
                       id='boardInput'
                       className='mr-3'
                       placeholder='Board Size'
-                      defaultValue='4'
+                      defaultValue='6'
                       readOnly={true}
                     />
                   </div>
