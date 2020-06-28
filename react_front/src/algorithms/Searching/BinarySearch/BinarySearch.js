@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import BinaryTiles from './BinaryTiles';
+import SearchingTiles from '../SearchingTiles';
 import './BinarySearch.css';
 import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
+import '../Searching.css';
 
 const ARRAY_BARS = 19;
 const BASE_COLOR = 'purple';
@@ -214,11 +215,11 @@ class BinarySearch extends Component {
           </div>
           <br />
           <div className='container'>
-            {array.map((value, idx) => (
-              <BinaryTiles
-                type={'binarySearch'}
-                key={idx}
-                index={idx}
+            {array.map((value, index) => (
+              <SearchingTiles
+                type={'BinarySearch'}
+                key={index}
+                index={index}
                 value={value}
               />
             ))}

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import LinearTiles from './LinearTiles';
+import SearchingTiles from '../SearchingTiles';
 import './LinearSearch.css';
 import { RandomInt } from '../../../components/RandomInt';
 import Header from '../../../components/Header';
+import '../Searching.css';
 
 const ARRAY_BARS = 20;
 const BASE_COLOR = 'purple';
 const FOUND_COLOR = '#32CD32';
 const NOT_FOUND_COLOR = 'red';
-const ANIMATION_SPEED_SECONDS = 0.4;
+const ANIMATION_SPEED_SECONDS = 1;
 
 class LinearSearch extends Component {
   constructor(props) {
@@ -166,7 +167,11 @@ class LinearSearch extends Component {
           <br />
           <div className='container'>
             {array.map((value, index) => (
-              <LinearTiles index={index} value={value} />
+              <SearchingTiles
+                type={`LinearSearch`}
+                index={index}
+                value={value}
+              />
             ))}
           </div>
           {completed ? (
