@@ -143,8 +143,12 @@ class BinarySearch extends Component {
         }, (k + 1) * ANIMATION_SPEED_SECONDS * 1000);
       }
 
-      if (left === 0 && right === 0 && mid === 0 && !found) {
+      if (!found) {
         msg = `${target} not present in the array`;
+        // console.log(left);
+        // console.log(mid);
+        // console.log(right);
+        // console.log(found);
         setTimeout(() => {
           this.setState({
             found: false,
