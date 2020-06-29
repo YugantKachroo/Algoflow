@@ -8,11 +8,11 @@ let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
-const PRIMARY_COLOR = 'yellow';
+const PRIMARY_COLOR = '#ADD8E6';
 const BUTTON_COLOR_PRIMARY = 'black';
 const BUTTON_COLOR_SECONDARY = '#fc1703';
-const SECONDARY_COLOR = '#f54242';
-const FINAL_COLOR = 'green';
+const SECONDARY_COLOR = '#FF6347';
+const FINAL_COLOR = '#03fc28';
 let ANIMATION_SPEED_MS;
 
 export default class Sorting extends Component {
@@ -97,7 +97,7 @@ export default class Sorting extends Component {
 
   async SelectionSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 200;
+    ANIMATION_SPEED_MS = this.state.value / 80;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -131,11 +131,6 @@ export default class Sorting extends Component {
         console.log(s[i].style.backgroundColor);
       }
     }, (count + 2) * ANIMATION_SPEED_MS);
-
-    // const RESTORE_TIME = parseInt(
-    //   (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
-    // );
-    // setTimeout(async () => await this.buttonEnable(), RESTORE_TIME);
   }
 
   render() {
