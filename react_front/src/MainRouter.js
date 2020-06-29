@@ -8,7 +8,7 @@ import Menu from './Menu.js';
 import './css/MainRouter.css';
 
 const MainRouter = () => (
-  <fragment>
+  <>
     <Menu />
     <Switch>
       <Route exact path='/' component={Backtracking} />
@@ -16,7 +16,7 @@ const MainRouter = () => (
       <Route exact path='/Searching' component={Searching} />
       <Route exact path='/Sorting' component={Sorting} />
     </Switch>
-  </fragment>
+  </>
 );
 
 export default MainRouter;

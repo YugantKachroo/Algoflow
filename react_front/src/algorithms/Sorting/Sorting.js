@@ -9,7 +9,7 @@ let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
 const PRIMARY_COLOR = 'lightgreen';
 const SECONDARY_COLOR = '#f54242';
-const ANIMATION_SPEED_MS = 2;
+const ANIMATION_SPEED_MS = 1;
 //const FINAL_COLOR = 'yellow';
 
 const DISABLED_BUTTON = 'Currently Disabled';
@@ -17,7 +17,7 @@ const DISABLED_BUTTON = 'Currently Disabled';
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], disabled: false };
+    this.state = { array: [] };
   }
 
   componentDidMount() {
@@ -26,19 +26,17 @@ export default class Sorting extends Component {
 
   Arrayreset = () => {
     const array = [];
-    const disabled = false;
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 100));
     }
-    this.setState({ array, disabled });
+    this.setState({ array });
   };
 
   SelectionSort() {
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
+
     for (let i = 0; i < animations.length; i++) {
-      const isColorChange =
-        animations[i][0] === 'comparision1' ||
-        animations[i][0] === 'comparision2';
+      const isColorChange = animations[i][0] !== 'swapHeight';
       const arrayBars = document.getElementsByClassName('array-bar');
       if (isColorChange === true) {
         const color =
@@ -55,15 +53,15 @@ export default class Sorting extends Component {
         }, i * ANIMATION_SPEED_MS);
       }
     }
+    console.log(sortArray);
     const RESTORE_TIME = parseInt(
       (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
     );
     setTimeout(() => RESTORE_TIME);
-    //const arrayBars = document.getElementsByClassName('array-bar');
   }
 
   render() {
-    const { array } = this.state;
+    const { array, disabled } = this.state;
     const SORT_BUTTONS = 6;
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
