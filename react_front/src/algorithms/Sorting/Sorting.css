@@ -23,3 +23,14 @@
 .buttons button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
 }
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #dae0e2;
+}
