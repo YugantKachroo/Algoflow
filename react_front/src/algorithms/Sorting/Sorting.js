@@ -23,29 +23,66 @@ export default class Sorting extends Component {
     this.Arrayreset();
   }
 
-  Arrayreset = () => {
-    const array = [];
+  buttonEnable() {
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('selectionSort').style.cursor = 'pointer';
+    document.getElementById('selectionSort').disabled = false;
     document.getElementById(
       'newArray'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('newArray').style.cursor = 'pointer';
+    document.getElementById('newArray').disabled = false;
     document.getElementById(
       'mergeSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('mergeSort').style.cursor = 'pointer';
+    document.getElementById('mergeSort').disabled = false;
     document.getElementById(
       'heapSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('heapSort').style.cursor = 'pointer';
+    document.getElementById('heapSort').disabled = false;
     document.getElementById(
       'insertionSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('insertionSort').style.cursor = 'pointer';
+    document.getElementById('insertionSort').disabled = false;
     document.getElementById(
       'quickSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('quickSort').style.cursor = 'pointer';
+    document.getElementById('quickSort').disabled = false;
     document.getElementById(
       'bubbleSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('bubbleSort').style.cursor = 'pointer';
+    document.getElementById('bubbleSort').disabled = false;
+  }
+  buttonDisable() {
+    document.getElementById('selectionSort').style.cursor = 'not-allowed';
+    document.getElementById('selectionSort').disabled = true;
+
+    document.getElementById('mergeSort').disabled = true;
+    document.getElementById('mergeSort').style.cursor = 'not-allowed';
+
+    document.getElementById('insertionSort').disabled = true;
+    document.getElementById('insertionSort').style.cursor = 'not-allowed';
+
+    document.getElementById('bubbleSort').disabled = true;
+    document.getElementById('bubbleSort').style.cursor = 'not-allowed';
+
+    document.getElementById('quickSort').disabled = true;
+    document.getElementById('quickSort').style.cursor = 'not-allowed';
+
+    document.getElementById('heapSort').disabled = true;
+    document.getElementById('heapSort').style.cursor = 'not-allowed';
+  }
+  Arrayreset = () => {
+    const array = [];
+    this.buttonEnable();
+
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 100));
     }
@@ -53,12 +90,10 @@ export default class Sorting extends Component {
   };
   SelectionSort() {
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
-    document.getElementById('selectionSort').style.cursor = 'not-allowed';
+    this.buttonDisable();
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
-    document.getElementById('selectionSort').disabled = true;
-
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
       const arrayBars = document.getElementsByClassName('array-bar');
