@@ -103,15 +103,12 @@ class NQueen extends Component {
   render() {
     const { disabled } = this.state;
     return (
-      <div className='jumbotron jumbotron-fluid bg-light'>
+      <div className='jumbotron jumbotron-fluid bg-white'>
         <div className='container'>
           <div className='row'>
             <div className='col-sm-8'>
               <div className='row'>
-                <div className='col-sm-12'>
-                  <Header title='N QUEEN' />
-                  <br />
-                </div>
+                <div className='col-sm-12'></div>
               </div>
               <div className='Qbox Qboard mb-2' id='NQueensBoard'></div>
               <div className='row'>

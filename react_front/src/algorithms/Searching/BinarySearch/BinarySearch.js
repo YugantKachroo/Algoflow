@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SearchingTiles from '../SearchingTiles';
 import './BinarySearch.css';
 import { RandomInt } from '../../../components/RandomInt';
-import Header from '../../../components/Header';
 import '../Searching.css';
 
 const ARRAY_BARS = 19;
@@ -175,10 +174,8 @@ class BinarySearch extends Component {
     } = this.state;
 
     return (
-      <div className='jumbotron jumbotron-fluid bg-light'>
+      <div className='jumbotron jumbotron-fluid bg-white'>
         <center>
-          <Header title='BINARY SEARCH' />
-          <br />
           <div className='container'>
             <div className='row'>
               <div className='col-sm-4'></div>
