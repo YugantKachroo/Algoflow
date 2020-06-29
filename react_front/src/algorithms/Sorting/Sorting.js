@@ -8,16 +8,17 @@ let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
-const PRIMARY_COLOR = 'lightgreen';
+const PRIMARY_COLOR = 'yellow';
 const BUTTON_COLOR_PRIMARY = 'black';
 const BUTTON_COLOR_SECONDARY = '#fc1703';
 const SECONDARY_COLOR = '#f54242';
+const FINAL_COLOR = 'green';
 let ANIMATION_SPEED_MS;
 
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], value: 1, startc: false };
+    this.state = { array: [], value: 50, startc: false };
   }
 
   componentDidMount() {
@@ -91,10 +92,10 @@ export default class Sorting extends Component {
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
-    this.setState({ array, value: 1, startc: false });
+    this.setState({ array, value: 50, startc: false });
   };
 
-  SelectionSort = async () => {
+  async SelectionSort() {
     await this.buttonDisable();
     ANIMATION_SPEED_MS = this.state.value / 200;
     console.log(ANIMATION_SPEED_MS);
@@ -102,11 +103,11 @@ export default class Sorting extends Component {
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
-
+    let count = 0;
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
-
+      count++;
       const arrayBars = document.getElementsByClassName('array-bar');
       if (isColorChange === true) {
         const color =
@@ -123,11 +124,19 @@ export default class Sorting extends Component {
         }, i * ANIMATION_SPEED_MS);
       }
     }
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = FINAL_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+    }, (count + 2) * ANIMATION_SPEED_MS);
+
     // const RESTORE_TIME = parseInt(
     //   (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
     // );
     // setTimeout(async () => await this.buttonEnable(), RESTORE_TIME);
-  };
+  }
 
   render() {
     const { array, value, startc } = this.state;
