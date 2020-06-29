@@ -35,20 +35,18 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function DiscreteSlider() {
+export default function SliderBar() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Typography id='discrete-slider-always' gutterBottom>
-        Always visible
-      </Typography>
       <Slider
         defaultValue={80}
         getAriaValueText={valuetext}
         aria-labelledby='discrete-slider-always'
         step={10}
         marks={marks}
+        width='30'
         valueLabelDisplay='on'
       />
     </div>

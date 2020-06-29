@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
+import Slider from 'react-rangeslider';
 
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
@@ -11,12 +12,12 @@ const PRIMARY_COLOR = 'lightgreen';
 const BUTTON_COLOR_PRIMARY = 'black';
 const BUTTON_COLOR_SECONDARY = '#fc1703';
 const SECONDARY_COLOR = '#f54242';
-const ANIMATION_SPEED_MS = 0.21;
+let ANIMATION_SPEED_MS;
 
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [] };
+    this.state = { array: [], value: 1, startc: false };
   }
 
   componentDidMount() {
@@ -24,6 +25,7 @@ export default class Sorting extends Component {
   }
 
   buttonEnable() {
+    this.setState({ startc: false });
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
@@ -60,42 +62,51 @@ export default class Sorting extends Component {
     document.getElementById('bubbleSort').style.cursor = 'pointer';
     document.getElementById('bubbleSort').disabled = false;
   }
+
   buttonDisable() {
+    this.setState({ startc: true });
     document.getElementById('selectionSort').style.cursor = 'not-allowed';
     document.getElementById('selectionSort').disabled = true;
-
     document.getElementById('mergeSort').disabled = true;
     document.getElementById('mergeSort').style.cursor = 'not-allowed';
-
     document.getElementById('insertionSort').disabled = true;
     document.getElementById('insertionSort').style.cursor = 'not-allowed';
-
     document.getElementById('bubbleSort').disabled = true;
     document.getElementById('bubbleSort').style.cursor = 'not-allowed';
-
     document.getElementById('quickSort').disabled = true;
     document.getElementById('quickSort').style.cursor = 'not-allowed';
-
     document.getElementById('heapSort').disabled = true;
     document.getElementById('heapSort').style.cursor = 'not-allowed';
   }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+
   Arrayreset = () => {
     const array = [];
     this.buttonEnable();
-
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(RandomInt(50, WINDOW_HEIGHT - 100));
+      array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
-    this.setState({ array });
+    this.setState({ array, value: 1, startc: false });
   };
-  SelectionSort() {
-    const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
-    this.buttonDisable();
+
+  SelectionSort = async () => {
+    await this.buttonDisable();
+    ANIMATION_SPEED_MS = this.state.value / 200;
+    console.log(ANIMATION_SPEED_MS);
+
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
+    const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
+
       const arrayBars = document.getElementsByClassName('array-bar');
       if (isColorChange === true) {
         const color =
@@ -112,14 +123,33 @@ export default class Sorting extends Component {
         }, i * ANIMATION_SPEED_MS);
       }
     }
-  }
+    // const RESTORE_TIME = parseInt(
+    //   (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
+    // );
+    // setTimeout(async () => await this.buttonEnable(), RESTORE_TIME);
+  };
 
   render() {
-    const { array } = this.state;
+    const { array, value, startc } = this.state;
     const SORT_BUTTONS = 6;
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
       <>
+        <div className='col-sm-2'>
+          {startc ? (
+            ''
+          ) : (
+            <Slider
+              value={value}
+              labels={{ 1: 'Fast', 50: 'Medium', 100: 'Slow' }}
+              min={1}
+              max={100}
+              disabled={true}
+              orientation='horizontal'
+              onChange={this.handleChange}
+            />
+          )}
+        </div>
         <div
           className='array-container'
           style={{ position: 'absolute', right: `20px` }}
@@ -139,8 +169,8 @@ export default class Sorting extends Component {
           <button
             id='newArray'
             style={{
-              position: 'relative',
-              top: `${(0.1 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(1.15 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.Arrayreset()}
           >
@@ -149,8 +179,8 @@ export default class Sorting extends Component {
           <button
             id='mergeSort'
             style={{
-              position: 'relative',
-              top: `${(0.75 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(1.96 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.mergeSort()}
           >
@@ -159,8 +189,8 @@ export default class Sorting extends Component {
           <button
             id='quickSort'
             style={{
-              position: 'relative',
-              top: `${(1.5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(2.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.quickSort()}
           >
@@ -169,8 +199,8 @@ export default class Sorting extends Component {
           <button
             id='bubbleSort'
             style={{
-              position: 'relative',
-              top: `${(2.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(3.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.bubbleSort()}
           >
@@ -179,8 +209,8 @@ export default class Sorting extends Component {
           <button
             id='insertionSort'
             style={{
-              position: 'relative',
-              top: `${(3.2 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(4.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.insertionSort()}
           >
@@ -189,8 +219,8 @@ export default class Sorting extends Component {
           <button
             id='heapSort'
             style={{
-              position: 'relative',
-              top: `${(4.05 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(5.96 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.heapSort()}
           >
@@ -199,8 +229,8 @@ export default class Sorting extends Component {
           <button
             id='selectionSort'
             style={{
-              position: 'relative',
-              top: `${(5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'absolute',
+              top: `${(6.9 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.SelectionSort()}
           >
