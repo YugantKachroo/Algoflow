@@ -1,4 +1,4 @@
-export function SelectionSort(array) {
+export function SelectionSortAlgorithm(array) {
   let animations = [];
   let auxillaryArray = array;
   SelectionSort(auxillaryArray, animations);

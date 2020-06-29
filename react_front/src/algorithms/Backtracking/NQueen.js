@@ -115,7 +115,7 @@ export default class NQueen extends Component {
               </div>
               <div className='Qbox Qboard mb-2' id='NQueensBoard'></div>
               <div className='row'>
-                <div className='input-group mt-2 container col-sm-5'>
+                <div className='input-group mt-2 container col-sm-6'>
                   <div className='input-group-prepend'>
                     <span className='input-group-text'>Board Size</span>
                   </div>
@@ -138,6 +138,13 @@ export default class NQueen extends Component {
                       onClick={() => this.NQueens()}
                     >
                       Visualise
+                    </button>
+                    <button
+                      className='ui red button'
+                      disabled={disabled}
+                      onClick={() => this.drawBoard(6)}
+                    >
+                      Reset
                     </button>
                   </div>
                 </div>
