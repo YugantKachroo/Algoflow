@@ -5,7 +5,7 @@ import { RandomInt } from '../../components/RandomInt';
 
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
-let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 170) / 7);
+let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
 const PRIMARY_COLOR = 'black';
 const SECONDARY_COLOR = 'red';
@@ -27,7 +27,7 @@ export default class Sorting extends Component {
     const array = [];
     const disabled = false;
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(RandomInt(50, 300));
+      array.push(RandomInt(50, WINDOW_HEIGHT - 100));
     }
     this.setState({ array, disabled });
   };
@@ -44,12 +44,7 @@ export default class Sorting extends Component {
       <>
         <div
           className='array-container'
-          style={{
-            position: 'absolute',
-            right: `0px`,
-            left: '0px',
-            top: '80px',
-          }}
+          style={{ position: 'absolute', right: `20px` }}
         >
           {array.map((value, idx) => (
             <div
@@ -66,9 +61,8 @@ export default class Sorting extends Component {
           <button
             title='Generates a new random array'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(0 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(0.1 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.Arrayreset()}
           >
@@ -78,9 +72,8 @@ export default class Sorting extends Component {
             title='O(NlogN) Time Complexity'
             id='mergeSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(1.75 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(0.75 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.mergeSort()}
           >
@@ -90,9 +83,8 @@ export default class Sorting extends Component {
             title='O(N^2) Time Complexity'
             id='quickSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(2.9 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(1.5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.quickSort()}
           >
@@ -102,9 +94,8 @@ export default class Sorting extends Component {
             title='O(N^2) Time Complexity'
             id='bubbleSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(4.05 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(2.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.bubbleSort()}
           >
@@ -114,9 +105,8 @@ export default class Sorting extends Component {
             title='O(N^2) Time Complexity'
             id='insertionSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(5.2 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(3.2 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.insertionSort()}
           >
@@ -126,9 +116,8 @@ export default class Sorting extends Component {
             title='O(NlogN) Time Complexity'
             id='heapSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(6.35 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(4.05 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.heapSort()}
           >
@@ -138,9 +127,8 @@ export default class Sorting extends Component {
             title='O(N^2) Time Complexity'
             id='selectionSort'
             style={{
-              position: 'absolute',
-              top: `${(0.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-              left: `${(7.5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              position: 'relative',
+              top: `${(5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.selectionSort()}
           >
