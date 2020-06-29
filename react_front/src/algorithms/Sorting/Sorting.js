@@ -8,11 +8,10 @@ let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
 const PRIMARY_COLOR = 'lightgreen';
+const BUTTON_COLOR_PRIMARY = 'black';
+const BUTTON_COLOR_SECONDARY = '#fc1703';
 const SECONDARY_COLOR = '#f54242';
-const ANIMATION_SPEED_MS = 1;
-//const FINAL_COLOR = 'yellow';
-
-const DISABLED_BUTTON = 'Currently Disabled';
+const ANIMATION_SPEED_MS = 0.21;
 
 export default class Sorting extends Component {
   constructor(props) {
@@ -26,14 +25,39 @@ export default class Sorting extends Component {
 
   Arrayreset = () => {
     const array = [];
+    document.getElementById(
+      'selectionSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'newArray'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'mergeSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'heapSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'insertionSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'quickSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById(
+      'bubbleSort'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 100));
     }
     this.setState({ array });
   };
-
   SelectionSort() {
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
+    document.getElementById('selectionSort').style.cursor = 'not-allowed';
+    document.getElementById(
+      'selectionSort'
+    ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+    document.getElementById('selectionSort').disabled = true;
 
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
@@ -53,15 +77,10 @@ export default class Sorting extends Component {
         }, i * ANIMATION_SPEED_MS);
       }
     }
-    console.log(sortArray);
-    const RESTORE_TIME = parseInt(
-      (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
-    );
-    setTimeout(() => RESTORE_TIME);
   }
 
   render() {
-    const { array, disabled } = this.state;
+    const { array } = this.state;
     const SORT_BUTTONS = 6;
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
@@ -83,6 +102,7 @@ export default class Sorting extends Component {
         </div>
         <div className='buttons'>
           <button
+            id='newArray'
             style={{
               position: 'relative',
               top: `${(0.1 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
@@ -142,7 +162,7 @@ export default class Sorting extends Component {
             Heap Sort
           </button>
           <button
-            id='SelectionSort'
+            id='selectionSort'
             style={{
               position: 'relative',
               top: `${(5 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
