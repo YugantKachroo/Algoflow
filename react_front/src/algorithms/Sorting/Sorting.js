@@ -68,6 +68,8 @@ export default class Sorting extends Component {
     this.setState({ startc: true });
     document.getElementById('selectionSort').style.cursor = 'not-allowed';
     document.getElementById('selectionSort').disabled = true;
+    document.getElementById('newArray').style.cursor = 'not-allowed';
+    document.getElementById('newArray').disabled = true;
     document.getElementById('mergeSort').disabled = true;
     document.getElementById('mergeSort').style.cursor = 'not-allowed';
     document.getElementById('insertionSort').disabled = true;
@@ -137,6 +139,8 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
+      this.setState({ startc: false });
+      this.buttonEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
 
