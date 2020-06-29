@@ -5,10 +5,10 @@ import './NQueen.css';
 
 const SIZE_OF_BOARD = 6;
 var ANIMATION_SPEED_SECONDS = 1.5;
-const CELL_COLOR = '#BFC9CA';
-const SAFE_COLOR = '#DC143C';
-const CROWN_COLOR = '#FFFFFF';
-const SAFE = '#2ECC71';
+const CELL_COLOR = '#696969';
+const SAFE_COLOR = '#ebc334';
+const CROWN_COLOR = 'black';
+const SAFE = '#34eb34';
 const padding = 7;
 const fontSize = 18;
 
