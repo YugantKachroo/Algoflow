@@ -93,6 +93,13 @@ export default class Sorting extends Component {
       array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
     this.setState({ array, value: 50, startc: false });
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = PRIMARY_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+    }, ANIMATION_SPEED_MS);
   };
 
   async SelectionSort() {
