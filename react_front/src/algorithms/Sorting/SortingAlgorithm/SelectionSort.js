@@ -9,9 +9,9 @@ export const SelectionSortAlgorithm = (array) => {
 };
 
 function areEqualCheck(sortedArray, auxillaryArray) {
-  if (sortedArray.length != auxillaryArray.length) return false;
+  if (sortedArray.length !== auxillaryArray.length) return false;
   for (let i = 0; i < sortedArray.length; i++) {
-    if (sortedArray[i] != auxillaryArray[i]) return false;
+    if (sortedArray[i] !== auxillaryArray[i]) return false;
   }
   return true;
 }

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
-let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 170) / 7.5);
+let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 170) / 7);
 
 const PRIMARY_COLOR = 'black';
 const SECONDARY_COLOR = 'red';
@@ -27,7 +27,7 @@ export default class Sorting extends Component {
     const array = [];
     const disabled = false;
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(RandomInt(50, 600));
+      array.push(RandomInt(50, 300));
     }
     this.setState({ array, disabled });
   };
@@ -42,6 +42,26 @@ export default class Sorting extends Component {
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
       <>
+        <div
+          className='array-container'
+          style={{
+            position: 'absolute',
+            right: `0px`,
+            left: '0px',
+            top: '80px',
+          }}
+        >
+          {array.map((value, idx) => (
+            <div
+              className='array-bar'
+              key={idx}
+              style={{
+                backgroundColor: PRIMARY_COLOR,
+                height: `${value}px`,
+              }}
+            ></div>
+          ))}
+        </div>
         <div className='buttons'>
           <button
             title='Generates a new random array'
@@ -126,26 +146,6 @@ export default class Sorting extends Component {
           >
             Selection Sort
           </button>
-        </div>
-        <div
-          className='array-container'
-          style={{
-            position: 'relative',
-            right: `10px`,
-            left: '10px',
-            top: '80px',
-          }}
-        >
-          {array.map((value, idx) => (
-            <div
-              className='array-bar'
-              key={idx}
-              style={{
-                backgroundColor: PRIMARY_COLOR,
-                height: `${value}px`,
-              }}
-            ></div>
-          ))}
         </div>
       </>
     );

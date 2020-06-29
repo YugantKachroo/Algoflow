@@ -12,7 +12,7 @@ const SAFE = '#34eb34';
 const padding = 7;
 const fontSize = 18;
 
-export default class NQueen extends Component {
+class NQueen extends Component {
   constructor(props) {
     super(props);
     this.state = { disabled: false };
@@ -157,3 +157,5 @@ export default class NQueen extends Component {
     );
   }
 }
+
+export default NQueen;
