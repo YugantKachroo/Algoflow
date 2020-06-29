@@ -1,4 +1,4 @@
-export function SelectionSortAlgorithm(array) {
+export const SelectionSortAlgorithm = (array) => {
   let animations = [];
   let auxillaryArray = array;
   SelectionSort(auxillaryArray, animations);
@@ -6,7 +6,7 @@ export function SelectionSortAlgorithm(array) {
   console.log(areEqualCheck(sortedArray, auxillaryArray));
   array = auxillaryArray;
   return [animations, array];
-}
+};
 
 function areEqualCheck(sortedArray, auxillaryArray) {
   if (sortedArray.length != auxillaryArray.length) return false;
@@ -27,7 +27,7 @@ function SelectionSort(auxillaryArray, animations) {
         minElementIndex = j;
       }
     }
-    animations.push[('swapHeight', minElementIndex, auxillaryArray[i])];
+    animations.push(['swapHeight', minElementIndex, auxillaryArray[i]]);
     animations.push(['swapHeight', i, auxillaryArray[minElementIndex]]);
     let temp = auxillaryArray[i];
     auxillaryArray[i] = auxillaryArray[minElementIndex];

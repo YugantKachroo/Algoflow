@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import SelectionSortAlgorithm from './SortingAlgorithm/SelectionSort';
+import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 
@@ -31,6 +31,10 @@ export default class Sorting extends Component {
     }
     this.setState({ array, disabled });
   };
+
+  SelectionSort() {
+    const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
+  }
 
   render() {
     return <div>Sorting</div>;
