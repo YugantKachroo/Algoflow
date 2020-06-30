@@ -3,6 +3,7 @@ import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import { InsertionSortAlgorithm } from './SortingAlgorithm/InsertionSort';
 import { BubbleSortAlgorithm } from './SortingAlgorithm/BubbleSort';
 import { MergeSortAlgorithm } from './SortingAlgorithm/MergeSort';
+import { QuickSortAlgorithm } from './SortingAlgorithm/QuickSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 import Slider from 'react-rangeslider';
@@ -22,7 +23,7 @@ let ANIMATION_SPEED_MS;
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], value: 20, startc: false };
+    this.state = { array: [], value: 50, startc: false };
   }
 
   componentDidMount() {
@@ -101,7 +102,7 @@ export default class Sorting extends Component {
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
-    this.setState({ array, value: 20, startc: false });
+    this.setState({ array, value: 50, startc: false });
 
     //console.log(this.state.reset);
     const s = document.getElementsByClassName('array-bar');
@@ -116,7 +117,7 @@ export default class Sorting extends Component {
   async SelectionSort() {
     await this.buttonDisable();
     let count = 0;
-    ANIMATION_SPEED_MS = this.state.value / 30;
+    ANIMATION_SPEED_MS = this.state.value / 20;
     //console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -161,7 +162,7 @@ export default class Sorting extends Component {
 
   async InsertionSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 30;
+    ANIMATION_SPEED_MS = this.state.value / 20;
     //console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -206,7 +207,7 @@ export default class Sorting extends Component {
 
   async BubbleSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 30;
+    ANIMATION_SPEED_MS = this.state.value / 20;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -257,7 +258,7 @@ export default class Sorting extends Component {
 
   async MergeSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 30;
+    ANIMATION_SPEED_MS = this.state.value / 20;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -306,7 +307,7 @@ export default class Sorting extends Component {
 
   async QuickSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 30;
+    ANIMATION_SPEED_MS = this.state.value / 20;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -316,7 +317,7 @@ export default class Sorting extends Component {
     let count = 0;
     // eslint-disable-next-line
     const [animations, sortArray] = QuickSortAlgorithm(this.state.array);
-    for (let i = 0; i < animations.length; i++) {
+    for (let i = 0; i < animations.length - 1; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
       count++;
       const arrayBars = document.getElementsByClassName('array-bar');
@@ -326,6 +327,9 @@ export default class Sorting extends Component {
         // console.log(color);
         // eslint-disable-next-line
         const [temp, barOneIndex, barTwoIndex] = animations[i];
+        if (barOneIndex === -1) {
+          continue;
+        }
         const barOneStyle = arrayBars[barOneIndex].style;
         const barTwoStyle = arrayBars[barTwoIndex].style;
         setTimeout(() => {
