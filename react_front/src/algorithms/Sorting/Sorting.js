@@ -23,7 +23,7 @@ let ANIMATION_SPEED_MS;
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], value: 50, startc: false };
+    this.state = { array: [], value: 50, start: false };
   }
 
   componentDidMount() {
@@ -31,7 +31,7 @@ export default class Sorting extends Component {
   }
 
   generateEnable() {
-    this.setState({ startc: true });
+    this.setState({ start: true });
     document.getElementById(
       'newArray'
     ).style.backgroundColor = BUTTON_COLOR_ACTIVE;
@@ -40,7 +40,7 @@ export default class Sorting extends Component {
   }
 
   buttonEnable() {
-    this.setState({ startc: false });
+    this.setState({ start: false });
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
@@ -75,7 +75,7 @@ export default class Sorting extends Component {
   }
 
   buttonDisable() {
-    this.setState({ startc: true });
+    this.setState({ start: true });
     document.getElementById('selectionSort').style.cursor = 'not-allowed';
     document.getElementById('selectionSort').disabled = true;
     document.getElementById('newArray').style.cursor = 'not-allowed';
@@ -102,7 +102,8 @@ export default class Sorting extends Component {
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
-    this.setState({ array, value: 50, startc: false });
+    this.setState({ array, value: 50, start: false });
+    console.log(this.state.reset);
 
     //console.log(this.state.reset);
     const s = document.getElementsByClassName('array-bar');
@@ -155,7 +156,7 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
-      this.setState({ startc: false });
+      this.setState({ start: false });
       this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
@@ -200,7 +201,7 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
-      this.setState({ startc: false });
+      this.setState({ start: false });
       this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
@@ -251,7 +252,7 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
-      this.setState({ startc: false });
+      this.setState({ start: false });
       this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
@@ -300,7 +301,7 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
-      this.setState({ startc: false });
+      this.setState({ start: false });
       this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
@@ -354,19 +355,19 @@ export default class Sorting extends Component {
         s[i].style.backgroundColor = FINAL_COLOR;
         console.log(s[i].style.backgroundColor);
       }
-      this.setState({ startc: false });
+      this.setState({ start: false });
       this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
 
   render() {
-    const { array, value, startc } = this.state;
+    const { array, value, start } = this.state;
     const SORT_BUTTONS = 6;
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
       <>
         <div className='col-sm-2'>
-          {startc ? (
+          {start ? (
             ''
           ) : (
             <Slider
