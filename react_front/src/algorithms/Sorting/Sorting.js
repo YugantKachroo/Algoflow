@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import { InsertionSortAlgorithm } from './SortingAlgorithm/InsertionSort';
 import { BubbleSortAlgorithm } from './SortingAlgorithm/BubbleSort';
+import { MergeSortAlgorithm } from './SortingAlgorithm/MergeSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 import Slider from 'react-rangeslider';
@@ -21,7 +22,7 @@ let ANIMATION_SPEED_MS;
 export default class Sorting extends Component {
   constructor(props) {
     super(props);
-    this.state = { array: [], value: 50, startc: false };
+    this.state = { array: [], value: 20, startc: false };
   }
 
   componentDidMount() {
@@ -54,11 +55,7 @@ export default class Sorting extends Component {
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
     document.getElementById('mergeSort').style.cursor = 'pointer';
     document.getElementById('mergeSort').disabled = false;
-    document.getElementById(
-      'heapSort'
-    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
-    document.getElementById('heapSort').style.cursor = 'pointer';
-    document.getElementById('heapSort').disabled = false;
+
     document.getElementById(
       'insertionSort'
     ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
@@ -90,8 +87,6 @@ export default class Sorting extends Component {
     document.getElementById('bubbleSort').style.cursor = 'not-allowed';
     document.getElementById('quickSort').disabled = true;
     document.getElementById('quickSort').style.cursor = 'not-allowed';
-    document.getElementById('heapSort').disabled = true;
-    document.getElementById('heapSort').style.cursor = 'not-allowed';
   }
 
   handleChange = (value) => {
@@ -106,26 +101,29 @@ export default class Sorting extends Component {
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(RandomInt(50, WINDOW_HEIGHT - 120));
     }
-    this.setState({ array, value: 50, startc: false });
+    this.setState({ array, value: 20, startc: false });
+
+    //console.log(this.state.reset);
     const s = document.getElementsByClassName('array-bar');
     setTimeout(() => {
       for (let i = 0; i < s.length; i++) {
         s[i].style.backgroundColor = PRIMARY_COLOR;
-        console.log(s[i].style.backgroundColor);
+        //console.log(s[i].style.backgroundColor);
       }
     }, ANIMATION_SPEED_MS);
   };
 
   async SelectionSort() {
     await this.buttonDisable();
+    let count = 0;
     ANIMATION_SPEED_MS = this.state.value / 30;
-    console.log(ANIMATION_SPEED_MS);
+    //console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
 
-    let count = 0;
+    // eslint-disable-next-line
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
@@ -134,19 +132,22 @@ export default class Sorting extends Component {
       if (isColorChange === true) {
         const color =
           animations[i][0] === 'comparision1' ? SECONDARY_COLOR : PRIMARY_COLOR;
-        console.log(color);
+        //console.log(color);
+        // eslint-disable-next-line
         const [temp, barOneIndex, barTwoIndex] = animations[i];
         setTimeout(() => {
           arrayBars[barOneIndex].style.backgroundColor = color;
           arrayBars[barTwoIndex].style.backgroundColor = color;
         }, i * ANIMATION_SPEED_MS);
       } else {
+        // eslint-disable-next-line
         const [temp, barIndex, newHeight] = animations[i];
         setTimeout(() => {
           arrayBars[barIndex].style.height = `${newHeight}px`;
         }, i * ANIMATION_SPEED_MS);
       }
     }
+
     const s = document.getElementsByClassName('array-bar');
     setTimeout(() => {
       for (let i = 0; i < s.length; i++) {
@@ -161,13 +162,14 @@ export default class Sorting extends Component {
   async InsertionSort() {
     await this.buttonDisable();
     ANIMATION_SPEED_MS = this.state.value / 30;
-    console.log(ANIMATION_SPEED_MS);
+    //console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
       'insertionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
 
     let count = 0;
+    // eslint-disable-next-line
     const [animations, sortArray] = InsertionSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
@@ -177,12 +179,14 @@ export default class Sorting extends Component {
         const color =
           animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
         // console.log(color);
+        // eslint-disable-next-line
         const [temp, barOneIndex, barTwoIndex] = animations[i];
         setTimeout(() => {
           arrayBars[barOneIndex].style.backgroundColor = color;
           arrayBars[barTwoIndex].style.backgroundColor = color;
         }, i * ANIMATION_SPEED_MS);
       } else {
+        // eslint-disable-next-line
         const [temp, barIndex, newHeight] = animations[i];
         setTimeout(() => {
           arrayBars[barIndex].style.height = `${newHeight}px`;
@@ -210,6 +214,7 @@ export default class Sorting extends Component {
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
 
     let count = 0;
+    // eslint-disable-next-line
     const [animations, sortArray] = BubbleSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = animations[i][0] !== 'swapHeight';
@@ -219,6 +224,7 @@ export default class Sorting extends Component {
         const color =
           animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
         // console.log(color);
+        // eslint-disable-next-line
         const [temp, barOneIndex, barTwoIndex] = animations[i];
         const barOneStyle = arrayBars[barOneIndex].style;
         const barTwoStyle = arrayBars[barTwoIndex].style;
@@ -227,6 +233,58 @@ export default class Sorting extends Component {
           barTwoStyle.backgroundColor = color;
         }, i * ANIMATION_SPEED_MS);
       } else {
+        // eslint-disable-next-line
+        const [temp, barIndex, newHeight] = animations[i];
+        if (barIndex === -1) {
+          continue;
+        }
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = FINAL_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+      this.setState({ startc: false });
+      this.generateEnable();
+    }, (count + 2) * ANIMATION_SPEED_MS);
+  }
+
+  async MergeSort() {
+    await this.buttonDisable();
+    ANIMATION_SPEED_MS = this.state.value / 30;
+    console.log(ANIMATION_SPEED_MS);
+
+    document.getElementById(
+      'mergeSort'
+    ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
+    let count = 0;
+    // eslint-disable-next-line
+    const [animations, sortArray] = MergeSortAlgorithm(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange = animations[i][0] !== 'swapHeight';
+      count++;
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+        // console.log(color);
+        // eslint-disable-next-line
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // eslint-disable-next-line
         const [temp, barIndex, newHeight] = animations[i];
         if (barIndex === -1) {
           continue;
@@ -289,7 +347,7 @@ export default class Sorting extends Component {
             id='newArray'
             style={{
               position: 'absolute',
-              top: `${(1.1 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(1.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.Arrayreset()}
           >
@@ -299,9 +357,9 @@ export default class Sorting extends Component {
             id='mergeSort'
             style={{
               position: 'absolute',
-              top: `${(1.96 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(2.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
-            onClick={() => this.mergeSort()}
+            onClick={() => this.MergeSort()}
           >
             Merge Sort
           </button>
@@ -309,9 +367,9 @@ export default class Sorting extends Component {
             id='quickSort'
             style={{
               position: 'absolute',
-              top: `${(2.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(3.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
-            onClick={() => this.quickSort()}
+            onClick={() => this.QuickSort()}
           >
             Quick Sort
           </button>
@@ -319,7 +377,7 @@ export default class Sorting extends Component {
             id='bubbleSort'
             style={{
               position: 'absolute',
-              top: `${(3.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(4.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.BubbleSort()}
           >
@@ -329,27 +387,18 @@ export default class Sorting extends Component {
             id='insertionSort'
             style={{
               position: 'absolute',
-              top: `${(4.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(5.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.InsertionSort()}
           >
             Insertion Sort
           </button>
-          <button
-            id='heapSort'
-            style={{
-              position: 'absolute',
-              top: `${(5.96 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
-            }}
-            onClick={() => this.heapSort()}
-          >
-            Heap Sort
-          </button>
+
           <button
             id='selectionSort'
             style={{
               position: 'absolute',
-              top: `${(6.9 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(6.25 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.SelectionSort()}
           >

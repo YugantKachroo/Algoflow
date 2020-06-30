@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NQueenAlgorithm } from './NQueenAlgorithm';
-import Header from '../../components/Header';
 import './NQueen.css';
 
 const SIZE_OF_BOARD = 6;
