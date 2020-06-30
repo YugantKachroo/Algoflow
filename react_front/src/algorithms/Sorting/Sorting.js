@@ -286,9 +286,7 @@ export default class Sorting extends Component {
       } else {
         // eslint-disable-next-line
         const [temp, barIndex, newHeight] = animations[i];
-        if (barIndex === -1) {
-          continue;
-        }
+
         const barStyle = arrayBars[barIndex].style;
         setTimeout(() => {
           barStyle.height = `${newHeight}px`;

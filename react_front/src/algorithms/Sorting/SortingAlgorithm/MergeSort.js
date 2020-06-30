@@ -1,6 +1,6 @@
 export function MergeSortAlgorithm(array) {
   let animations = [];
-  let auxillaryArray = array;
+  let auxillaryArray = array.slice();
   MergeSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
   let sortedArray = array.slice().sort((a, b) => a - b);
   console.log(areEqualCheck(sortedArray, auxillaryArray));
@@ -17,22 +17,22 @@ function areEqualCheck(sortedArray, auxillaryArray) {
 }
 
 function MergeSort(auxillaryArray, startIndex, endIndex, animations) {
-  if (startIndex < endIndex) {
-    const midIndex = Math.floor(startIndex + (endIndex - startIndex) / 2);
-    MergeSort(auxillaryArray, startIndex, midIndex, animations);
-    MergeSort(auxillaryArray, midIndex + 1, endIndex, animations);
-    Merge(auxillaryArray, startIndex, midIndex, endIndex, animations);
-  }
+  if (startIndex === endIndex) return;
+
+  const midIndex = Math.floor((endIndex + startIndex) / 2);
+  MergeSort(auxillaryArray, startIndex, midIndex, animations);
+  MergeSort(auxillaryArray, midIndex + 1, endIndex, animations);
+  Merge(auxillaryArray, startIndex, midIndex, endIndex, animations);
 }
 
-function Merge(auxillaryArray, startIndex, midIndex, endIndex, animations) {
+function Merge(auxillaryArray, startIndex, middleIndex, endIndex, animations) {
   let sortArray = [];
   let i = startIndex;
-  let j = midIndex + 1;
-  while (i < midIndex + 1 && j < endIndex) {
+  let j = middleIndex + 1;
+  while (i <= middleIndex && j <= endIndex) {
     animations.push(['comparison1', i, j]);
     animations.push(['comparison2', i, j]);
-    if (auxillaryArray[i] < auxillaryArray[j]) {
+    if (auxillaryArray[i] <= auxillaryArray[j]) {
       animations.push([
         'swapHeight',
         sortArray.length + startIndex,
@@ -48,9 +48,9 @@ function Merge(auxillaryArray, startIndex, midIndex, endIndex, animations) {
       sortArray.push(auxillaryArray[j++]);
     }
   }
-  while (i <= midIndex) {
-    animations.push(['comparison1', i, midIndex]);
-    animations.push(['comparison2', i, midIndex]);
+  while (i <= middleIndex) {
+    animations.push(['comparison1', i, i]);
+    animations.push(['comparison2', i, i]);
     animations.push([
       'swapHeight',
       sortArray.length + startIndex,
@@ -58,9 +58,9 @@ function Merge(auxillaryArray, startIndex, midIndex, endIndex, animations) {
     ]);
     sortArray.push(auxillaryArray[i++]);
   }
-  while (j <= midIndex) {
-    animations.push(['comparison1', j, midIndex]);
-    animations.push(['comparison2', j, midIndex]);
+  while (j <= endIndex) {
+    animations.push(['comparison1', j, j]);
+    animations.push(['comparison2', j, j]);
     animations.push([
       'swapHeight',
       sortArray.length + startIndex,
@@ -68,7 +68,7 @@ function Merge(auxillaryArray, startIndex, midIndex, endIndex, animations) {
     ]);
     sortArray.push(auxillaryArray[j++]);
   }
-  for (let i = startIndex; i < endIndex; i++) {
+  for (let i = startIndex; i <= endIndex; i++) {
     auxillaryArray[i] = sortArray[i - startIndex];
   }
 }
