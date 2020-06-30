@@ -33,19 +33,42 @@ function Merge(auxillaryArray, startIndex, midIndex, endIndex, animations) {
     animations.push(['comparison1', i, j]);
     animations.push(['comparison2', i, j]);
     if (auxillaryArray[i] < auxillaryArray[j]) {
-      animations.psuh([
+      animations.push([
         'swapHeight',
         sortArray.length + startIndex,
         auxillaryArray[i],
       ]);
       sortArray.push(auxillaryArray[i++]);
     } else {
-      animations.psuh([
+      animations.push([
         'swapHeight',
         sortArray.length + startIndex,
         auxillaryArray[j],
       ]);
       sortArray.push(auxillaryArray[j++]);
     }
+  }
+  while (i <= midIndex) {
+    animations.push(['comparison1', i, midIndex]);
+    animations.push(['comparison2', i, midIndex]);
+    animations.push([
+      'swapHeight',
+      sortArray.length + startIndex,
+      auxillaryArray[i],
+    ]);
+    sortArray.push(auxillaryArray[i++]);
+  }
+  while (j <= midIndex) {
+    animations.push(['comparison1', j, midIndex]);
+    animations.push(['comparison2', j, midIndex]);
+    animations.push([
+      'swapHeight',
+      sortArray.length + startIndex,
+      auxillaryArray[j],
+    ]);
+    sortArray.push(auxillaryArray[j++]);
+  }
+  for (let i = startIndex; i < endIndex; i++) {
+    auxillaryArray[i] = sortArray[i - startIndex];
   }
 }
