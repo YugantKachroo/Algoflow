@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
+import { InsertionSortAlgorithm } from './SortingAlgorithm/InsertionSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 import Slider from 'react-rangeslider';
@@ -23,6 +24,15 @@ export default class Sorting extends Component {
 
   componentDidMount() {
     this.Arrayreset();
+  }
+
+  generateEnable() {
+    this.setState({ startc: true });
+    document.getElementById(
+      'newArray'
+    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    document.getElementById('newArray').style.cursor = 'pointer';
+    document.getElementById('newArray').disabled = false;
   }
 
   buttonEnable() {
@@ -112,6 +122,7 @@ export default class Sorting extends Component {
     document.getElementById(
       'selectionSort'
     ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
     let count = 0;
     const [animations, sortArray] = SelectionSortAlgorithm(this.state.array);
     for (let i = 0; i < animations.length; i++) {
@@ -141,7 +152,49 @@ export default class Sorting extends Component {
         console.log(s[i].style.backgroundColor);
       }
       this.setState({ startc: false });
-      this.buttonEnable();
+      this.generateEnable();
+    }, (count + 2) * ANIMATION_SPEED_MS);
+  }
+
+  async InsertionSort() {
+    await this.buttonDisable();
+    ANIMATION_SPEED_MS = this.state.value / 80;
+    console.log(ANIMATION_SPEED_MS);
+
+    document.getElementById(
+      'insertionSort'
+    ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
+    let count = 0;
+    const [animations, sortArray] = InsertionSortAlgorithm(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange = animations[i][0] !== 'swapHeight';
+      count++;
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === 'comparision1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+        // console.log(color);
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        setTimeout(() => {
+          arrayBars[barOneIndex].style.backgroundColor = color;
+          arrayBars[barTwoIndex].style.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [temp, barIndex, newHeight] = animations[i];
+        setTimeout(() => {
+          arrayBars[barIndex].style.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = FINAL_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+      this.setState({ startc: false });
+      this.generateEnable();
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
 
@@ -228,7 +281,7 @@ export default class Sorting extends Component {
               position: 'absolute',
               top: `${(4.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
-            onClick={() => this.insertionSort()}
+            onClick={() => this.InsertionSort()}
           >
             Insertion Sort
           </button>

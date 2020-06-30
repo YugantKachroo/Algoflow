@@ -26,9 +26,12 @@ function InsertionSort(auxillaryArray, animations) {
     while (j >= 0 && auxillaryArray[j] > key) {
       animations.push(['swapHeight', j + 1, auxillaryArray[j]]);
       auxillaryArray[j + 1] = auxillaryArray[j];
-      j--;
-      animations.push(['comparision1', j, j + 1]);
-      animations.push(['comparision2', j, j + 1]);
+      j = j - 1;
+      if (j < 0) {
+      } else {
+        animations.push(['comparision1', j, i]);
+        animations.push(['comparision2', j, i]);
+      }
     }
     animations.push(['swapHeight', j + 1, key]);
     auxillaryArray[j + 1] = key;
