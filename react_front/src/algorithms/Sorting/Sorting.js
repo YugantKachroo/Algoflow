@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { SelectionSortAlgorithm } from './SortingAlgorithm/SelectionSort';
 import { InsertionSortAlgorithm } from './SortingAlgorithm/InsertionSort';
+import { BubbleSortAlgorithm } from './SortingAlgorithm/BubbleSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 import Slider from 'react-rangeslider';
@@ -174,7 +175,7 @@ export default class Sorting extends Component {
       const arrayBars = document.getElementsByClassName('array-bar');
       if (isColorChange === true) {
         const color =
-          animations[i][0] === 'comparision1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+          animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
         // console.log(color);
         const [temp, barOneIndex, barTwoIndex] = animations[i];
         setTimeout(() => {
@@ -185,6 +186,54 @@ export default class Sorting extends Component {
         const [temp, barIndex, newHeight] = animations[i];
         setTimeout(() => {
           arrayBars[barIndex].style.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = FINAL_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+      this.setState({ startc: false });
+      this.generateEnable();
+    }, (count + 2) * ANIMATION_SPEED_MS);
+  }
+
+  async BubbleSort() {
+    await this.buttonDisable();
+    ANIMATION_SPEED_MS = this.state.value / 30;
+    console.log(ANIMATION_SPEED_MS);
+
+    document.getElementById(
+      'bubbleSort'
+    ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
+    let count = 0;
+    const [animations, sortArray] = BubbleSortAlgorithm(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange = animations[i][0] !== 'swapHeight';
+      count++;
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+        // console.log(color);
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [temp, barIndex, newHeight] = animations[i];
+        if (barIndex === -1) {
+          continue;
+        }
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
         }, i * ANIMATION_SPEED_MS);
       }
     }
@@ -272,7 +321,7 @@ export default class Sorting extends Component {
               position: 'absolute',
               top: `${(3.95 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
-            onClick={() => this.bubbleSort()}
+            onClick={() => this.BubbleSort()}
           >
             Bubble Sort
           </button>
