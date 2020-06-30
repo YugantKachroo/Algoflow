@@ -6,7 +6,7 @@ class Backtracking extends Component {
     return (
       <div>
         <br />
-        <h1 class='ui horizontal divider header'>NQueen</h1>
+        <h1 className='ui horizontal divider header'>NQueen</h1>
         <NQueen />
       </div>
     );
