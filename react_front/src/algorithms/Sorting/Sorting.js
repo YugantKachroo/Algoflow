@@ -10,6 +10,7 @@ let WINDOW_HEIGHT = window.innerHeight;
 let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
 
 const PRIMARY_COLOR = '#ADD8E6';
+const BUTTON_COLOR_ACTIVE = 'green';
 const BUTTON_COLOR_PRIMARY = 'black';
 const BUTTON_COLOR_SECONDARY = '#fc1703';
 const SECONDARY_COLOR = '#FF6347';
@@ -30,7 +31,7 @@ export default class Sorting extends Component {
     this.setState({ startc: true });
     document.getElementById(
       'newArray'
-    ).style.backgroundColor = BUTTON_COLOR_PRIMARY;
+    ).style.backgroundColor = BUTTON_COLOR_ACTIVE;
     document.getElementById('newArray').style.cursor = 'pointer';
     document.getElementById('newArray').disabled = false;
   }
@@ -116,7 +117,7 @@ export default class Sorting extends Component {
 
   async SelectionSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 80;
+    ANIMATION_SPEED_MS = this.state.value / 30;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -158,7 +159,7 @@ export default class Sorting extends Component {
 
   async InsertionSort() {
     await this.buttonDisable();
-    ANIMATION_SPEED_MS = this.state.value / 80;
+    ANIMATION_SPEED_MS = this.state.value / 30;
     console.log(ANIMATION_SPEED_MS);
 
     document.getElementById(
@@ -239,7 +240,7 @@ export default class Sorting extends Component {
             id='newArray'
             style={{
               position: 'absolute',
-              top: `${(1.3 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(1.1 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.Arrayreset()}
           >
