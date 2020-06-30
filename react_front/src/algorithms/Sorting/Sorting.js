@@ -304,6 +304,57 @@ export default class Sorting extends Component {
     }, (count + 2) * ANIMATION_SPEED_MS);
   }
 
+  async QuickSort() {
+    await this.buttonDisable();
+    ANIMATION_SPEED_MS = this.state.value / 30;
+    console.log(ANIMATION_SPEED_MS);
+
+    document.getElementById(
+      'quickSort'
+    ).style.backgroundColor = BUTTON_COLOR_SECONDARY;
+
+    let count = 0;
+    // eslint-disable-next-line
+    const [animations, sortArray] = QuickSortAlgorithm(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange = animations[i][0] !== 'swapHeight';
+      count++;
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === 'comparison1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+        // console.log(color);
+        // eslint-disable-next-line
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // eslint-disable-next-line
+        const [temp, barIndex, newHeight] = animations[i];
+        if (barIndex === -1) {
+          continue;
+        }
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+    const s = document.getElementsByClassName('array-bar');
+    setTimeout(() => {
+      for (let i = 0; i < s.length; i++) {
+        s[i].style.backgroundColor = FINAL_COLOR;
+        console.log(s[i].style.backgroundColor);
+      }
+      this.setState({ startc: false });
+      this.generateEnable();
+    }, (count + 2) * ANIMATION_SPEED_MS);
+  }
+
   render() {
     const { array, value, startc } = this.state;
     const SORT_BUTTONS = 6;
