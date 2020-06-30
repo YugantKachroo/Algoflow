@@ -121,6 +121,7 @@ export default class Sorting extends Component {
       if (isColorChange === true) {
         const color =
           animations[i][0] === 'comparision1' ? SECONDARY_COLOR : PRIMARY_COLOR;
+        console.log(color);
         const [temp, barOneIndex, barTwoIndex] = animations[i];
         setTimeout(() => {
           arrayBars[barOneIndex].style.backgroundColor = color;
@@ -185,7 +186,7 @@ export default class Sorting extends Component {
             id='newArray'
             style={{
               position: 'absolute',
-              top: `${(1.15 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
+              top: `${(1.3 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`,
             }}
             onClick={() => this.Arrayreset()}
           >
