@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Sudoku.css';
+import { RandomInt } from '../../../components/RandomInt';
 
 const GIVEN_VALUES = 20;
 var newGrid = [
@@ -23,11 +24,12 @@ export default class Sudoku extends Component {
   }
 
   drawGrid() {
-    const sudokuGrid = this.state.sudokuGrid;
-    console.log(sudokuGrid);
+    const { sudokuGrid } = this.state;
+    //    console.log(sudokuGrid);
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         var index = i + '' + j;
+        //console.log(i + '' + j);
         if (sudokuGrid[i][j] !== 0) {
           document.getElementById(index).innerHTML = sudokuGrid[i][j];
           document.getElementById(index).setAttribute('class', 'givenNumber');
@@ -38,10 +40,73 @@ export default class Sudoku extends Component {
     }
   }
 
+  emptyMessages() {
+    document.getElementById('messages').innerHTML = '';
+  }
+
+  async generateSudoku() {
+    const { sudokuGrid } = this.state;
+    await this.setState({ disabled: true });
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        sudokuGrid[i][j] = 0;
+      }
+    }
+    this.clearGrid();
+
+    var indexX = RandomInt(0, 8);
+    var indexY = RandomInt(0, 8);
+    var value = RandomInt(1, 9);
+    for (let i = 0; i < GIVEN_VALUES; i++) {
+      while (!this.valid(indexX, indexY, value)) {
+        value = RandomInt(1, 9);
+        while (sudokuGrid[indexX][indexY] !== 0) {
+          indexX = RandomInt(0, 8);
+          indexY = RandomInt(0, 8);
+        }
+      }
+      sudokuGrid[indexX][indexY] = value;
+    }
+    this.drawGrid();
+    await this.setState({ disabled: false });
+  }
+
+  valid(indexX, indexY, value) {
+    var row, column, subRow, subColumn;
+    var { sudokuGrid } = this.state;
+    for (column = 0; column < 9; column++) {
+      if (sudokuGrid[indexX][column] === value) return false;
+    }
+
+    for (row = 0; row < 9; row++) {
+      if (sudokuGrid[row][indexY] === value) return false;
+    }
+
+    subRow = indexX - (indexX % 3);
+    subColumn = indexY - (indexY % 3);
+    for (row = 0; row < 3; row++) {
+      for (column = 0; column < 3; column++) {
+        if (sudokuGrid[subRow + row][subColumn + column] === value)
+          return false;
+      }
+    }
+
+    return true;
+  }
+
+  clearGrid() {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        var indexId = i + '' + j;
+        document.getElementById(indexId).innerHTML = '';
+      }
+    }
+  }
+
   render() {
     const { disabled } = this.state;
     return (
-      <div>
+      <div className='jumbotron-fluid bg-white'>
         <br />
         <br />
         <div className='container'>
