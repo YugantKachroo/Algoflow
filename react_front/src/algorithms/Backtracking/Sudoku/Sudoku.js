@@ -363,7 +363,7 @@ export default class Sudoku extends Component {
           </table>
 
           {/* <div> className='col-sm-5'> */}
-          <div className='center'>
+          <center>
             {' '}
             <button
               className='mt-2 mr-5 ui yellow button generateButton'
@@ -384,7 +384,7 @@ export default class Sudoku extends Component {
             >
               Skip
             </button>{' '}
-          </div>
+          </center>
           <div id='messages'></div>
         </div>
       </div>
