@@ -11,12 +11,10 @@ export default class Sudoku extends Component {
   render() {
     return (
       <div>
+        <br />
+        <br />
         <div class='container'>
           <table>
-            <caption>
-              {' '}
-              <font size='6'>Sudoku Puzzle </font>
-            </caption>
             <tr id='0'>
               <td id='00'></td>
               <td id='01'></td>
@@ -119,28 +117,26 @@ export default class Sudoku extends Component {
           </table>
 
           <div class='buttonsContainer'>
-            <td>
-              {' '}
-              <button class='button generateButton' onclick='generateGivens()'>
-                Generate Puzzle
-              </button>{' '}
-            </td>
-            <td>
-              {' '}
-              <button class='button solveButton' onclick='solveSudokuPuzzle()'>
-                Solve
-              </button>{' '}
-            </td>
-            <td>
-              {' '}
-              <button
-                class='button solveButtonWithImidiateDrawing'
-                onclick='DrawSolutionNow()'
-                hidden
-              >
-                Show me the solution now!
-              </button>{' '}
-            </td>
+            {' '}
+            <button
+              class='ui yellow button generateButton'
+              onclick='generateGivens()'
+            >
+              Generate Puzzle
+            </button>{' '}
+            <button
+              class='ui green button solveButton'
+              onclick='solveSudokuPuzzle()'
+            >
+              Solve
+            </button>{' '}
+            <button
+              class='ui purple button solveButtonWithImidiateDrawing'
+              onclick='DrawSolutionNow()'
+              hidden
+            >
+              Show me the solution now!
+            </button>{' '}
           </div>
           <div id='messages'></div>
         </div>
