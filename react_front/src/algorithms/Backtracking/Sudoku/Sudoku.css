@@ -57,8 +57,7 @@ tr:nth-child(3n) {
 }
 
 .generateButton {
-  float: left;
-  width: 170px;
+  width: 150px;
   font-size: 17px;
   cursor: pointer;
   height: 52px;
@@ -67,7 +66,6 @@ tr:nth-child(3n) {
 }
 
 .solveButton {
-  float: right;
   width: 170px;
   font-size: 17px;
   cursor: pointer;
@@ -77,8 +75,7 @@ tr:nth-child(3n) {
 }
 
 .solveNow {
-  margin-top: 5px;
-  width: 380px;
+  width: 170px;
   font-size: 17px;
   cursor: pointer;
   height: 52px;

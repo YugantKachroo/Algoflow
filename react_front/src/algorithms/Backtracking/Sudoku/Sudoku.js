@@ -362,26 +362,27 @@ export default class Sudoku extends Component {
             </tbody>
           </table>
 
-          <div className='buttonsContainer'>
+          {/* <div> className='col-sm-5'> */}
+          <div className='center'>
             {' '}
             <button
-              className='ui yellow button generateButton'
+              className='mt-2 mr-5 ui yellow button generateButton'
               onClick={() => this.generateSudoku()}
             >
               Generate Puzzle
             </button>{' '}
             <button
-              className='ui green button solveButton'
+              className='mt-2 mr-5 ui green button solveButton'
               onClick={() => this.solveSudokuPuzzle()}
             >
               Solve
             </button>{' '}
             <button
-              className='ui purple button solveNow'
+              className='mt-2 mr-5 ui purple button solveNow'
               onClick={() => this.drawSolutionNow()}
               hidden
             >
-              Show me the solution now!
+              Skip
             </button>{' '}
           </div>
           <div id='messages'></div>
