@@ -76,7 +76,7 @@ tr:nth-child(3n) {
   border-radius: 10px;
 }
 
-.solveButtonWithImidiateDrawing {
+.solveNow {
   margin-top: 5px;
   width: 380px;
   font-size: 17px;

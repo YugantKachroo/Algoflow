@@ -14,22 +14,22 @@ var newGrid = [
   [0, 0, 0, 4, 1, 9, 0, 0, 5],
   [0, 0, 0, 0, 8, 0, 0, 7, 9],
 ];
+
 export default class Sudoku extends Component {
   constructor() {
     super();
     this.state = { sudokuGrid: newGrid, disabled: false };
   }
+
   componentDidMount() {
     this.drawGrid();
   }
 
   drawGrid() {
     const { sudokuGrid } = this.state;
-    //    console.log(sudokuGrid);
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         var index = i + '' + j;
-        //console.log(i + '' + j);
         if (sudokuGrid[i][j] !== 0) {
           document.getElementById(index).innerHTML = sudokuGrid[i][j];
           document.getElementById(index).setAttribute('class', 'givenNumber');
@@ -100,6 +100,14 @@ export default class Sudoku extends Component {
         var indexId = i + '' + j;
         document.getElementById(indexId).innerHTML = '';
       }
+    }
+  }
+
+  showButton(show) {
+    if (show) {
+      document.getElementsByClassName('solveNow')[0].hidden = false;
+    } else {
+      document.getElementsByClassName('solveNow')[0].hidden = true;
     }
   }
 
@@ -231,7 +239,7 @@ export default class Sudoku extends Component {
               Solve
             </button>{' '}
             <button
-              className='ui purple button solveButtonWithImidiateDrawing'
+              className='ui purple button solveNow'
               onClick={() => this.drawSolutionNow()}
               hidden
             >
