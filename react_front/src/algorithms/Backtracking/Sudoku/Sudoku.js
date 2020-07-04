@@ -3,6 +3,7 @@ import './Sudoku.css';
 import { RandomInt } from '../../../components/RandomInt';
 
 const GIVEN_VALUES = 20;
+var gridDraw, timetaken, drawElement, drawSolutionNow;
 var newGrid = [
   [5, 3, 0, 0, 7, 0, 0, 0, 0],
   [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -110,6 +111,25 @@ export default class Sudoku extends Component {
       document.getElementsByClassName('solveNow')[0].hidden = true;
     }
   }
+
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async solveSudokuPuzzle() {
+    await this.setState({ disabled: true });
+    await this.sleep(100);
+    gridDraw = [];
+    timetaken = 0;
+
+    if (this.Backtrack()) {
+      this.showButton(1);
+    } else {
+      this.state({ disabled: false });
+    }
+  }
+
+  async Backtrack() {}
 
   render() {
     const { disabled } = this.state;
