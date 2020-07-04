@@ -1,0 +1,87 @@
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 200%;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr {
+  height: 45px;
+}
+
+td {
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+td:first-child {
+  border-left: solid;
+  border-left-color: black;
+}
+td:nth-child(3n) {
+  border-right: solid;
+  border-right-color: black;
+}
+tr:first-child {
+  border-top: solid;
+}
+tr:nth-child(3n) {
+  border-bottom: solid;
+}
+
+.container {
+  width: 378px;
+  margin: 5px auto;
+}
+
+.buttonsContainer {
+  margin-top: 5px;
+  width: 380px;
+  height: 60px;
+}
+
+#messages {
+  margin-top: 5px;
+  width: 380px;
+  font-size: 150%;
+}
+
+.givenNumber {
+  color: red;
+}
+
+.solvingNumber {
+  color: blue;
+}
+
+.generateButton {
+  float: left;
+  width: 170px;
+  font-size: 17px;
+  cursor: pointer;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
+}
+
+.solveButton {
+  float: right;
+  width: 170px;
+  font-size: 17px;
+  cursor: pointer;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
+}
+
+.solveButtonWithImidiateDrawing {
+  margin-top: 5px;
+  width: 380px;
+  font-size: 17px;
+  cursor: pointer;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
+}

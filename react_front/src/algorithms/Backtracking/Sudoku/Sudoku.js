@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Sudoku.css';
 
 export default class Sudoku extends Component {
   constructor() {
