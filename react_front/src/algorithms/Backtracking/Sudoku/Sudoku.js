@@ -19,7 +19,7 @@ var newGrid = [
 export default class Sudoku extends Component {
   constructor() {
     super();
-    this.state = { sudokuGrid: newGrid, disabled: false };
+    this.state = { sudokuGrid: newGrid };
   }
 
   componentDidMount() {
@@ -47,7 +47,7 @@ export default class Sudoku extends Component {
 
   async generateSudoku() {
     const { sudokuGrid } = this.state;
-    await this.setState({ disabled: true });
+    this.disableButtons();
     this.emptyMessages();
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
@@ -55,7 +55,6 @@ export default class Sudoku extends Component {
       }
     }
     this.clearGrid();
-
     var indexX = RandomInt(0, 8);
     var indexY = RandomInt(0, 8);
     var value = RandomInt(1, 9);
@@ -70,7 +69,7 @@ export default class Sudoku extends Component {
       sudokuGrid[indexX][indexY] = value;
     }
     this.drawGrid();
-    await this.setState({ disabled: false });
+    this.enableButtons();
   }
 
   valid(indexX, indexY, value) {
@@ -118,8 +117,8 @@ export default class Sudoku extends Component {
   }
 
   async solveSudokuPuzzle() {
-    await this.setState({ disabled: true });
     await this.sleep(100);
+    this.disableButtons();
     gridDraw = [];
     timetaken = 0;
 
@@ -170,9 +169,26 @@ export default class Sudoku extends Component {
     this.showButton(0);
     this.emptyMessages();
   }
+  disableButtons() {
+    this.disableGenerateButton();
+    this.disableSolveButton();
+  }
+
+  enableButtons() {
+    this.enableGenerateButton();
+    this.enableSolveButton();
+  }
 
   enableGenerateButton() {
     document.getElementsByClassName('generateButton')[0].disabled = false;
+  }
+
+  enableSolveButton() {
+    document.getElementsByClassName('solveButton')[0].disabled = false;
+  }
+
+  disableGenerateButton() {
+    document.getElementsByClassName('generateButton')[0].disabled = true;
   }
 
   disableSolveButton() {
@@ -237,7 +253,6 @@ export default class Sudoku extends Component {
   }
 
   render() {
-    const { disabled } = this.state;
     return (
       <div className='jumbotron-fluid bg-white'>
         <br />
@@ -352,14 +367,12 @@ export default class Sudoku extends Component {
             <button
               className='ui yellow button generateButton'
               onClick={() => this.generateSudoku()}
-              disabled={disabled}
             >
               Generate Puzzle
             </button>{' '}
             <button
               className='ui green button solveButton'
               onClick={() => this.solveSudokuPuzzle()}
-              disabled={disabled}
             >
               Solve
             </button>{' '}
