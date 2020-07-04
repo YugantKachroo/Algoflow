@@ -3,7 +3,7 @@ import './Sudoku.css';
 import { RandomInt } from '../../../components/RandomInt';
 
 const GIVEN_VALUES = 20;
-var gridDraw, timetaken, drawElement, drawSolutionNow;
+var gridDraw, timetaken, drawElement, drawSolutionnow;
 var newGrid = [
   [5, 3, 0, 0, 7, 0, 0, 0, 0],
   [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -48,6 +48,7 @@ export default class Sudoku extends Component {
   async generateSudoku() {
     const { sudokuGrid } = this.state;
     await this.setState({ disabled: true });
+    this.emptyMessages();
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         sudokuGrid[i][j] = 0;
@@ -123,13 +124,117 @@ export default class Sudoku extends Component {
     timetaken = 0;
 
     if (this.Backtrack()) {
+      this.drawAnimation();
       this.showButton(1);
     } else {
-      this.state({ disabled: false });
+      this.createNewMessage();
+      this.enableGenerateButton();
+      this.disableSolveButton();
     }
   }
 
-  async Backtrack() {}
+  async createNewMessage() {
+    if (timetaken) {
+      console.log(gridDraw.length);
+      document.getElementById('messages').innerHTML =
+        'Using a backtracking algorithm takes too long to find a solution - if there is one!' +
+        ' Try generating a new puzzle...';
+    } else {
+      document.getElementById('messages').innerHTML =
+        'This puzzle does not have a solution - try generating a new one!';
+    }
+  }
+
+  async drawAnimation() {
+    var i, position, value;
+    console.log(gridDraw.length);
+    drawSolutionnow = 0;
+    for (i = 0; i < gridDraw.length; i++) {
+      if (drawSolutionnow) {
+        break;
+      }
+      drawElement = gridDraw[i];
+      position = drawElement[0];
+      value = drawElement[1];
+      console.log(position);
+      if (value === '0') {
+        document.getElementById(position).innerHTML = '';
+      } else {
+        //  console.log(position);
+        document.getElementById(position).innerHTML = value;
+      }
+      await this.sleep(1);
+    }
+    this.enableGenerateButton();
+    this.disableSolveButton();
+    this.showButton(0);
+    this.emptyMessages();
+  }
+
+  enableGenerateButton() {
+    document.getElementsByClassName('generateButton')[0].disabled = false;
+  }
+
+  disableSolveButton() {
+    document.getElementsByClassName('solveButton')[0].disabled = true;
+  }
+
+  async drawSolutionNow() {
+    drawSolutionnow = 1;
+    this.fullGridSolution();
+    this.showButton(0);
+    this.disableSolveButton();
+  }
+
+  fullGridSolution() {
+    const { sudokuGrid } = this.state;
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        var index = i + '' + j;
+        document.getElementById(index).innerHTML = sudokuGrid[i][j];
+      }
+    }
+  }
+
+  Backtrack() {
+    const { sudokuGrid } = this.state;
+    var positionOfEmptyGrid, positionOfvalue, value, row, col;
+    positionOfEmptyGrid = this.locationEmptyGrid();
+    if (positionOfEmptyGrid === '') return true;
+    row = positionOfEmptyGrid.charAt(0);
+    col = positionOfEmptyGrid.charAt(1);
+    positionOfvalue = positionOfEmptyGrid;
+    for (value = 1; value <= 9; value++) {
+      if (this.valid(row, col, value)) {
+        sudokuGrid[row][col] = value;
+        drawElement = [positionOfvalue, value];
+        gridDraw.push(drawElement);
+        if (this.Backtrack()) return true;
+        sudokuGrid[row][col] = 0;
+        if (gridDraw.length > 3000000) {
+          timetaken = 1;
+          return false;
+        }
+        drawElement = [positionOfvalue, '0'];
+        gridDraw.push(drawElement);
+      }
+    }
+    return false;
+  }
+
+  locationEmptyGrid() {
+    const { sudokuGrid } = this.state;
+    var position = '';
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (sudokuGrid[i][j] === 0) {
+          position = i + '' + j;
+          return position;
+        }
+      }
+    }
+    return position;
+  }
 
   render() {
     const { disabled } = this.state;
