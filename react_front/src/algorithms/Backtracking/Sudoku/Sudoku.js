@@ -257,6 +257,9 @@ export default class Sudoku extends Component {
       <div className='jumbotron-fluid bg-white'>
         <br />
         <br />
+        <center>
+          <div id='messages'></div>
+        </center>
         <div className='container'>
           <table>
             <tbody>
@@ -385,7 +388,6 @@ export default class Sudoku extends Component {
               Skip
             </button>{' '}
           </center>
-          <div id='messages'></div>
         </div>
       </div>
     );
