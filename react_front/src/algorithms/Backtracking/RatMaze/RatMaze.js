@@ -10,25 +10,28 @@ const SOL = MakeBoard(Maze.length);
 const NO_PATH_COLOR = '#696969';
 const PATH_COLOR = '#dfeb34';
 const SAFE_COLOR = '#008000';
-const ANIMATION_SPEED_MS = 500;
+const ANIMATION_SPEED_MS = 200;
 
 export default class RatMaze extends Component {
   constructor(props) {
     super(props);
-    this.state = { disabled: false, visualize: false };
+    this.state = { disabled: false, visualize: false, Maze: Maze };
   }
 
   componentDidMount() {
     this.drawBoard(Maze);
   }
 
-  boardReset() {
-    let m1 = Mazes[RandomInt(0, Mazes.length - 1)];
+  async boardReset() {
+    let m1;
+    m1 = Mazes[RandomInt(0, Mazes.length - 1)];
     Maze = m1;
-    this.drawBoard(Maze);
+    await this.setState({ Maze: m1 });
+    this.drawBoard();
   }
 
-  async drawBoard(Maze = []) {
+  async drawBoard() {
+    const { Maze } = this.state;
     this.setState({ visualize: false, disabled: false });
     const Rows = Maze.length;
     const Cols = Maze[0].length;
@@ -60,20 +63,13 @@ export default class RatMaze extends Component {
   }
 
   async Algorithm() {
+    const { Maze } = this.state;
+    // eslint-disable-next-line
     const [solution, animations] = RatMazeAlgorithm(Maze, SOL);
     await this.setState({ disabled: true, visualize: true });
     const blocks = document.getElementsByClassName('r-array-tile');
     const rat = document.getElementsByClassName('rat');
     let count = 0;
-    const finalPath = [];
-    for (let i = 0; i < solution.length; i++) {
-      for (let j = 0; j < solution.length; j++) {
-        let index = Maze.length * i + j;
-        if (solution[i][j] === 1) {
-          finalPath.push(index);
-        }
-      }
-    }
     for (let i = 0; i < animations.length; i++) {
       const [x, y, ratSafe] = animations[i];
       const ind = Maze.length * x + y;
@@ -92,16 +88,8 @@ export default class RatMaze extends Component {
     }
 
     setTimeout(() => {
-      for (let i = 0; i < finalPath.length; i++) {
-        setTimeout(() => {
-          blocks[finalPath[i]].classList.add('highlightPath');
-        }, i * 40);
-      }
-    }, (count + 1) * ANIMATION_SPEED_MS);
-
-    setTimeout(() => {
       this.setState({ disabled: false });
-    }, (count + 2) * ANIMATION_SPEED_MS);
+    }, (count + 1) * ANIMATION_SPEED_MS);
   }
 
   render() {
