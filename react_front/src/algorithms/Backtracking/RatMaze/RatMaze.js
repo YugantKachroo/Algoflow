@@ -7,9 +7,9 @@ import './RatMaze.css';
 const Maze = Mazes[RandomInt(0, Mazes.length - 1)];
 const SOL = MakeBoard(Maze.length);
 
-const NO_PATH_COLOR = '#ededed';
-const PATH_COLOR = '#ADD2FE';
-const SAFE_COLOR = '#B0FCEF';
+const NO_PATH_COLOR = '#696969';
+const PATH_COLOR = '#dfeb34';
+const SAFE_COLOR = '#93eb34';
 const ANIMATION_SPEED_MS = 1000;
 
 export default class RatMaze extends Component {
