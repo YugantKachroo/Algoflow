@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NQueen from './NQueen.js';
+import NQueen from './NQueen/NQueen.js';
 import Sudoku from './Sudoku/Sudoku.js';
 
 class Backtracking extends Component {
