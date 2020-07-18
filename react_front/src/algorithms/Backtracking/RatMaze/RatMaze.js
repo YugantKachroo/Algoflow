@@ -10,12 +10,12 @@ const SOL = MakeBoard(Maze.length);
 const NO_PATH_COLOR = '#696969';
 const PATH_COLOR = '#dfeb34';
 const SAFE_COLOR = '#93eb34';
-const ANIMATION_SPEED_MS = 1000;
+const ANIMATION_SPEED_MS = 500;
 
 export default class RatMaze extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { disabled: false, visualize: false };
   }
 
   componentDidMount() {
@@ -23,6 +23,7 @@ export default class RatMaze extends Component {
   }
 
   async drawBoard(Maze = []) {
+    this.setState({ visualize: false, disabled: false });
     const Rows = Maze.length;
     const Cols = Maze[0].length;
     const ratMaze = document.getElementById('ratMazeBoard');
@@ -52,7 +53,55 @@ export default class RatMaze extends Component {
     }
   }
 
+  async Algorithm() {
+    const sol = RatMazeAlgorithm(Maze, SOL, []);
+    await this.setState({ disabled: true, visualize: true });
+    const animations = sol[1];
+    const solution = sol[0];
+    const blocks = document.getElementsByClassName('r-array-tile');
+    const rat = document.getElementsByClassName('rat');
+    let count = 0;
+    const finalPath = [];
+    for (let i = 0; i < solution.length; i++) {
+      for (let j = 0; j < solution.length; j++) {
+        let index = Maze.length * i + j;
+        if (solution[i][j] === 1) {
+          finalPath.push(index);
+        }
+      }
+    }
+    for (let i = 0; i < animations.length; i++) {
+      const [x, y, ratSafe] = animations[i];
+      const ind = Maze.length * x + y;
+      setTimeout(() => {
+        if (ratSafe) {
+          blocks[ind].style.backgroundColor = SAFE_COLOR;
+          rat[ind].innerHTML = '🐁';
+          rat[ind].classList.add('flipH');
+        } else {
+          blocks[ind].style.backgroundColor = PATH_COLOR;
+          rat[ind].innerHTML = '';
+          rat[ind].classList.add('flipH');
+        }
+      }, i * ANIMATION_SPEED_MS);
+      count = i;
+    }
+
+    setTimeout(() => {
+      for (let i = 0; i < finalPath.length; i++) {
+        setTimeout(() => {
+          blocks[finalPath[i]].classList.add('highlightPath');
+        }, i * 40);
+      }
+    }, (count + 1) * ANIMATION_SPEED_MS);
+
+    setTimeout(() => {
+      this.setState({ disabled: false });
+    }, (count + 2) * ANIMATION_SPEED_MS);
+  }
+
   render() {
+    const { disabled, visualize } = this.state;
     return (
       <div>
         <div className='container-fluid'>
@@ -62,10 +111,18 @@ export default class RatMaze extends Component {
             </div>
             <div className='col-sm-5 mt-2'>
               <button
-                onClick={() => this.Algortihm()}
+                disabled={visualize}
+                onClick={() => this.Algorithm()}
                 className='ui blue button'
               >
                 Visualize Algorithm
+              </button>
+              <button
+                disabled={disabled}
+                onClick={() => this.drawBoard(Maze)}
+                className='ui blue button'
+              >
+                Reset
               </button>
             </div>
           </div>
