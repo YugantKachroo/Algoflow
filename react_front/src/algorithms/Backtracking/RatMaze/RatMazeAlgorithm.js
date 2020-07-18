@@ -1,7 +1,7 @@
 export function MakeBoard(size) {
   let sol = [];
   for (let i = 0; i < size; i++) {
-    let temp;
+    let temp = [];
     for (let j = 0; j < size; j++) {
       temp.push(0);
     }
