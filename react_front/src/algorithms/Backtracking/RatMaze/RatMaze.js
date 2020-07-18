@@ -10,7 +10,7 @@ const SOL = MakeBoard(Maze.length);
 const NO_PATH_COLOR = '#696969';
 const PATH_COLOR = '#dfeb34';
 const SAFE_COLOR = '#008000';
-const ANIMATION_SPEED_MS = 200;
+const ANIMATION_SPEED_MS = 380;
 
 export default class RatMaze extends Component {
   constructor(props) {
@@ -73,6 +73,7 @@ export default class RatMaze extends Component {
     for (let i = 0; i < animations.length; i++) {
       const [x, y, ratSafe] = animations[i];
       const ind = Maze.length * x + y;
+
       setTimeout(() => {
         if (ratSafe) {
           blocks[ind].style.backgroundColor = SAFE_COLOR;
@@ -95,32 +96,30 @@ export default class RatMaze extends Component {
   render() {
     const { disabled, visualize } = this.state;
     return (
-      <div>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-sm-7'>
-              <div className='Rbox Rboard mt-2' id='ratMazeBoard'></div>
-            </div>
-            <div className='col-sm-5 mt-2'>
-              <button
-                disabled={visualize}
-                onClick={() => this.Algorithm()}
-                className='ui blue button'
-              >
-                Visualize Algorithm
-              </button>
-              <button
-                disabled={disabled}
-                onClick={() => this.boardReset()}
-                className='ui black button'
-              >
-                Reset
-              </button>
-              <br />
-              <br />
-              <div>
-                <b>Rat only moves in two directions - Forward and Down</b>
-              </div>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-sm-7'>
+            <div className='Rbox Rboard mt-2' id='ratMazeBoard'></div>
+          </div>
+          <div className='col-sm-5 mt-2'>
+            <button
+              disabled={visualize}
+              onClick={() => this.Algorithm()}
+              className='ui blue button'
+            >
+              Visualize Algorithm
+            </button>
+            <button
+              disabled={disabled}
+              onClick={() => this.boardReset()}
+              className='ui black button'
+            >
+              Reset
+            </button>
+            <br />
+            <br />
+            <div>
+              <b>Rat only moves in two directions - Forward and Down</b>
             </div>
           </div>
         </div>
