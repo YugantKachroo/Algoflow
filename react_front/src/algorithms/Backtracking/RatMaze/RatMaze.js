@@ -4,12 +4,12 @@ import Mazes from './Mazes';
 import { RandomInt } from '../../../components/RandomInt';
 import './RatMaze.css';
 
-const Maze = Mazes[RandomInt(0, Mazes.length - 1)];
+let Maze = Mazes[RandomInt(0, Mazes.length - 1)];
 const SOL = MakeBoard(Maze.length);
 
 const NO_PATH_COLOR = '#696969';
 const PATH_COLOR = '#dfeb34';
-const SAFE_COLOR = '#93eb34';
+const SAFE_COLOR = '#008000';
 const ANIMATION_SPEED_MS = 500;
 
 export default class RatMaze extends Component {
@@ -19,6 +19,12 @@ export default class RatMaze extends Component {
   }
 
   componentDidMount() {
+    this.drawBoard(Maze);
+  }
+
+  boardReset() {
+    let m1 = Mazes[RandomInt(0, Mazes.length - 1)];
+    Maze = m1;
     this.drawBoard(Maze);
   }
 
@@ -54,10 +60,8 @@ export default class RatMaze extends Component {
   }
 
   async Algorithm() {
-    const sol = RatMazeAlgorithm(Maze, SOL, []);
+    const [solution, animations] = RatMazeAlgorithm(Maze, SOL);
     await this.setState({ disabled: true, visualize: true });
-    const animations = sol[1];
-    const solution = sol[0];
     const blocks = document.getElementsByClassName('r-array-tile');
     const rat = document.getElementsByClassName('rat');
     let count = 0;
@@ -119,11 +123,16 @@ export default class RatMaze extends Component {
               </button>
               <button
                 disabled={disabled}
-                onClick={() => this.drawBoard(Maze)}
-                className='ui blue button'
+                onClick={() => this.boardReset()}
+                className='ui black button'
               >
                 Reset
               </button>
+              <br />
+              <br />
+              <div>
+                <b>Rat only moves in two directions - Forward and Down</b>
+              </div>
             </div>
           </div>
         </div>
