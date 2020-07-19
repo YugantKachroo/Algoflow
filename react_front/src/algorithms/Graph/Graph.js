@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Legend } from './Utils/Legend';
 import { c1Dto2D, c2Dto1D } from './Utils/Conversion';
 //import Node from './Node/Node';
-import Dijkstra from './Algorithms/Dijkstra';
+import { Dijkstra } from './Algorithms/Dijkstra';
 import Maze from './Maze/Maze';
 import './Graph.css';
 

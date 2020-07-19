@@ -23,8 +23,8 @@ export function Dijkstra(grid, startNode, finishNode) {
 
 function getAllNodes(grid = []) {
   const nodes = [];
-  for (let i = 0; i < grid.size; i++) {
-    for (let j = 0; j < grid[0].size; j++) {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
       nodes.push(grid[i][j]);
     }
   }
@@ -64,7 +64,7 @@ function updateUnvisitedNeighbours(node, grid) {
 function calculatePath(finishNode) {
   const shortestPathNodes = [];
   let currentNode = finishNode;
-  while (currentNode != null) {
+  while (currentNode !== null) {
     shortestPathNodes.unshift(currentNode);
     currentNode = currentNode.previousNode;
   }
