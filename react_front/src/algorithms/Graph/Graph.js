@@ -124,6 +124,36 @@ export default class Graph extends Component {
     const d2Grid = c1Dto2D(grid, ROWS, COLS);
     const STARTNODE = d2Grid[START_NODE_ROW][START_NODE_COL];
     const FINISHNODE = d2Grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+
+    var visitedNodesInOrder, nodesInShortestPathOrder;
+    switch (algorithm) {
+      case 0:
+        alert('Select an algorithm');
+        this.setState({ disableNodesButton: false, disableMazesButton: false });
+        return;
+      case 1:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = Dijkstra(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
+      default:
+        return;
+    }
+    this.animatePath(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
+
+  highlightNodes(row, col) {
+    if (this.state.highlightMazeNodes) {
+      highlightNode(row, col, ROWS, COLS);
+    }
+  }
+
+  unHighlightNodes(row, col) {
+    if (this.state.highlightMazeNodes) {
+      unHighlightNode(row, col, ROWS, COLS);
+    }
   }
 
   render() {
