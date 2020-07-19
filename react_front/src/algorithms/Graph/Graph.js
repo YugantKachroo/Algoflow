@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Legend } from './Utils/Legend';
+import Legend from './Utils/Legend';
 import { c1Dto2D, c2Dto1D } from './Utils/Conversion';
 import {
   highlightNode,
@@ -75,7 +75,178 @@ export default class Graph extends Component {
     };
   }
 
+  clearBoard() {
+    this.setUpGrid();
+    const { grid } = this.state;
+    for (let i = 0; i < grid.length; i++) {
+      const node = grid[i];
+      document
+        .getElementById(`node-${node.row}-${node.col}`)
+        .classList.remove('node-visited');
+      document
+        .getElementById(`node-${node.row}-${node.col}`)
+        .classList.remove('node-shortest-path');
+    }
+    this.setState({
+      disableNodesButton: false,
+      disableMazesButton: false,
+      highlightMazeNodes: true,
+    });
+  }
+
+  selectAlgorithm() {
+    const algorithm = parseInt(
+      document.getElementById('pathFindingAlgoDropDown').value
+    );
+    if (algorithm === 0) {
+      alert('Select an algorithm');
+      return;
+    }
+    this.visualizeAlgorithms(algorithm);
+  }
+
+  visualizeAlgorithms(algorithm) {
+    this.setState({
+      disableClearMazeButton: true,
+      disableMazesButton: true,
+      disableNodesButton: true,
+      modifyNodeState: 0,
+    });
+
+    const {
+      grid,
+      START_NODE_ROW,
+      START_NODE_COL,
+      FINISH_NODE_ROW,
+      FINISH_NODE_COL,
+    } = this.state;
+
+    const d2Grid = c1Dto2D(grid, ROWS, COLS);
+    const STARTNODE = d2Grid[START_NODE_ROW][START_NODE_COL];
+    const FINISHNODE = d2Grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+  }
+
   render() {
-    return <div>Graph Algorithm</div>;
+    const {
+      grid,
+      modifyingNodeState,
+      disableMazesButton,
+      disableNodesButton,
+      disableClearMazeButton,
+    } = this.state;
+    return (
+      <div>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-sm-7 mb-1'>
+              <div className='box shadowT mb-2'>
+                <div
+                  onMouseOut={() => this.unHighlightDiagonals()}
+                  onMouseOver={() => this.highlightDiagonals()}
+                  id='grid'
+                  className='grid'
+                >
+                  {grid.map((node, idx) => {
+                    const { row, col, isStart, isFinish, isWall } = node;
+                    return (
+                      <Node
+                        key={idx}
+                        col={col}
+                        isFinish={isFinish}
+                        isStart={isStart}
+                        isWall={isWall}
+                        row={row}
+                        onNodeClick={(row, col) =>
+                          this.handleNodeOperations(
+                            row,
+                            col,
+                            modifyingNodeState
+                          )
+                        }
+                        onNodeOver={(row, col) => this.highlightNodes(row, col)}
+                        onNodeOut={(row, col) =>
+                          this.unHighlightNodes(row, col)
+                        }
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-5 shadowT rounded-b mb-2 bg-light'>
+              <div className='btn-group btn-block mt-2'>
+                <button
+                  type='button'
+                  disabled={disableNodesButton}
+                  className='btn bg-start'
+                  onClick={() => this.modifyNodeState(START_NODE_STATE)}
+                >
+                  Place Source
+                </button>
+                <button
+                  type='button'
+                  disabled={disableNodesButton}
+                  className='btn bg-end'
+                  onClick={() => this.modifyNodeState(END_NODE_STATE)}
+                >
+                  Place Destination
+                </button>
+                <button
+                  type='button'
+                  disabled={disableNodesButton}
+                  className='btn btn-dark'
+                  onClick={() => this.modifyNodeState(WALL_NODE_STATE)}
+                >
+                  Place Wall
+                </button>
+              </div>
+              <div className='btn-group btn-block mt-2'>
+                <button
+                  type='button'
+                  disabled={disableMazesButton}
+                  className='btn btn-secondary'
+                  onClick={() => this.generateMaze(grid)}
+                >
+                  Generate Maze
+                </button>
+                <button
+                  type='button'
+                  disabled={disableClearMazeButton}
+                  className='btn btn-secondary'
+                  onClick={() => this.clearBoard()}
+                >
+                  Clear Maze
+                </button>
+              </div>
+              <div className='btn-group btn-block mt-2'>
+                <div className='input-group'>
+                  <select
+                    disabled={disableNodesButton}
+                    id='pathFindingAlgoDropDown'
+                    className='custom-select'
+                    defaultValue='0'
+                  >
+                    <option disabled value='0'>
+                      Select Algorithm
+                    </option>
+                    <option value='1'>Dijkstras</option>
+                  </select>
+                  <div className='input-group-append'>
+                    <button
+                      disabled={disableNodesButton}
+                      onClick={() => this.selectAlgorithm()}
+                      className='btn bg-purple'
+                    >
+                      Perform Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <Legend />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
