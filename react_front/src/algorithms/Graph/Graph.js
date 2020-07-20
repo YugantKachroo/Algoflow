@@ -9,6 +9,7 @@ import {
 } from './Utils/Highlight';
 import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
+import { BFS } from './Algorithms/BFS';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
