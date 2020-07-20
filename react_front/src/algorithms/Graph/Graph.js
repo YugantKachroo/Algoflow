@@ -10,6 +10,7 @@ import {
 import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
 import { BFS } from './Algorithms/BFS';
+import { DFS } from './Algorithms/DFS';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
@@ -159,6 +160,13 @@ export default class Graph extends Component {
         break;
       case 2:
         [visitedNodesInOrder, nodesInShortestPathOrder] = BFS(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
+      case 3:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = DFS(
           d2Grid,
           STARTNODE,
           FINISHNODE
@@ -444,6 +452,7 @@ export default class Graph extends Component {
                     </option>
                     <option value='1'>Dijkstras (Diagonal Not Allowed)</option>
                     <option value='2'>BFS (Diagonal Not Allowed)</option>
+                    <option value='3'>DFS (Diagonal Not Allowed)</option>
                   </select>
                   <div className='input-group-append'>
                     <button
