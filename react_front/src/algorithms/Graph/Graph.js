@@ -80,6 +80,11 @@ export default class Graph extends Component {
     const { grid } = this.state;
     for (let i = 0; i < grid.length; i++) {
       const node = grid[i];
+      if (node.isStart || node.isFinish) {
+        document.getElementById(
+          `node-${node.row}-${node.col}`
+        ).style.backgroundColor = 'white';
+      }
       document
         .getElementById(`node-${node.row}-${node.col}`)
         .classList.remove('node-visited');
@@ -292,11 +297,19 @@ export default class Graph extends Component {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
-        if (!node.isStart && !node.isFinish && !node.isWall) {
+        if (node.isStart) {
+          document.getElementById(
+            `node-${node.row}-${node.col}`
+          ).style.backgroundColor = 'rgb(255, 254, 106)';
+        }
+        if (!node.isFinish && !node.isStart && !node.isWall) {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path';
         }
         if (node.isFinish) {
+          document.getElementById(
+            `node-${node.row}-${node.col}`
+          ).style.backgroundColor = 'rgb(255, 254, 106)';
           setTimeout(() => {
             this.setState({ disableClearMazeButton: false });
           }, 1000);
