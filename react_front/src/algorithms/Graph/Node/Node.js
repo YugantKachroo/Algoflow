@@ -23,7 +23,7 @@ export default class Node extends Component {
     return (
       <div
         id={`node-${row}-${col}`}
-        className={`node-${extraClassName}`}
+        className={`node ${extraClassName}`}
         onClick={() => onNodeClick(row, col)}
         onMouseOver={() => onNodeOver(row, col)}
         onMouseOut={() => onNodeOut(row, col)}
