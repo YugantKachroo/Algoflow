@@ -28,11 +28,15 @@ body {
 }
 
 .legend-start {
-  background-color: red;
+  background-image: url('./svg/start.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .legend-finish {
-  background-color: green;
+  background-image: url('./svg/end.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .legend-visited {

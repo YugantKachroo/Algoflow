@@ -30,12 +30,16 @@
 }
 
 .node-start {
-  background-color: red;
+  background-image: url('../svg/start.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
   transition: ease-in-out 200ms;
 }
 
 .node-finish {
-  background-color: green;
+  background-image: url('../svg/end.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
   transition: ease-in-out 200ms;
 }
 
@@ -44,10 +48,6 @@
   transition: all 250ms;
 }
 
-/* .node-shortest-path {
-  background-color: yellow;
-  transition: ease-in-out 25ms;
-} */
 .node-shortest-path {
   animation-name: shortestPath;
   animation-duration: 1s;
@@ -76,10 +76,6 @@
   }
 }
 
-/* .node-visited {
-  background-color: #3493eb;
-  transition: ease-in-out 100ms;
-} */
 .node-visited {
   animation-name: visitedAnimation;
   animation-duration: 1s;

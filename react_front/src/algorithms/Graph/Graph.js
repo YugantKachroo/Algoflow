@@ -12,8 +12,8 @@ import { Dijkstra } from './Algorithms/Dijkstra';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
-const ROWS = 47;
-const COLS = 47;
+const ROWS = 41;
+const COLS = 41;
 const START_NODE_STATE = 1;
 const END_NODE_STATE = 2;
 const WALL_NODE_STATE = 3;
@@ -410,7 +410,7 @@ export default class Graph extends Component {
                     <option disabled value='0'>
                       Select Algorithm
                     </option>
-                    <option value='1'>Dijkstras</option>
+                    <option value='1'>Dijkstras (Diagonal Not Allowed)</option>
                   </select>
                   <div className='input-group-append'>
                     <button
