@@ -12,9 +12,8 @@ import { Dijkstra } from './Algorithms/Dijkstra';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
-const x = 3;
-const ROWS = 40 - x;
-const COLS = 40 - x;
+const ROWS = 37;
+const COLS = 37;
 const START_NODE_STATE = 1;
 const END_NODE_STATE = 2;
 const WALL_NODE_STATE = 3;
@@ -73,11 +72,6 @@ export default class Graph extends Component {
       isVisited: false,
       isWall: false,
       previousNode: null,
-      cost: {
-        F: Infinity,
-        G: Infinity,
-        H: Infinity,
-      },
     };
   }
 
@@ -277,20 +271,20 @@ export default class Graph extends Component {
 
   animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
     this.setState({ disableNodesButton: true, highlightMazeNodes: false });
-    for (let i = 0; i < visitedNodesInOrder.length; i++) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
-        }, this.state.SPEED * i);
+        }, this.state.speed * i);
         return;
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         if (!node.isStart && !node.isFinish && !node.isWall) {
-          document.getElementById(`node -${node.row}-${node.col}`).className =
+          document.getElementById(`node-${node.row}-${node.col}`).className =
             'node node-visited';
         }
-      }, this.state.SPEED * i);
+      }, this.state.speed * i);
     }
   }
 
@@ -299,7 +293,7 @@ export default class Graph extends Component {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         if (!node.isStart && !node.isFinish && !node.isWall) {
-          document.getElementById(`node -${node.row}-${node.col}`).className =
+          document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path';
         }
         if (node.isFinish) {
