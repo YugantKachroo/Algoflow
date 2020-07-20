@@ -80,11 +80,24 @@ export default class Graph extends Component {
     const { grid } = this.state;
     for (let i = 0; i < grid.length; i++) {
       const node = grid[i];
-      if (node.isStart || node.isFinish) {
-        document.getElementById(
-          `node-${node.row}-${node.col}`
-        ).style.backgroundColor = 'white';
+
+      if (node.isStart) {
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-shortest-path-start');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.add('node-start');
       }
+      if (node.isFinish) {
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-shortest-path-finish');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.add('node-finish');
+      }
+
       document
         .getElementById(`node-${node.row}-${node.col}`)
         .classList.remove('node-visited');
@@ -298,18 +311,16 @@ export default class Graph extends Component {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         if (node.isStart) {
-          document.getElementById(
-            `node-${node.row}-${node.col}`
-          ).style.backgroundColor = 'rgb(255, 254, 106)';
+          document.getElementById(`node-${node.row}-${node.col}`).classList =
+            'node node-shortest-path-start';
         }
         if (!node.isFinish && !node.isStart && !node.isWall) {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path';
         }
         if (node.isFinish) {
-          document.getElementById(
-            `node-${node.row}-${node.col}`
-          ).style.backgroundColor = 'rgb(255, 254, 106)';
+          document.getElementById(`node-${node.row}-${node.col}`).classList =
+            'node node-shortest-path-finish';
           setTimeout(() => {
             this.setState({ disableClearMazeButton: false });
           }, 1000);

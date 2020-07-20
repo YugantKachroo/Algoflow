@@ -48,6 +48,22 @@
   transition: all 250ms;
 }
 
+.node-shortest-path-start {
+  background-image: url('../svg/start.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: ease-in-out 200ms;
+  background-color: rgb(255, 254, 106);
+}
+
+.node-shortest-path-finish {
+  background-image: url('../svg/end.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: ease-in-out 200ms;
+  background-color: rgb(255, 254, 106);
+}
+
 .node-shortest-path {
   animation-name: shortestPath;
   animation-duration: 1s;
