@@ -157,6 +157,13 @@ export default class Graph extends Component {
           FINISHNODE
         );
         break;
+      case 2:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = BFS(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
       default:
         return;
     }
@@ -436,6 +443,7 @@ export default class Graph extends Component {
                       Select Algorithm
                     </option>
                     <option value='1'>Dijkstras (Diagonal Not Allowed)</option>
+                    <option value='2'>BFS (Diagonal Not Allowed)</option>
                   </select>
                   <div className='input-group-append'>
                     <button
