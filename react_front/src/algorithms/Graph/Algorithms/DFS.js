@@ -19,7 +19,6 @@ export function DFS(grid = [], startNode, finishNode) {
     const neighbours = getAllNeighbours(grid, node);
     for (const neighbour of neighbours) {
       neighbour.previousNode = node;
-      // neighbour.isVisited = true;
       queue.push(neighbour);
     }
   }
