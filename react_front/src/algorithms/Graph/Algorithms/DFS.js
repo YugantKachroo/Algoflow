@@ -1,7 +1,6 @@
 export function DFS(grid = [], startNode, finishNode) {
   const queue = [];
   const visitedInOrder = [];
-  //startNode.isVisited = true;
   queue.push(startNode);
   while (!queue.empty) {
     const node = queue.pop();

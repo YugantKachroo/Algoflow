@@ -11,6 +11,7 @@ import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
 import { BFS } from './Algorithms/BFS';
 import { DFS } from './Algorithms/DFS';
+import { BiDirectionalSearch } from './Algorithms/BiDirectionalSearch';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
@@ -172,6 +173,17 @@ export default class Graph extends Component {
           FINISHNODE
         );
         break;
+      case 4:
+        const [
+          sourceVisited,
+          destinationVisited,
+          sourcePathNodes,
+          destinationPathNodes,
+        ] = BiDirectionalSearch(d2Grid, STARTNODE, FINISHNODE);
+
+        this.animatePath(sourceVisited, sourcePathNodes);
+        this.animatePath(destinationVisited, destinationPathNodes);
+        return;
       default:
         return;
     }
@@ -418,8 +430,6 @@ export default class Graph extends Component {
                 >
                   Place Wall
                 </button>
-                {/* </div>
-              <div className='btn-group btn-block mt-2'> */}
                 <button
                   type='button'
                   disabled={disableMazesButton}
@@ -453,6 +463,9 @@ export default class Graph extends Component {
                     <option value='1'>Dijkstras (Diagonal Not Allowed)</option>
                     <option value='2'>BFS (Diagonal Not Allowed)</option>
                     <option value='3'>DFS (Diagonal Not Allowed)</option>
+                    <option value='4'>
+                      BiDirectionalSearch (Diagonal Not Allowed)
+                    </option>
                   </select>
                   <div className='input-group-append'>
                     <button
