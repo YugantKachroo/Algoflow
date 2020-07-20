@@ -1,7 +1,7 @@
 function getNeighbours(row, col, ROWS, COLS) {
   const array = [];
   let i, j;
-  for (i = 0, j = 0; i < ROWS, j < COLS; i++, j++) {
+  for (i = 0, j = 0; i < ROWS || j < COLS; i++, j++) {
     array.push([row, i]);
     array.push([j, col]);
   }
@@ -56,7 +56,6 @@ export function highlightDiagonals(nodes = [], ROWS, COLS) {
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
-      const { row, col } = nodes[i][j];
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
         document.getElementById(`node-${i}-${j}`);
         document.classList.add('plus-center');
@@ -77,7 +76,6 @@ export function unHighlightDiagonals(nodes = [], ROWS, COLS) {
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
-      const { row, col } = nodes[i][j];
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
         document.getElementById(`node-${i}-${j}`);
         document.classList.add('plus-center');

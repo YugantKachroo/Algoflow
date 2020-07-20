@@ -47,9 +47,8 @@ export default class Graph extends Component {
     const gridBox = document.getElementById('grid');
     gridBox.style.setProperty('--p-grid-rows', ROWS);
     gridBox.style.setProperty('--p-grid-cols', COLS);
-    let i, j;
-    for (i = 0; i < ROWS; i++) {
-      for (j = 0; j < COLS; j++) {
+    for (let i = 0; i < ROWS; i++) {
+      for (let j = 0; j < COLS; j++) {
         grid.push(this.createNode(i, j));
       }
     }
