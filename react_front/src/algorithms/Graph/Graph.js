@@ -109,7 +109,7 @@ export default class Graph extends Component {
       disableClearMazeButton: true,
       disableMazesButton: true,
       disableNodesButton: true,
-      modifyNodeState: 0,
+      modifyingNodeState: 0,
     });
 
     const {
@@ -256,8 +256,8 @@ export default class Graph extends Component {
     }
   }
 
-  modifyingNodeState(STATE) {
-    this.setState({ modifyNodeState: STATE });
+  modifyNodeState(STATE) {
+    this.setState({ modifyingNodeState: STATE });
   }
 
   generateMaze(grid) {
@@ -287,7 +287,22 @@ export default class Graph extends Component {
     }
   }
 
-  animateShortestPath(nodesInShortestPathOrder) {}
+  animateShortestPath(nodesInShortestPathOrder) {
+    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+      setTimeout(() => {
+        const node = nodesInShortestPathOrder[i];
+        if (!node.isStart && !node.isFinish && !node.isWall) {
+          document.getElementById(`node -${node.row}-${node.col}`).className =
+            'node node-shortest-path';
+        }
+        if (node.isFinish) {
+          setTimeout(() => {
+            this.setState({ disableClearMazeButton: false });
+          }, 1000);
+        }
+      }, this.state.speed * i);
+    }
+  }
 
   render() {
     const {
