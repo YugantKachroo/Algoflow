@@ -9,7 +9,7 @@ import {
 } from './Utils/Highlight';
 import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
-import Maze from './Maze/Maze';
+import { Maze } from './Maze/Maze';
 import './Graph.css';
 
 const ROWS = 37;
@@ -154,6 +154,119 @@ export default class Graph extends Component {
     if (this.state.highlightMazeNodes) {
       unHighlightNode(row, col, ROWS, COLS);
     }
+  }
+
+  highlightDiagonals() {
+    if (this.state.isGridDiagonalsHighlighted) {
+      const nodes = c1Dto2D(this.state.grid.slice(), ROWS, COLS);
+      highlightDiagonals(nodes, ROWS, COLS);
+    }
+  }
+
+  unHighlightDiagonals() {
+    if (this.state.isGridDiagonalsHighlighted) {
+      const nodes = c1Dto2D(this.state.grid.slice(), ROWS, COLS);
+      unHighlightDiagonals(nodes, ROWS, COLS);
+    }
+  }
+
+  toggleStartOrFinish(grid = [], row, col, NODE_ROW, NODE_COL, nodeType) {
+    const newGrid = grid.slice();
+    const currentNode = grid[ROWS * NODE_ROW + NODE_COL];
+    const newNode = grid[ROWS * row + col];
+    if (nodeType === 'START') {
+      if (newNode.isWall || newNode.isFinish) {
+        return false;
+      } else {
+        currentNode.isStart = false;
+        newNode.isStart = true;
+        this.setState({ grid: newGrid });
+        return true;
+      }
+    } else if (nodeType === 'FINISH') {
+      if (newNode.isWall || newNode.isFinish) {
+        return false;
+      } else {
+        currentNode.isFinish = false;
+        newNode.isFinish = true;
+        this.setState({ grid: newGrid });
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  toggleWall(grid, row, col) {
+    const newGrid = grid.slice();
+    const currentNode = grid[ROWS * row + col];
+    if (!currentNode.isStart && !currentNode.isFinish) {
+      currentNode.isWall = !currentNode.isWall;
+      this.setState({ grid: newGrid });
+    }
+  }
+
+  handleNodeOperations(row, col, NODE_STATE) {
+    const {
+      START_NODE_ROW,
+      START_NODE_COL,
+      FINISH_NODE_ROW,
+      FINISH_NODE_COL,
+      grid,
+    } = this.state;
+    switch (NODE_STATE) {
+      case 1:
+        if (
+          this.toggleStartOrFinish(
+            grid,
+            row,
+            col,
+            START_NODE_ROW,
+            START_NODE_COL,
+            'START'
+          )
+        ) {
+          this.setState({
+            START_NODE_ROW: row,
+            START_NODE_COL: col,
+          });
+        }
+        break;
+      case 2:
+        if (
+          this.toggleStartOrFinish(
+            grid,
+            row,
+            col,
+            FINISH_NODE_ROW,
+            FINISH_NODE_COL,
+            'FINISH'
+          )
+        ) {
+          this.setState({
+            FINISH_NODE_ROW: row,
+            FINISH_NODE_COL: col,
+          });
+        }
+        break;
+      case 3:
+        this.toggleWall(grid, row, col);
+        break;
+      default:
+        break;
+    }
+  }
+
+  modifyingNodeState(STATE) {
+    this.setState({ modifyNodeState: STATE });
+  }
+
+  generateMaze(grid) {
+    this.setState({ disableMazesButton: true, disableClearMazeButton: false });
+    const twoDArray = c1Dto2D(grid, ROWS, COLS);
+    const mazeGrid = Maze(twoDArray, ROWS, COLS);
+    const oneDArray = c2Dto1D(mazeGrid);
+    this.setState({ grid: oneDArray });
   }
 
   render() {
