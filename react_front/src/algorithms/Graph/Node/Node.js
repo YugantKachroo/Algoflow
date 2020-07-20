@@ -10,8 +10,8 @@ export default class Node extends Component {
       isStart,
       isWall,
       onNodeClick,
-      OnNodeOver,
-      OnNodeOut,
+      onNodeOver,
+      onNodeOut,
     } = this.props;
     const extraClassName = isFinish
       ? 'node-finish'

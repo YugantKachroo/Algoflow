@@ -269,6 +269,27 @@ export default class Graph extends Component {
     this.setState({ grid: oneDArray });
   }
 
+  animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
+    this.setState({ disableNodesButton: true, highlightMazeNodes: false });
+    for (let i = 0; i < visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, this.state.SPEED * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        if (!node.isStart && !node.isFinish && !node.isWall) {
+          document.getElementById(`node -${node.row}-${node.col}`).className =
+            'node node-visited';
+        }
+      }, this.state.SPEED * i);
+    }
+  }
+
+  animateShortestPath(nodesInShortestPathOrder) {}
+
   render() {
     const {
       grid,

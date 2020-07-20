@@ -56,7 +56,7 @@ export function highlightDiagonals(nodes = [], ROWS, COLS) {
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
-      const { row, col } = node[i][j];
+      const { row, col } = nodes[i][j];
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
         document.getElementById(`node-${i}-${j}`);
         document.classList.add('plus-center');
@@ -77,7 +77,7 @@ export function unHighlightDiagonals(nodes = [], ROWS, COLS) {
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
-      const { row, col } = node[i][j];
+      const { row, col } = nodes[i][j];
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
         document.getElementById(`node-${i}-${j}`);
         document.classList.add('plus-center');
