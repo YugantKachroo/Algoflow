@@ -36,11 +36,11 @@ body {
 }
 
 .legend-visited {
-  background-color: #34d8eb;
+  background-color: rgba(0, 190, 218, 0.75);
 }
 
 .legend-shortest-path {
-  background-color: yellow;
+  background-color: rgb(255, 254, 106);
 }
 
 .legend-wall {
