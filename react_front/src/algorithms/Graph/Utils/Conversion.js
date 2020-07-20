@@ -12,10 +12,10 @@ export function c1Dto2D(OdArray, Rows, Cols) {
   }
   return Two;
 }
-export function c2Dto1D(TdArray, Rows, Cols) {
+export function c2Dto1D(TdArray) {
   const one = [];
-  for (let i = 0; i < Rows; i++) {
-    for (let j = 0; j < Cols; j++) {
+  for (let i = 0; i < TdArray.length; i++) {
+    for (let j = 0; j < TdArray[0].length; j++) {
       one.push(TdArray[i][j]);
     }
   }

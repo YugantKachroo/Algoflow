@@ -1,7 +1,6 @@
 function getNeighbours(row, col, ROWS, COLS) {
   const array = [];
-  let i, j;
-  for (i = 0, j = 0; i < ROWS || j < COLS; i++, j++) {
+  for (let i = 0, j = 0; i < ROWS || j < COLS; i++, j++) {
     array.push([row, i]);
     array.push([j, col]);
   }
@@ -32,14 +31,14 @@ export function unHighlightNode(row, col, ROWS, COLS) {
     const [nRow, nCol] = val;
     const node = document.getElementById(`node-${nRow}-${nCol}`);
     if (nRow === parseInt(ROWS / 2)) {
-      node.classList.add('plus-center');
+      node.classList.remove('plus-center');
     } else {
-      node.classList.add('plus');
+      node.classList.remove('plus');
     }
     if (nCol === parseInt(COLS / 2)) {
-      node.classList.add('plus-center');
+      node.classList.remove('plus-center');
     } else {
-      node.classList.add('plus');
+      node.classList.remove('plus');
     }
   }
 }
@@ -49,16 +48,16 @@ export function highlightDiagonals(nodes = [], ROWS, COLS) {
     for (let j = 0; j < COLS; j++) {
       const { row, col } = nodes[i][j];
       if (row === col) {
-        document.getElementById(`node-${row}-${col}`);
-        document.classList.add('plus-center');
+        document
+          .getElementById(`node-${row}-${col}`)
+          .classList.add('plus-center');
       }
     }
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
-        document.getElementById(`node-${i}-${j}`);
-        document.classList.add('plus-center');
+        document.getElementById(`node-${i}-${j}`).classList.add('plus-center');
       }
     }
   }
@@ -69,16 +68,18 @@ export function unHighlightDiagonals(nodes = [], ROWS, COLS) {
     for (let j = 0; j < COLS; j++) {
       const { row, col } = nodes[i][j];
       if (row === col) {
-        document.getElementById(`node-${row}-${col}`);
-        document.classList.add('plus-center');
+        document
+          .getElementById(`node-${row}-${col}`)
+          .classList.remove('plus-center');
       }
     }
   }
   for (let i = ROWS - 1; i >= 0; i--) {
     for (let j = 0; j < COLS; j++) {
       if (i + j === parseInt((ROWS - 1 + COLS) / 2)) {
-        document.getElementById(`node-${i}-${j}`);
-        document.classList.add('plus-center');
+        document
+          .getElementById(`node-${i}-${j}`)
+          .classList.remove('plus-center');
       }
     }
   }

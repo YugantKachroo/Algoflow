@@ -12,8 +12,9 @@ import { Dijkstra } from './Algorithms/Dijkstra';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
-const ROWS = 37;
-const COLS = 37;
+const x = 3;
+const ROWS = 40 - x;
+const COLS = 40 - x;
 const START_NODE_STATE = 1;
 const END_NODE_STATE = 2;
 const WALL_NODE_STATE = 3;
@@ -70,7 +71,13 @@ export default class Graph extends Component {
       isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
       distance: Infinity,
       isVisited: false,
+      isWall: false,
       previousNode: null,
+      cost: {
+        F: Infinity,
+        G: Infinity,
+        H: Infinity,
+      },
     };
   }
 
