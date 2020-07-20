@@ -1,51 +1,77 @@
 export function DFS(grid = [], startNode, finishNode) {
+  const queue = [];
   const visitedInOrder = [];
-  visitedInOrder.push(startNode);
-
-  let flag = 0;
-  dfsRecursion(grid, startNode, finishNode, visitedInOrder, flag);
+  //startNode.isVisited = true;
+  queue.push(startNode);
+  while (!queue.empty) {
+    const node = queue.pop();
+    if (node.isVisited) {
+      continue;
+    }
+    node.isVisited = true;
+    visitedInOrder.push(node);
+    if (node === finishNode) {
+      return [visitedInOrder, calculatePath(finishNode)];
+    }
+    if (node.isWall) {
+      continue;
+    }
+    const neighbours = getAllNeighbours(grid, node);
+    for (const neighbour of neighbours) {
+      neighbour.previousNode = node;
+      // neighbour.isVisited = true;
+      queue.push(neighbour);
+    }
+  }
   return [visitedInOrder, calculatePath(finishNode)];
 }
 
-function dfsRecursion(grid = [], node, finishNode, visitedInOrder, flag) {
-  node.isVisited = true;
-  //visitedInOrder.push(node);
-  if (node === finishNode) {
-    flag = 1;
-    return [visitedInOrder, calculatePath(finishNode)];
+function getAllNeighbours(grid = [], node) {
+  const ROWS = grid.length;
+  const COLS = grid[0].length;
+  const { row, col } = node;
+  const neighbours = [];
+  if (
+    row + 1 >= 0 &&
+    row + 1 < ROWS &&
+    col >= 0 &&
+    col < COLS &&
+    !grid[row + 1][col].isVisited &&
+    !grid[row + 1][col].isWall
+  ) {
+    neighbours.push(grid[row + 1][col]);
   }
-  const x = [0, 0, 1, -1];
-  const y = [1, -1, 0, 0];
-  for (let i = 0; i < 4; i++) {
-    const { row, col } = node;
-    const newRow = row + x[i];
-    const newCol = col + y[i];
-    if (
-      !(
-        newRow >= 0 &&
-        newCol >= 0 &&
-        newRow < grid.length &&
-        newCol < grid[0].length
-      )
-    ) {
-      continue;
-    }
-    const neighbour = grid[newRow][newCol];
-
-    if (neighbour.isWall === true || neighbour.isVisited === true) {
-      continue;
-    }
-    neighbour.previousNode = node;
-    visitedInOrder.push(neighbour);
-    if (neighbour === finishNode) {
-      flag = 1;
-      return [visitedInOrder, calculatePath(finishNode)];
-    }
-    if (flag === 1) {
-      return dfsRecursion(grid, neighbour, finishNode, visitedInOrder);
-    }
-    dfsRecursion(grid, neighbour, finishNode, visitedInOrder);
+  if (
+    row - 1 >= 0 &&
+    row - 1 < ROWS &&
+    col >= 0 &&
+    col < COLS &&
+    !grid[row - 1][col].isVisited &&
+    !grid[row - 1][col].isWall
+  ) {
+    neighbours.push(grid[row - 1][col]);
   }
+  if (
+    row >= 0 &&
+    row < ROWS &&
+    col + 1 >= 0 &&
+    col + 1 < COLS &&
+    !grid[row][col + 1].isVisited &&
+    !grid[row][col + 1].isWall
+  ) {
+    neighbours.push(grid[row][col + 1]);
+  }
+  if (
+    row >= 0 &&
+    row < ROWS &&
+    col - 1 >= 0 &&
+    col - 1 < COLS &&
+    !grid[row][col - 1].isVisited &&
+    !grid[row][col - 1].isWall
+  ) {
+    neighbours.push(grid[row][col - 1]);
+  }
+  return neighbours;
 }
 
 function calculatePath(finishNode) {
