@@ -30,12 +30,12 @@
 }
 
 .node-start {
-  background-color: #f81245;
+  background-color: red;
   transition: ease-in-out 200ms;
 }
 
 .node-finish {
-  background-color: #12f893;
+  background-color: green;
   transition: ease-in-out 200ms;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .node-visited {
-  background-color: blueviolet;
+  background-color: #34d8eb;
   transition: ease-in-out 100ms;
 }
 

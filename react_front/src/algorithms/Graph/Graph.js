@@ -12,8 +12,8 @@ import { Dijkstra } from './Algorithms/Dijkstra';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
 
-const ROWS = 37;
-const COLS = 37;
+const ROWS = 47;
+const COLS = 47;
 const START_NODE_STATE = 1;
 const END_NODE_STATE = 2;
 const WALL_NODE_STATE = 3;
@@ -25,10 +25,10 @@ export default class Graph extends Component {
     this.state = {
       grid: [],
       modifyingNodeState: 0,
-      START_NODE_ROW: 1,
-      START_NODE_COL: 1,
-      FINISH_NODE_ROW: ROWS - 2,
-      FINISH_NODE_COL: COLS - 2,
+      START_NODE_ROW: 12,
+      START_NODE_COL: 16,
+      FINISH_NODE_ROW: 26,
+      FINISH_NODE_COL: 23,
       disableMazesButton: false,
       disableNodesButton: false,
       disableClearMazeButton: false,
@@ -352,12 +352,12 @@ export default class Graph extends Component {
                 </div>
               </div>
             </div>
-            <div className='col-sm-5 shadowT rounded-b mb-2 bg-light'>
+            <div className='col-sm-5'>
               <div className='btn-group btn-block mt-2'>
                 <button
                   type='button'
                   disabled={disableNodesButton}
-                  className='btn bg-start'
+                  className='ui red button'
                   onClick={() => this.modifyNodeState(START_NODE_STATE)}
                 >
                   Place Source
@@ -365,7 +365,7 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableNodesButton}
-                  className='btn bg-end'
+                  className='ui green button'
                   onClick={() => this.modifyNodeState(END_NODE_STATE)}
                 >
                   Place Destination
@@ -373,17 +373,17 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableNodesButton}
-                  className='btn btn-dark'
+                  className='ui black button'
                   onClick={() => this.modifyNodeState(WALL_NODE_STATE)}
                 >
                   Place Wall
                 </button>
-              </div>
-              <div className='btn-group btn-block mt-2'>
+                {/* </div>
+              <div className='btn-group btn-block mt-2'> */}
                 <button
                   type='button'
                   disabled={disableMazesButton}
-                  className='btn btn-secondary'
+                  className='ui blue button'
                   onClick={() => this.generateMaze(grid)}
                 >
                   Generate Maze
@@ -391,18 +391,20 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableClearMazeButton}
-                  className='btn btn-secondary'
+                  className='ui pink button'
                   onClick={() => this.clearBoard()}
                 >
                   Clear Maze
                 </button>
               </div>
+              <br />
+              <br />
               <div className='btn-group btn-block mt-2'>
                 <div className='input-group'>
                   <select
                     disabled={disableNodesButton}
                     id='pathFindingAlgoDropDown'
-                    className='custom-select'
+                    className='mr-2 custom-select'
                     defaultValue='0'
                   >
                     <option disabled value='0'>
@@ -414,13 +416,15 @@ export default class Graph extends Component {
                     <button
                       disabled={disableNodesButton}
                       onClick={() => this.selectAlgorithm()}
-                      className='btn bg-purple'
+                      className='ui purple button'
                     >
                       Perform Search
                     </button>
                   </div>
                 </div>
               </div>
+              <br />
+              <br />
               <Legend />
             </div>
           </div>

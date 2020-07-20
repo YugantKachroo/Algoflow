@@ -24,19 +24,19 @@ body {
   margin: 2px;
 }
 #legendRow {
-  background-color: #ccd1d1;
+  background-color: white;
 }
 
 .legend-start {
-  background-color: #f81245;
+  background-color: red;
 }
 
 .legend-finish {
-  background-color: #12f893;
+  background-color: green;
 }
 
 .legend-visited {
-  background-color: blueviolet;
+  background-color: #34d8eb;
 }
 
 .legend-shortest-path {

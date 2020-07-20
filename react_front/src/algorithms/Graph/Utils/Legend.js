@@ -2,6 +2,7 @@ import React from 'react';
 
 const Legend = () => (
   <div id='legend' className='mt-2 mb-2'>
+    <h4>Legend</h4>
     <div id='legendRow' className='row p-2'>
       <div className='col-6'>
         <div className='row'>
@@ -40,13 +41,6 @@ const Legend = () => (
             <div className='text-dark font-weight-bold legend-label'>
               Destination
             </div>
-          </div>
-
-          <div className='col-2'>
-            <div className='legend legend-path'></div>
-          </div>
-          <div className='col-10'>
-            <div className='text-dark font-weight-bold legend-label'>Path</div>
           </div>
 
           <div className='col-2'>
