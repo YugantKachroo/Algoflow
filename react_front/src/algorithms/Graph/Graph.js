@@ -9,6 +9,7 @@ import { DFSND } from './Algorithms/DFSND';
 import { DFSWD } from './Algorithms/DFSWD';
 import { BiDirectionalSearch } from './Algorithms/BiDirectionalSearch';
 import { Maze } from './Maze/Maze';
+import { WeightMaze } from './Maze/WeightMaze';
 import './Graph.css';
 
 const ROWS = 41;
@@ -68,6 +69,7 @@ export default class Graph extends Component {
       distance: Infinity,
       isVisited: false,
       isWall: false,
+      isWeight: false,
       previousNode: null,
     };
   }
@@ -239,7 +241,7 @@ export default class Graph extends Component {
     const currentNode = grid[ROWS * NODE_ROW + NODE_COL];
     const newNode = grid[ROWS * row + col];
     if (nodeType === 'START') {
-      if (newNode.isWall || newNode.isFinish) {
+      if (newNode.isWall || newNode.isWeight || newNode.isFinish) {
         return false;
       } else {
         currentNode.isStart = false;
@@ -248,7 +250,7 @@ export default class Graph extends Component {
         return true;
       }
     } else if (nodeType === 'FINISH') {
-      if (newNode.isWall || newNode.isFinish) {
+      if (newNode.isWall || newNode.isWeight || newNode.isFinish) {
         return false;
       } else {
         currentNode.isFinish = false;
@@ -333,6 +335,14 @@ export default class Graph extends Component {
     this.setState({ grid: oneDArray });
   }
 
+  generateWeightMaze(grid) {
+    this.setState({ disableMazesButton: true, disableClearMazeButton: false });
+    const twoDArray = c1Dto2D(grid, ROWS, COLS);
+    const mazeGrid = WeightMaze(twoDArray, ROWS, COLS);
+    const oneDArray = c2Dto1D(mazeGrid);
+    this.setState({ grid: oneDArray });
+  }
+
   animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
     this.setState({ disableNodesButton: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
@@ -344,7 +354,7 @@ export default class Graph extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
-        if (!node.isStart && !node.isFinish && !node.isWall) {
+        if (!node.isStart && !node.isFinish && !node.isWall && !node.isWeight) {
           document.getElementById(`node-${node.row}-${node.col}`).className =
             'node node-visited';
         }
@@ -360,7 +370,7 @@ export default class Graph extends Component {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path-start';
         }
-        if (!node.isFinish && !node.isStart && !node.isWall) {
+        if (!node.isFinish && !node.isStart && !node.isWall && !node.isWeight) {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path';
         }
@@ -369,7 +379,7 @@ export default class Graph extends Component {
             'node node-shortest-path-finish';
           setTimeout(() => {
             this.setState({ disableClearMazeButton: false });
-          }, this.state.speed * i);
+          }, this.state.speed * (i - 1));
         }
       }, this.state.speed * i);
     }
@@ -391,7 +401,14 @@ export default class Graph extends Component {
               <div className='box shadowT mb-2'>
                 <div id='grid' className='grid'>
                   {grid.map((node, idx) => {
-                    const { row, col, isStart, isFinish, isWall } = node;
+                    const {
+                      row,
+                      col,
+                      isStart,
+                      isFinish,
+                      isWall,
+                      isWeight,
+                    } = node;
                     return (
                       <Node
                         key={idx}
@@ -399,6 +416,7 @@ export default class Graph extends Component {
                         isFinish={isFinish}
                         isStart={isStart}
                         isWall={isWall}
+                        isWeight={isWeight}
                         row={row}
                         onNodeClick={(row, col) =>
                           this.handleNodeOperations(
@@ -472,7 +490,7 @@ export default class Graph extends Component {
                   type='button'
                   disabled={disableMazesButton}
                   className='ui black button'
-                  onClick={() => this.generateMaze(grid)}
+                  onClick={() => this.generateWeightMaze(grid)}
                 >
                   Generate Weighted Maze
                 </button>

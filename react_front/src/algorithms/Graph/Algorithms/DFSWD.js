@@ -12,7 +12,7 @@ export function DFSWD(grid = [], startNode, finishNode) {
     if (node === finishNode) {
       return [visitedInOrder, calculatePath(finishNode)];
     }
-    if (node.isWall) {
+    if (node.isWall || node.isWeight) {
       continue;
     }
     const neighbours = getAllNeighbours(grid, node);

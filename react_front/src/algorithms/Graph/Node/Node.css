@@ -39,6 +39,13 @@
   background-color: #212f3c;
   transition: all 250ms;
 }
+.node-weight {
+  background-image: url('../svg/weight.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: ease-in-out 200ms;
+  transition: all 250ms;
+}
 
 .node-shortest-path-start {
   background-image: url('../svg/start.svg');

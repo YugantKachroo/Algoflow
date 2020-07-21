@@ -8,7 +8,7 @@ export function BFSWD(grid = [], startNode, finishNode) {
     if (node === finishNode) {
       return [visitedInOrder, calculatePath(finishNode)];
     }
-    if (node.isWall) {
+    if (node.isWall || node.isWeight) {
       continue;
     }
     const neighbours = getAllNeighbours(grid, node);
