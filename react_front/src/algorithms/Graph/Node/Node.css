@@ -4,7 +4,7 @@
 }
 
 .box {
-  padding: 5px;
+  padding: 0 px;
 }
 
 .grid {
@@ -19,14 +19,6 @@
 .node {
   padding-top: 107%;
   background-color: #f3f3f3;
-}
-
-.plus {
-  background-color: #adc0d2;
-}
-
-.plus-center {
-  background-color: white;
 }
 
 .node-start {
@@ -123,22 +115,4 @@
     transform: scale(1);
     background-color: rgba(0, 190, 218, 0.75);
   }
-}
-
-.bg-start {
-  background-color: #f81245 !important;
-  color: white !important;
-}
-.bg-end {
-  background-color: #12f893 !important;
-  color: black !important;
-}
-.bg-wall {
-  background-color: #e5e8e8 !important;
-  color: black !important;
-}
-
-.bg-purple {
-  background-color: blueviolet !important;
-  color: white !important;
 }

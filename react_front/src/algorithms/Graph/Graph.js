@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import Legend from './Utils/Legend';
 import { c1Dto2D, c2Dto1D } from './Utils/Conversion';
-import {
-  highlightNode,
-  unHighlightNode,
-  highlightDiagonals,
-  unHighlightDiagonals,
-} from './Utils/Highlight';
 import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
 import { BFSND } from './Algorithms/BFSND';
@@ -37,8 +31,6 @@ export default class Graph extends Component {
       disableMazesButton: false,
       disableNodesButton: false,
       disableClearMazeButton: false,
-      highlightMazeNodes: true,
-      isGridDiagonalsHighlighted: false,
       speed: SPEED,
     };
   }
@@ -113,7 +105,43 @@ export default class Graph extends Component {
     this.setState({
       disableNodesButton: false,
       disableMazesButton: false,
-      highlightMazeNodes: true,
+      disableClearMazeButton: false,
+    });
+  }
+
+  clearPath() {
+    const { grid } = this.state;
+    for (let i = 0; i < grid.length; i++) {
+      const node = grid[i];
+      node.isVisited = false;
+
+      if (node.isStart) {
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-shortest-path-start');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.add('node-start');
+      }
+      if (node.isFinish) {
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-shortest-path-finish');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.add('node-finish');
+      }
+
+      document
+        .getElementById(`node-${node.row}-${node.col}`)
+        .classList.remove('node-visited');
+      document
+        .getElementById(`node-${node.row}-${node.col}`)
+        .classList.remove('node-shortest-path');
+    }
+    this.setState({
+      disableNodesButton: false,
+      disableClearMazeButton: false,
     });
   }
 
@@ -204,32 +232,6 @@ export default class Graph extends Component {
         return;
     }
     this.animatePath(visitedNodesInOrder, nodesInShortestPathOrder);
-  }
-
-  highlightNodes(row, col) {
-    if (this.state.highlightMazeNodes) {
-      highlightNode(row, col, ROWS, COLS);
-    }
-  }
-
-  unHighlightNodes(row, col) {
-    if (this.state.highlightMazeNodes) {
-      unHighlightNode(row, col, ROWS, COLS);
-    }
-  }
-
-  highlightDiagonals() {
-    if (this.state.isGridDiagonalsHighlighted) {
-      const nodes = c1Dto2D(this.state.grid.slice(), ROWS, COLS);
-      highlightDiagonals(nodes, ROWS, COLS);
-    }
-  }
-
-  unHighlightDiagonals() {
-    if (this.state.isGridDiagonalsHighlighted) {
-      const nodes = c1Dto2D(this.state.grid.slice(), ROWS, COLS);
-      unHighlightDiagonals(nodes, ROWS, COLS);
-    }
   }
 
   toggleStartOrFinish(grid = [], row, col, NODE_ROW, NODE_COL, nodeType) {
@@ -332,7 +334,7 @@ export default class Graph extends Component {
   }
 
   animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
-    this.setState({ disableNodesButton: true, highlightMazeNodes: false });
+    this.setState({ disableNodesButton: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -367,7 +369,7 @@ export default class Graph extends Component {
             'node node-shortest-path-finish';
           setTimeout(() => {
             this.setState({ disableClearMazeButton: false });
-          }, 1000);
+          }, this.state.speed * i);
         }
       }, this.state.speed * i);
     }
@@ -387,12 +389,7 @@ export default class Graph extends Component {
           <div className='row'>
             <div className='col-sm-7 mb-1'>
               <div className='box shadowT mb-2'>
-                <div
-                  onMouseOut={() => this.unHighlightDiagonals()}
-                  onMouseOver={() => this.highlightDiagonals()}
-                  id='grid'
-                  className='grid'
-                >
+                <div id='grid' className='grid'>
                   {grid.map((node, idx) => {
                     const { row, col, isStart, isFinish, isWall } = node;
                     return (
@@ -410,10 +407,6 @@ export default class Graph extends Component {
                             modifyingNodeState
                           )
                         }
-                        onNodeOver={(row, col) => this.highlightNodes(row, col)}
-                        onNodeOut={(row, col) =>
-                          this.unHighlightNodes(row, col)
-                        }
                       />
                     );
                   })}
@@ -425,7 +418,7 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableNodesButton}
-                  className='ui red button'
+                  className='ui black button'
                   onClick={() => this.modifyNodeState(START_NODE_STATE)}
                 >
                   Place Source
@@ -433,11 +426,12 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableNodesButton}
-                  className='ui green button'
+                  className='ui black button'
                   onClick={() => this.modifyNodeState(END_NODE_STATE)}
                 >
                   Place Destination
                 </button>
+
                 <button
                   type='button'
                   disabled={disableNodesButton}
@@ -446,10 +440,12 @@ export default class Graph extends Component {
                 >
                   Place Wall
                 </button>
+              </div>
+              <div className='btn-group btn-block mt-2'>
                 <button
                   type='button'
                   disabled={disableMazesButton}
-                  className='ui blue button'
+                  className='ui black button'
                   onClick={() => this.generateMaze(grid)}
                 >
                   Generate Maze
@@ -457,10 +453,28 @@ export default class Graph extends Component {
                 <button
                   type='button'
                   disabled={disableClearMazeButton}
-                  className='ui pink button'
+                  className='ui black button'
                   onClick={() => this.clearBoard()}
                 >
                   Clear Maze
+                </button>
+                <button
+                  type='button'
+                  disabled={disableClearMazeButton}
+                  className='ui black button'
+                  onClick={() => this.clearPath()}
+                >
+                  Clear Path
+                </button>
+              </div>
+              <div className='btn-group btn-block mt-2'>
+                <button
+                  type='button'
+                  disabled={disableMazesButton}
+                  className='ui black button'
+                  onClick={() => this.generateMaze(grid)}
+                >
+                  Generate Weighted Maze
                 </button>
               </div>
               <br />
@@ -476,12 +490,12 @@ export default class Graph extends Component {
                     <option disabled value='0'>
                       Select Algorithm
                     </option>
-                    <option value='1'>Dijkstras (Diagonal Not Allowed)</option>
+                    {/* <option value='1'>Dijkstras (Diagonal Not Allowed)</option> */}
                     <option value='2'>BFS (Diagonal Not Allowed)</option>
                     <option value='3'>DFS (Diagonal Not Allowed)</option>
-                    <option value='4'>
+                    {/* <option value='4'>
                       BiDirectionalSearch (Diagonal Not Allowed)
-                    </option>
+                    </option> */}
                     <option value='5'>BFS (Diagonal Allowed)</option>
                     <option value='6'>DFS (Diagonal Allowed)</option>
                   </select>
@@ -489,7 +503,7 @@ export default class Graph extends Component {
                     <button
                       disabled={disableNodesButton}
                       onClick={() => this.selectAlgorithm()}
-                      className='ui purple button'
+                      className='ui green button'
                     >
                       Perform Search
                     </button>
