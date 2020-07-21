@@ -9,8 +9,10 @@ import {
 } from './Utils/Highlight';
 import Node from './Node/Node';
 import { Dijkstra } from './Algorithms/Dijkstra';
-import { BFS } from './Algorithms/BFS';
-import { DFS } from './Algorithms/DFS';
+import { BFSND } from './Algorithms/BFSND';
+import { BFSWD } from './Algorithms/BFSWD';
+import { DFSND } from './Algorithms/DFSND';
+import { DFSWD } from './Algorithms/DFSWD';
 import { BiDirectionalSearch } from './Algorithms/BiDirectionalSearch';
 import { Maze } from './Maze/Maze';
 import './Graph.css';
@@ -160,14 +162,14 @@ export default class Graph extends Component {
         );
         break;
       case 2:
-        [visitedNodesInOrder, nodesInShortestPathOrder] = BFS(
+        [visitedNodesInOrder, nodesInShortestPathOrder] = BFSND(
           d2Grid,
           STARTNODE,
           FINISHNODE
         );
         break;
       case 3:
-        [visitedNodesInOrder, nodesInShortestPathOrder] = DFS(
+        [visitedNodesInOrder, nodesInShortestPathOrder] = DFSND(
           d2Grid,
           STARTNODE,
           FINISHNODE
@@ -184,6 +186,20 @@ export default class Graph extends Component {
         this.animatePath(sourceVisited, sourcePathNodes);
         this.animatePath(destinationVisited, destinationPathNodes);
         return;
+      case 5:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = BFSWD(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
+      case 6:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = DFSWD(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
       default:
         return;
     }
@@ -466,6 +482,8 @@ export default class Graph extends Component {
                     <option value='4'>
                       BiDirectionalSearch (Diagonal Not Allowed)
                     </option>
+                    <option value='5'>BFS (Diagonal Allowed)</option>
+                    <option value='6'>DFS (Diagonal Allowed)</option>
                   </select>
                   <div className='input-group-append'>
                     <button

@@ -1,14 +1,10 @@
-export function DFS(grid = [], startNode, finishNode) {
+export function BFSWD(grid = [], startNode, finishNode) {
   const queue = [];
   const visitedInOrder = [];
+  startNode.isVisited = true;
   queue.push(startNode);
   while (!queue.empty) {
-    const node = queue.pop();
-    if (node.isVisited) {
-      continue;
-    }
-    node.isVisited = true;
-    visitedInOrder.push(node);
+    const node = queue.shift();
     if (node === finishNode) {
       return [visitedInOrder, calculatePath(finishNode)];
     }
@@ -18,6 +14,8 @@ export function DFS(grid = [], startNode, finishNode) {
     const neighbours = getAllNeighbours(grid, node);
     for (const neighbour of neighbours) {
       neighbour.previousNode = node;
+      neighbour.isVisited = true;
+      visitedInOrder.push(neighbour);
       queue.push(neighbour);
     }
   }
@@ -68,6 +66,46 @@ function getAllNeighbours(grid = [], node) {
     !grid[row][col - 1].isWall
   ) {
     neighbours.push(grid[row][col - 1]);
+  }
+  if (
+    row - 1 >= 0 &&
+    row - 1 < ROWS &&
+    col - 1 >= 0 &&
+    col - 1 < COLS &&
+    !grid[row - 1][col - 1].isVisited &&
+    !grid[row - 1][col - 1].isWall
+  ) {
+    neighbours.push(grid[row - 1][col - 1]);
+  }
+  if (
+    row + 1 >= 0 &&
+    row + 1 < ROWS &&
+    col - 1 >= 0 &&
+    col - 1 < COLS &&
+    !grid[row + 1][col - 1].isVisited &&
+    !grid[row + 1][col - 1].isWall
+  ) {
+    neighbours.push(grid[row + 1][col - 1]);
+  }
+  if (
+    row - 1 >= 0 &&
+    row - 1 < ROWS &&
+    col + 1 >= 0 &&
+    col + 1 < COLS &&
+    !grid[row - 1][col + 1].isVisited &&
+    !grid[row - 1][col + 1].isWall
+  ) {
+    neighbours.push(grid[row - 1][col + 1]);
+  }
+  if (
+    row + 1 >= 0 &&
+    row + 1 < ROWS &&
+    col + 1 >= 0 &&
+    col + 1 < COLS &&
+    !grid[row + 1][col + 1].isVisited &&
+    !grid[row + 1][col + 1].isWall
+  ) {
+    neighbours.push(grid[row + 1][col + 1]);
   }
   return neighbours;
 }

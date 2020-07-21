@@ -1,4 +1,4 @@
-export function BFS(grid = [], startNode, finishNode) {
+export function BFSND(grid = [], startNode, finishNode) {
   const queue = [];
   const visitedInOrder = [];
   startNode.isVisited = true;
