@@ -18,7 +18,7 @@
 
 .node {
   padding-top: 107%;
-  background-color: #fff;
+  background-color: #f3f3f3;
 }
 
 .plus {
@@ -26,7 +26,7 @@
 }
 
 .plus-center {
-  background-color: #ffffb3;
+  background-color: white;
 }
 
 .node-start {
