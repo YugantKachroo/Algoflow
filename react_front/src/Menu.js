@@ -12,16 +12,16 @@ const Menu = ({ history }) => (
     <ul className='nav nav-tabs bg-info'>
       <li className='nav-item'>
         <Link className='nav-link' style={isActive(history, '/')} to='/'>
-          Backtracking
+          Graph
         </Link>
       </li>
       <li className='nav-item'>
         <Link
           className='nav-link'
           style={isActive(history, '/Graph')}
-          to='/Graph'
+          to='/Backtrack'
         >
-          Graph
+          Backtracking
         </Link>
       </li>
       <li className='nav-item'>

@@ -11,8 +11,8 @@ const MainRouter = () => (
   <>
     <Menu />
     <Switch>
-      <Route exact path='/' component={Backtracking} />
-      <Route exact path='/Graph' component={Graph} />
+      <Route exact path='/' component={Graph} />
+      <Route exact path='/Backtrack' component={Backtracking} />
       <Route exact path='/Searching' component={Searching} />
       <Route exact path='/Sorting' component={Sorting} />
     </Switch>

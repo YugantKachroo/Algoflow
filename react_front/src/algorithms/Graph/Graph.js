@@ -17,6 +17,7 @@ const COLS = 41;
 const START_NODE_STATE = 1;
 const END_NODE_STATE = 2;
 const WALL_NODE_STATE = 3;
+const WEIGHT_NODE_STATE = 4;
 const SPEED = 25;
 
 export default class Graph extends Component {
@@ -32,6 +33,7 @@ export default class Graph extends Component {
       disableMazesButton: false,
       disableNodesButton: false,
       disableClearMazeButton: false,
+      Weight: false,
       speed: SPEED,
     };
   }
@@ -50,7 +52,7 @@ export default class Graph extends Component {
         grid.push(this.createNode(i, j));
       }
     }
-    this.setState({ grid });
+    this.setState({ grid, Weight: false });
   }
 
   createNode(row, col) {
@@ -108,6 +110,7 @@ export default class Graph extends Component {
       disableNodesButton: false,
       disableMazesButton: false,
       disableClearMazeButton: false,
+      //Weight: true,
     });
   }
 
@@ -266,9 +269,22 @@ export default class Graph extends Component {
   toggleWall(grid, row, col) {
     const newGrid = grid.slice();
     const currentNode = grid[ROWS * row + col];
-    if (!currentNode.isStart && !currentNode.isFinish) {
+    if (
+      !currentNode.isStart &&
+      !currentNode.isFinish &&
+      !currentNode.isWeight
+    ) {
       currentNode.isWall = !currentNode.isWall;
       this.setState({ grid: newGrid });
+    }
+  }
+
+  toggleWeight(grid, row, col) {
+    const newGrid = grid.slice();
+    const currentNode = grid[ROWS * row + col];
+    if (!currentNode.isStart && !currentNode.isFinish && !currentNode.isWall) {
+      currentNode.isWeight = !currentNode.isWeight;
+      this.setState({ grid: newGrid, Weight: true });
     }
   }
 
@@ -318,6 +334,10 @@ export default class Graph extends Component {
       case 3:
         this.toggleWall(grid, row, col);
         break;
+      case 4:
+        this.toggleWeight(grid, row, col);
+        this.setState({ Weight: true });
+        break;
       default:
         break;
     }
@@ -340,7 +360,7 @@ export default class Graph extends Component {
     const twoDArray = c1Dto2D(grid, ROWS, COLS);
     const mazeGrid = WeightMaze(twoDArray, ROWS, COLS);
     const oneDArray = c2Dto1D(mazeGrid);
-    this.setState({ grid: oneDArray });
+    this.setState({ grid: oneDArray, Weight: true });
   }
 
   animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
@@ -392,7 +412,9 @@ export default class Graph extends Component {
       disableMazesButton,
       disableNodesButton,
       disableClearMazeButton,
+      Weight,
     } = this.state;
+    console.log(Weight);
     return (
       <div>
         <div className='container'>
@@ -494,6 +516,14 @@ export default class Graph extends Component {
                 >
                   Generate Weighted Maze
                 </button>
+                <button
+                  type='button'
+                  disabled={disableNodesButton}
+                  className='ui black button'
+                  onClick={() => this.modifyNodeState(WEIGHT_NODE_STATE)}
+                >
+                  Place Weight
+                </button>
               </div>
               <br />
               <br />
@@ -508,14 +538,36 @@ export default class Graph extends Component {
                     <option disabled value='0'>
                       Select Algorithm
                     </option>
-                    {/* <option value='1'>Dijkstras (Diagonal Not Allowed)</option> */}
-                    <option value='2'>BFS (Diagonal Not Allowed)</option>
-                    <option value='3'>DFS (Diagonal Not Allowed)</option>
+                    {Weight ? (
+                      <option value='1'>
+                        Dijkstras (Diagonal Not Allowed)
+                      </option>
+                    ) : (
+                      ''
+                    )}
+                    {Weight ? (
+                      ''
+                    ) : (
+                      <option value='2'>BFS (Diagonal Not Allowed)</option>
+                    )}
+                    {Weight ? (
+                      ''
+                    ) : (
+                      <option value='3'>DFS (Diagonal Not Allowed)</option>
+                    )}
                     {/* <option value='4'>
                       BiDirectionalSearch (Diagonal Not Allowed)
                     </option> */}
-                    <option value='5'>BFS (Diagonal Allowed)</option>
-                    <option value='6'>DFS (Diagonal Allowed)</option>
+                    {Weight ? (
+                      ''
+                    ) : (
+                      <option value='5'>BFS (Diagonal Allowed)</option>
+                    )}
+                    {Weight ? (
+                      ''
+                    ) : (
+                      <option value='6'>DFS (Diagonal Allowed)</option>
+                    )}
                   </select>
                   <div className='input-group-append'>
                     <button

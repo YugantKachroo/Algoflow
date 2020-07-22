@@ -5,7 +5,7 @@ export function Dijkstra(grid, startNode, finishNode) {
   while (unvisitedNodes.length) {
     sortNodes(unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
-    if (closestNode.isWall) {
+    if (closestNode.isWall || closestNode.isWeight) {
       continue;
     }
     if (closestNode.distance === Infinity) {
