@@ -10,6 +10,7 @@ export const NQueenAlgorithm = (size, animations = []) => {
   solve(board, 0, animations);
   return board;
 };
+
 function solve(board = [], col, animations = []) {
   let N = board.length;
   if (col >= N) return true;

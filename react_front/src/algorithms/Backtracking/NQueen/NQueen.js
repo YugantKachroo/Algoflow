@@ -33,7 +33,7 @@ class NQueen extends Component {
       container.appendChild(cell).className = 'Qgrid-item q-array-tile';
     }
     const arrayTiles = document.getElementsByClassName('q-array-tile');
-    const queens = document.getElementsByClassName('fas');
+    const queens = document.getElementsByClassName('fa-chess-queen');
     for (let i = 0; i < arrayTiles.length; i++) {
       arrayTiles[i].style.padding = `${padding}px`;
       arrayTiles[i].style.backgroundColor = CELL_COLOR;
