@@ -42,6 +42,14 @@ const Legend = () => (
               Destination
             </div>
           </div>
+          <div className='col-2'>
+            <div className='legend legend-weight'></div>
+          </div>
+          <div className='col-10'>
+            <div className='text-dark font-weight-bold legend-label'>
+              Weight (Cost 1)
+            </div>
+          </div>
 
           <div className='col-2'>
             <div className='legend legend-shortest-path'></div>

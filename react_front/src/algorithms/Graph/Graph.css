@@ -39,6 +39,12 @@ body {
   background-size: contain;
 }
 
+.legend-weight {
+  background-image: url('./svg/weight.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .legend-visited {
   background-color: rgba(0, 190, 218, 0.75);
 }

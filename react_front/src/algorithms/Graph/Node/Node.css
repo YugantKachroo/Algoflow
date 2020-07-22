@@ -64,11 +64,14 @@
 }
 
 .node-shortest-path-weight {
-  background-image: url('../svg/weight.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  transition: ease-in-out 200ms;
-  background-color: rgb(255, 254, 106);
+  animation-name: shortestPath1;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 .node-shortest-path {
@@ -80,6 +83,32 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+}
+
+@keyframes shortestPath1 {
+  0% {
+    transform: scale(0.6);
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgb(255, 254, 106);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgb(255, 254, 106);
+  }
+
+  100% {
+    transform: scale(1);
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgb(255, 254, 106);
+  }
 }
 
 @keyframes shortestPath {
@@ -110,6 +139,17 @@
   animation-play-state: running;
 }
 
+.node-visited-weight {
+  animation-name: visitedAnimation1;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.3);
@@ -128,6 +168,38 @@
 
   100% {
     transform: scale(1);
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+}
+
+@keyframes visitedAnimation1 {
+  0% {
+    transform: scale(0.3);
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+
+  50% {
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+
+  75% {
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0, 190, 218, 0.75);
+  }
+
+  100% {
+    transform: scale(1);
+    background-image: url('../svg/weight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
     background-color: rgba(0, 190, 218, 0.75);
   }
 }

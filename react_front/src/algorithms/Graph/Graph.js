@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Legend from './Utils/Legend';
 import { c1Dto2D, c2Dto1D } from './Utils/Conversion';
 import Node from './Node/Node';
-import { Dijkstra } from './Algorithms/Dijkstra';
+import { DijkstraND } from './Algorithms/DijkstraND';
+import { DijkstraWD } from './Algorithms/DijkstraWD';
 import { BFSND } from './Algorithms/BFSND';
 import { BFSWD } from './Algorithms/BFSWD';
 import { DFSND } from './Algorithms/DFSND';
@@ -110,7 +111,6 @@ export default class Graph extends Component {
       disableNodesButton: false,
       disableMazesButton: false,
       disableClearMazeButton: false,
-      //Weight: true,
     });
   }
 
@@ -132,6 +132,9 @@ export default class Graph extends Component {
         document
           .getElementById(`node-${node.row}-${node.col}`)
           .classList.remove('node-shortest-path-weight');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-visited-weight');
         document
           .getElementById(`node-${node.row}-${node.col}`)
           .classList.add('node-weight');
@@ -196,7 +199,7 @@ export default class Graph extends Component {
         this.setState({ disableNodesButton: false, disableMazesButton: false });
         return;
       case 1:
-        [visitedNodesInOrder, nodesInShortestPathOrder] = Dijkstra(
+        [visitedNodesInOrder, nodesInShortestPathOrder] = DijkstraND(
           d2Grid,
           STARTNODE,
           FINISHNODE
@@ -236,6 +239,13 @@ export default class Graph extends Component {
         break;
       case 6:
         [visitedNodesInOrder, nodesInShortestPathOrder] = DFSWD(
+          d2Grid,
+          STARTNODE,
+          FINISHNODE
+        );
+        break;
+      case 7:
+        [visitedNodesInOrder, nodesInShortestPathOrder] = DijkstraWD(
           d2Grid,
           STARTNODE,
           FINISHNODE
@@ -385,6 +395,10 @@ export default class Graph extends Component {
         if (!node.isStart && !node.isFinish && !node.isWall && !node.isWeight) {
           document.getElementById(`node-${node.row}-${node.col}`).className =
             'node node-visited';
+        }
+        if (node.isWeight) {
+          document.getElementById(`node-${node.row}-${node.col}`).className =
+            'node node-visited-weight';
         }
       }, this.state.speed * i);
     }
@@ -579,6 +593,11 @@ export default class Graph extends Component {
                       ''
                     ) : (
                       <option value='6'>DFS (Diagonal Allowed)</option>
+                    )}
+                    {Weight ? (
+                      <option value='7'>Dijkstras (Diagonal Allowed)</option>
+                    ) : (
+                      ''
                     )}
                   </select>
                   <div className='input-group-append'>

@@ -1,4 +1,4 @@
-export function Dijkstra(grid, startNode, finishNode) {
+export function DijkstraND(grid, startNode, finishNode) {
   const visitedOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
@@ -31,9 +31,8 @@ export function Dijkstra(grid, startNode, finishNode) {
         continue;
       }
       const neighbour = grid[nRow][nCol];
-      console.log(neighbour.isVisited);
       if (neighbour.isVisited === true) {
-        //continue;
+        continue;
       } else {
         if (closestNode.distance + 1 < neighbour.distance) {
           let edge_wt = 1;
@@ -68,6 +67,8 @@ function getClosestNeighbour(grid) {
     if (node.distance < minDistance) {
       closest = node;
       minDistance = node.distance;
+    } else {
+      continue;
     }
   }
   return closest;
