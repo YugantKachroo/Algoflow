@@ -394,6 +394,10 @@ export default class Graph extends Component {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path';
         }
+        if (node.isWeight) {
+          document.getElementById(`node-${node.row}-${node.col}`).classList =
+            'node node-shortest-path-weight';
+        }
         if (node.isFinish) {
           document.getElementById(`node-${node.row}-${node.col}`).classList =
             'node node-shortest-path-finish';

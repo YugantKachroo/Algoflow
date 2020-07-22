@@ -2,12 +2,13 @@ export function Dijkstra(grid, startNode, finishNode) {
   const visitedOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
-  while (unvisitedNodes.length) {
-    sortNodes(unvisitedNodes);
-    const closestNode = unvisitedNodes.shift();
-    if (closestNode.isWall || closestNode.isWeight) {
-      continue;
+  let N = unvisitedNodes.length;
+  while (N--) {
+    const closestNode = getClosestNeighbour(unvisitedNodes);
+    if (closestNode === null) {
+      return [visitedOrder, calculatePath(finishNode)];
     }
+
     if (closestNode.distance === Infinity) {
       return [visitedOrder, calculatePath(finishNode)];
     }
@@ -17,7 +18,28 @@ export function Dijkstra(grid, startNode, finishNode) {
     if (closestNode === finishNode) {
       return [visitedOrder, calculatePath(finishNode)];
     }
-    updateUnvisitedNeighbors(closestNode, grid);
+    const x = [0, 0, 1, -1];
+    const y = [1, -1, 0, 0];
+
+    for (let i = 0; i < 4; ++i) {
+      const { col, row } = closestNode;
+      const nRow = row + x[i];
+      const nCol = col + y[i];
+      if (
+        !(nRow >= 0 && nRow >= 0 && nCol < grid.length && nCol < grid[0].length)
+      )
+        continue;
+      const neighbor = grid[nRow][nCol];
+      if (neighbor.isVisited == true) {
+        continue;
+      }
+      if (closestNode.distance + 1 < neighbor.distance) {
+        let edge_wt = 1;
+        if (neighbor.isWeight) edge_wt += 1;
+        neighbor.distance = closestNode.distance + edge_wt;
+        neighbor.previousNode = closestNode;
+      }
+    }
   }
 }
 
@@ -31,26 +53,19 @@ function getAllNodes(grid = []) {
   return nodes;
 }
 
-function sortNodes(unvisitedNodes) {
-  unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
-}
-
-function getUnvisitedNeighbors(node, grid) {
-  const neighbors = [];
-  const { col, row } = node;
-  if (row > 0) neighbors.push(grid[row - 1][col]);
-  if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
-  if (col > 0) neighbors.push(grid[row][col - 1]);
-  if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
-  return neighbors.filter((neighbor) => !neighbor.isVisited);
-}
-
-function updateUnvisitedNeighbors(node, grid) {
-  const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
-  for (const neighbor of unvisitedNeighbors) {
-    neighbor.distance = node.distance + 1;
-    neighbor.previousNode = node;
+function getClosestNeighbour(grid) {
+  let minDistance = Infinity;
+  let closest = null;
+  for (const node of grid) {
+    if (node.isVisited) {
+      continue;
+    }
+    if (node.distance < minDistance) {
+      closest = node;
+      minDistance = node.distance;
+    }
   }
+  return closest;
 }
 
 function calculatePath(finishNode) {
