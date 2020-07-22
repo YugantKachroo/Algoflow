@@ -128,6 +128,14 @@ export default class Graph extends Component {
           .getElementById(`node-${node.row}-${node.col}`)
           .classList.add('node-start');
       }
+      if (node.isWeight) {
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.remove('node-shortest-path-weight');
+        document
+          .getElementById(`node-${node.row}-${node.col}`)
+          .classList.add('node-weight');
+      }
       if (node.isFinish) {
         document
           .getElementById(`node-${node.row}-${node.col}`)

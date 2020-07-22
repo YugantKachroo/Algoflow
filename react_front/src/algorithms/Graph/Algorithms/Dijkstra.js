@@ -21,23 +21,28 @@ export function Dijkstra(grid, startNode, finishNode) {
     const x = [0, 0, 1, -1];
     const y = [1, -1, 0, 0];
 
-    for (let i = 0; i < 4; ++i) {
-      const { col, row } = closestNode;
+    for (let i = 0; i < 4; i++) {
+      const { row, col } = closestNode;
       const nRow = row + x[i];
       const nCol = col + y[i];
       if (
-        !(nRow >= 0 && nRow >= 0 && nCol < grid.length && nCol < grid[0].length)
-      )
-        continue;
-      const neighbor = grid[nRow][nCol];
-      if (neighbor.isVisited == true) {
+        !(nRow >= 0 && nCol >= 0 && nRow < grid.length && nCol < grid[0].length)
+      ) {
         continue;
       }
-      if (closestNode.distance + 1 < neighbor.distance) {
-        let edge_wt = 1;
-        if (neighbor.isWeight) edge_wt += 1;
-        neighbor.distance = closestNode.distance + edge_wt;
-        neighbor.previousNode = closestNode;
+      const neighbour = grid[nRow][nCol];
+      console.log(neighbour.isVisited);
+      if (neighbour.isVisited === true) {
+        //continue;
+      } else {
+        if (closestNode.distance + 1 < neighbour.distance) {
+          let edge_wt = 1;
+          if (neighbour.isWeight) {
+            edge_wt += 1;
+          }
+          neighbour.distance = closestNode.distance + edge_wt;
+          neighbour.previousNode = closestNode;
+        }
       }
     }
   }
