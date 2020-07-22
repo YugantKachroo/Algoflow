@@ -21,12 +21,21 @@ function solve(maze = [], x, y, sol = [], animations = []) {
   if (isSafe(maze, x, y)) {
     animations.push([x, y, true]);
     sol[x][y] = 1;
+
     if (solve(maze, x, y + 1, sol, animations)) {
       return true;
     }
+
     if (solve(maze, x + 1, y, sol, animations)) {
       return true;
     }
+
+    // if (solve(maze, x - 1, y, sol, animations)) {
+    //   return true;
+    // }
+    // if (solve(maze, x, y - 1, sol, animations)) {
+    //   return true;
+    // }
     animations.push([x, y, false]);
     sol[x][y] = 0;
     return false;

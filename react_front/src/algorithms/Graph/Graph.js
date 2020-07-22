@@ -11,6 +11,7 @@ import { DFSWD } from './Algorithms/DFSWD';
 import { BiDirectionalSearch } from './Algorithms/BiDirectionalSearch';
 import { Maze } from './Maze/Maze';
 import { WeightMaze } from './Maze/WeightMaze';
+import Bar from '../../components/Bar';
 import './Graph.css';
 
 const ROWS = 41;
@@ -443,6 +444,7 @@ export default class Graph extends Component {
     console.log(Weight);
     return (
       <div>
+        <Bar />
         <div className='container'>
           <div className='row'>
             <div className='col-sm-7 mb-1'>

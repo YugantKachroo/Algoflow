@@ -116,7 +116,6 @@ class NQueen extends Component {
                     <span className='input-group-text'>Board Size</span>
                   </div>
                   <div className='ui labeled input'>
-                    {/* <div class='ui label'>Board Size</div> */}
                     <input
                       type='number'
                       id='boardInput'

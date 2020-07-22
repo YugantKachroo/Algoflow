@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Graph from './algorithms/Graph/Graph.js';
 import Backtracking from './algorithms/Backtracking/Backtracking.js';
 import Sorting from './algorithms/Sorting/Sorting.js';
@@ -9,13 +9,11 @@ import './css/MainRouter.css';
 
 const MainRouter = () => (
   <>
-    <Menu />
-    <Switch>
-      <Route exact path='/' component={Graph} />
-      <Route exact path='/Backtrack' component={Backtracking} />
-      <Route exact path='/Searching' component={Searching} />
-      <Route exact path='/Sorting' component={Sorting} />
-    </Switch>
+    <Route exact path='/' component={Menu} />
+    <Route path='/graph' component={Graph} />
+    <Route path='/backtracking' component={Backtracking} />
+    <Route path='/sorting' component={Sorting} />
+    <Route path='/searching' component={Searching} />
   </>
 );
 

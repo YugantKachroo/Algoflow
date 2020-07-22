@@ -1,49 +1,61 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-const isActive = (history, path) => {
-  if (history.location.pathname === path)
-    return { color: '#000000', backgroundColor: 'white' };
-  else return { color: '#000000' };
-};
+export default class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-const Menu = ({ history }) => (
-  <div>
-    <ul className='nav nav-tabs bg-info'>
-      <li className='nav-item'>
-        <Link className='nav-link' style={isActive(history, '/')} to='/'>
-          Graph
-        </Link>
-      </li>
-      <li className='nav-item'>
-        <Link
-          className='nav-link'
-          style={isActive(history, '/Graph')}
-          to='/Backtrack'
-        >
-          Backtracking
-        </Link>
-      </li>
-      <li className='nav-item'>
-        <Link
-          className='nav-link'
-          style={isActive(history, '/Searching')}
-          to='/Searching'
-        >
-          Searching
-        </Link>
-      </li>
-      <li className='nav-item'>
-        <Link
-          className='nav-link'
-          style={isActive(history, '/Sorting')}
-          to='/Sorting'
-        >
-          Sorting
-        </Link>
-      </li>
-    </ul>
-  </div>
-);
+  render() {
+    return (
+      <div className='container mt-20'>
+        <br />
+        <br />
+        <table class='ui selectable inverted violet table'>
+          <thead>
+            <tr>
+              <th>Algorithm Category</th>
+              <th class='right aligned'>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Graph</td>
 
-export default withRouter(Menu);
+              <td class='right aligned'>
+                <NavLink to='/graph'>
+                  <code>/graph</code>
+                </NavLink>
+              </td>
+            </tr>
+            <tr>
+              <td>Backtracking</td>
+              <td class='right aligned'>
+                <NavLink to='/backtracking'>
+                  <code>/backtracking</code>
+                </NavLink>
+              </td>
+            </tr>
+            <tr>
+              <td>Sorting</td>
+              <td class='right aligned'>
+                <NavLink to='/sorting'>
+                  <code>/sorting</code>
+                </NavLink>
+              </td>
+            </tr>
+            <tr>
+              <td>Searching</td>
+              <td class='right aligned'>
+                <NavLink to='/searching'>
+                  <code>/searching</code>
+                </NavLink>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
