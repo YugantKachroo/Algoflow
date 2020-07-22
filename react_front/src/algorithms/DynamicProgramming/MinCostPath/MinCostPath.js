@@ -14,16 +14,16 @@ const PATH_COLOR = '#dfeb34';
 export default class MinCostPath extends Component {
   constructor() {
     super();
-    this.state = { Maze: Maze };
+    this.state = { QuestionMaze: Maze, SolutionMaze: Maze };
   }
 
   componentDidMount() {
-    this.drawBoard(Maze);
-    this.drawBoard1(Maze);
+    this.drawQuestionBoard();
+    this.drawSolutionBoard();
   }
 
-  async drawBoard() {
-    const { Maze } = this.state;
+  drawQuestionBoard() {
+    const { QuestionMaze } = this.state;
     this.setState({ visualize: false, disabled: false });
     const Rows = Maze.length;
     const Cols = Maze[0].length;
@@ -33,13 +33,13 @@ export default class MinCostPath extends Component {
     ratMaze.style.setProperty('--Rgrid-cols', Cols);
     for (let c = 0; c < Rows * Cols; c++) {
       let cell = document.createElement('div');
-      cell.innerText = c + 1;
+      cell.innerText = RandomInt(1, 20);
       ratMaze.appendChild(cell).className = 'grid-item';
     }
   }
 
-  async drawBoard1() {
-    const { Maze } = this.state;
+  drawSolutionBoard() {
+    const { SolutionMaze } = this.state;
     this.setState({ visualize: false, disabled: false });
     const Rows = Maze.length;
     const Cols = Maze[0].length;
@@ -52,6 +52,11 @@ export default class MinCostPath extends Component {
       cell.innerText = 0;
       ratMaze.appendChild(cell).className = 'grid-item';
     }
+  }
+
+  boardReset() {
+    this.drawQuestionBoard();
+    this.drawSolutionBoard();
   }
 
   render() {
