@@ -8,7 +8,7 @@ class Searching extends Component {
       <div>
         <Bar />
         <br />
-        <h1 class='ui horizontal divider header'>Min Cost Path</h1>
+        <h1 className='ui horizontal divider header'>Min Cost Path</h1>
         <MinCostPath />
       </div>
     );

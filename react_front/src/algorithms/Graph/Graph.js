@@ -54,6 +54,7 @@ export default class Graph extends Component {
         grid.push(this.createNode(i, j));
       }
     }
+    //console.log(grid);
     this.setState({ grid, Weight: false });
   }
 
