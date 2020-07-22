@@ -7,6 +7,7 @@ import { QuickSortAlgorithm } from './SortingAlgorithm/QuickSort';
 import './Sorting.css';
 import { RandomInt } from '../../components/RandomInt';
 import Slider from 'react-rangeslider';
+import Bar from '../../components/Bar';
 
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
@@ -366,6 +367,7 @@ export default class Sorting extends Component {
     const TOTAL_BUTTONS = 1 + SORT_BUTTONS;
     return (
       <>
+        <Bar />
         <div className='col-sm-2'>
           {start ? (
             ''
