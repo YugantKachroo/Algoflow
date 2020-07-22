@@ -2,86 +2,85 @@ import React, { Component } from 'react';
 import './MinCostPath.css';
 import { RandomInt } from '../../../components/RandomInt';
 
-var newGrid = [
+var Maze = [
   [5, 3, 2],
   [6, 4, 1],
   [1, 9, 8],
 ];
 
+const NO_PATH_COLOR = '#696969';
+const PATH_COLOR = '#dfeb34';
+
 export default class MinCostPath extends Component {
   constructor() {
     super();
-    this.state = { sudokuGrid: newGrid };
+    this.state = { Maze: Maze };
   }
 
   componentDidMount() {
-    this.drawGrid();
+    this.drawBoard(Maze);
+    this.drawBoard1(Maze);
   }
 
-  drawGrid() {
-    const { sudokuGrid } = this.state;
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        var index = i + '' + j;
-        if (sudokuGrid[i][j] !== 0) {
-          document.getElementById(index).innerHTML = sudokuGrid[i][j];
-          document.getElementById(index).setAttribute('class', 'givenNumber');
-        } else {
-          document.getElementById(index).setAttribute('class', 'solvingNumber');
-        }
-      }
+  async drawBoard() {
+    const { Maze } = this.state;
+    this.setState({ visualize: false, disabled: false });
+    const Rows = Maze.length;
+    const Cols = Maze[0].length;
+    let ratMaze = document.getElementById('QuestionBoard');
+    ratMaze.innerHTML = '';
+    ratMaze.style.setProperty('--Rgrid-rows', Rows);
+    ratMaze.style.setProperty('--Rgrid-cols', Cols);
+    for (let c = 0; c < Rows * Cols; c++) {
+      let cell = document.createElement('div');
+      cell.innerText = c + 1;
+      ratMaze.appendChild(cell).className = 'grid-item';
     }
   }
 
-  clearGrid() {
-    for (let i = 0; i < 1; i++) {
-      for (let j = 0; j < 9; j++) {
-        var indexId = i + '' + j;
-        document.getElementById(indexId).innerHTML = '';
-      }
+  async drawBoard1() {
+    const { Maze } = this.state;
+    this.setState({ visualize: false, disabled: false });
+    const Rows = Maze.length;
+    const Cols = Maze[0].length;
+    let ratMaze = document.getElementById('SolutionBoard');
+    ratMaze.innerHTML = '';
+    ratMaze.style.setProperty('--Rgrid-rows', Rows);
+    ratMaze.style.setProperty('--Rgrid-cols', Cols);
+    for (let c = 0; c < Rows * Cols; c++) {
+      let cell = document.createElement('div');
+      cell.innerText = 0;
+      ratMaze.appendChild(cell).className = 'grid-item';
     }
   }
 
   render() {
     return (
-      <div className='jumbotron-fluid bg-white'>
-        <br />
-        <br />
-        <div className='container'>
-          <table>
-            <tbody>
-              <tr id='0'>
-                <td id='00'></td>
-                <td id='01'></td>
-                <td id='02'></td>
-              </tr>
-              <tr id='1'>
-                <td id='10'></td>
-                <td id='11'></td>
-                <td id='12'></td>
-              </tr>
-              <tr id='2'>
-                <td id='20'></td>
-                <td id='21'></td>
-                <td id='22'></td>
-              </tr>
-            </tbody>
-          </table>
-          <center>
-            {' '}
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-sm-6'>
+            <div className='Rbox Rboard mt-2' id='QuestionBoard'></div>
+          </div>
+          <div className='col-sm-2'>
+            <div className='Rbox Rboard mt-2' id='SolutionBoard'></div>
+          </div>
+          <div className='but'>
             <button
-              className='mt-2 mr-5 ui yellow button generateButton'
-              onClick={() => this.generateSudoku()}
+              onClick={() => this.Algorithm()}
+              className='mr-5 ui blue button'
             >
-              Generate Puzzle
-            </button>{' '}
+              Visualize Algorithm
+            </button>
             <button
-              className='mt-2 mr-5 ui green button solveButton'
-              onClick={() => this.solveSudokuPuzzle()}
+              onClick={() => this.boardReset()}
+              className='ui black button'
             >
-              Solve
-            </button>{' '}
-          </center>
+              Reset
+            </button>
+
+            <br />
+            <br />
+          </div>
         </div>
       </div>
     );
