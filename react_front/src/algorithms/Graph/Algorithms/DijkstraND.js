@@ -9,6 +9,10 @@ export function DijkstraND(grid, startNode, finishNode) {
       return [visitedOrder, calculatePath(finishNode)];
     }
 
+    if (closestNode.isWall) {
+      continue;
+    }
+
     if (closestNode.distance === Infinity) {
       return [visitedOrder, calculatePath(finishNode)];
     }
@@ -61,7 +65,7 @@ function getClosestNeighbour(grid) {
   let minDistance = Infinity;
   let closest = null;
   for (const node of grid) {
-    if (node.isVisited) {
+    if (node.isVisited || node.isWall) {
       continue;
     }
     if (node.distance < minDistance) {

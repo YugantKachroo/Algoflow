@@ -194,7 +194,8 @@ export default class Graph extends Component {
     const STARTNODE = d2Grid[START_NODE_ROW][START_NODE_COL];
     const FINISHNODE = d2Grid[FINISH_NODE_ROW][FINISH_NODE_COL];
 
-    var visitedNodesInOrder, nodesInShortestPathOrder;
+    var visitedNodesInOrder = [],
+      nodesInShortestPathOrder = [];
     switch (algorithm) {
       case 0:
         alert('Select an algorithm');
@@ -356,7 +357,7 @@ export default class Graph extends Component {
         break;
       case 4:
         this.toggleWeight(grid, row, col);
-        this.setState({ Weight: true });
+        // this.setState({ Weight: true });
         break;
       default:
         break;
@@ -383,7 +384,7 @@ export default class Graph extends Component {
     this.setState({ grid: oneDArray, Weight: true });
   }
 
-  animatePath(visitedNodesInOrder, nodesInShortestPathOrder) {
+  animatePath(visitedNodesInOrder = [], nodesInShortestPathOrder = []) {
     this.setState({ disableNodesButton: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
