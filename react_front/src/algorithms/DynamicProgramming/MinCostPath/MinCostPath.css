@@ -1,56 +1,84 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-
-* {
-  font-family: 'Open Sans', sans-serif;
-}
-.Rboard {
-  position: relative;
-  border-radius: 3px;
-  padding: 10px;
-  background-color: #fff;
-  width: 500px;
-  margin-left: 80px;
-}
-
-.grid-item {
-  padding: 1em;
-  border: 1px solid #ddd;
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
   text-align: center;
+  font-size: 200%;
+  width: 50%;
+  table-layout: fixed;
 }
 
-.Rbox {
-  display: grid;
-  grid-gap: 0 0;
-  grid-template-rows: repeat(var(--Rgrid-rows), 1fr);
-  grid-template-columns: repeat(var(--Rgrid-cols), 1fr);
-  box-shadow: 0 0.5px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+tr {
+  height: 45px;
 }
 
-.Rgrid-item {
+td {
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+td:first-child {
+  border-left: solid;
+  border-left-color: black;
+}
+td:nth-child(3n) {
+  border-right: solid;
+  border-right-color: black;
+}
+tr:first-child {
+  border-top: solid;
+}
+tr:nth-child(3n) {
+  border-bottom: solid;
+}
+
+.container {
+  width: 378px;
+  margin: 5px auto;
+}
+
+.buttonsContainer {
+  margin-top: 5px;
+  width: 380px;
+  height: 60px;
+}
+
+#messages {
+  margin-top: 5px;
+  width: 380px;
+  font-size: 150%;
+}
+
+.givenNumber {
+  color: red;
+}
+
+.solvingNumber {
+  color: blue;
+}
+
+.generateButton {
+  width: 150px;
+  font-size: 17px;
   cursor: pointer;
-  text-align: center;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
 }
 
-@keyframes highlightPath {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.solveButton {
+  width: 170px;
+  font-size: 17px;
+  cursor: pointer;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
 }
 
-.highlightPath {
-  animation: highlightPath 100ms;
-  animation-timing-function: ease-in-out;
-  transition: 100ms all;
-}
-
-.but {
-  align-items: center;
-  margin-top: 200px;
-  margin-left: 38%;
-  position: absolute;
+.solveNow {
+  width: 170px;
+  font-size: 17px;
+  cursor: pointer;
+  height: 52px;
+  line-height: 50px;
+  border-radius: 10px;
 }

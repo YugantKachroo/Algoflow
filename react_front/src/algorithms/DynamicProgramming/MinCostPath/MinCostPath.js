@@ -1,152 +1,126 @@
 import React, { Component } from 'react';
 import './MinCostPath.css';
 import { RandomInt } from '../../../components/RandomInt';
-import {
-  MinCostPathAlgorithms,
-  MinCostPathAlgorithm,
-} from './MinCostPathAlgorithm';
 
-var Maze = [
-  [5, 3, 2],
-  [6, 4, 1],
+var newGrid = [
+  [5, 3, 1],
+  [6, 3, 2],
   [1, 9, 8],
 ];
-
-const SIZE = 3;
-
-const NO_PATH_COLOR = '#696969';
-const PATH_COLOR = '#dfeb34';
 
 export default class MinCostPath extends Component {
   constructor() {
     super();
-    this.state = { QuestionMaze: Maze, SolutionMaze: Maze };
+    this.state = { Grid: newGrid };
   }
 
   componentDidMount() {
-    this.drawQuestionBoard();
-    this.drawSolutionBoard();
+    this.drawGrid();
   }
 
-  drawQuestionBoard() {
-    const { QuestionMaze } = this.state;
-    this.setState({ visualize: false, disabled: false });
-    const Rows = QuestionMaze.length;
-    const Cols = QuestionMaze[0].length;
-    let QuestionCost = document.getElementById('QuestionBoard');
-    QuestionCost.innerHTML = '';
-    QuestionCost.style.setProperty('--Rgrid-rows', Rows);
-    QuestionCost.style.setProperty('--Rgrid-cols', Cols);
-    // for (let c = 0; c < Rows * Cols; c++) {
-    //   let cell = document.createElement('div');
-    //   const value = RandomInt(1, 10);
-    //   cell.innerText = value;
-    //   QuestionMaze[]
+  drawGrid() {
+    const { Grid } = this.state;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        var index = i + '' + j;
+        document.getElementById(index).innerHTML = Grid[i][j];
+        document.getElementById(index).setAttribute('class', 'givenNumber');
+      }
+    }
+  }
 
-    //   ratMaze.appendChild(cell).className = 'grid-item';
-    // }
-    for (let i = 0; i < SIZE; i++) {
-      for (let j = 0; j < SIZE; j++) {
-        let cell = document.createElement('div');
+  async generateMatrix() {
+    const { Grid } = this.state;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        Grid[i][j] = 0;
+      }
+    }
+    this.clearGrid();
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
         const value = RandomInt(1, 10);
-        cell.innerText = value;
-        QuestionMaze[i][j] = value;
-        QuestionCost.appendChild(cell).className = 'grid-item';
+        Grid[i][j] = value;
       }
     }
-    this.setState({ QuestionMaze: QuestionMaze });
+    this.drawGrid();
   }
 
-  drawSolutionBoard() {
-    const { SolutionMaze } = this.state;
-    this.setState({ visualize: false, disabled: false });
-    const Rows = SolutionMaze.length;
-    const Cols = SolutionMaze[0].length;
-    let SolutionCost = document.getElementById('SolutionBoard');
-    SolutionCost.innerHTML = '';
-    SolutionCost.style.setProperty('--Rgrid-rows', Rows);
-    SolutionCost.style.setProperty('--Rgrid-cols', Cols);
-    for (let i = 0; i < SIZE; i++) {
-      for (let j = 0; j < SIZE; j++) {
-        let cell = document.createElement('div');
-        cell.innerText = 0;
-        //  SolutionMaze[i][j] = '';
-        SolutionCost.appendChild(cell).className = 'grid-item';
+  clearGrid() {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        var indexId = i + '' + j;
+        document.getElementById(indexId).innerHTML = '';
       }
     }
-    this.setState({ SolutionMaze: SolutionMaze });
-  }
-
-  boardReset() {
-    this.drawQuestionBoard();
-    this.drawSolutionBoard();
-  }
-
-  async Algorithm() {
-    const { QuestionMaze, SolutionMaze } = this.state;
-    // console.log(QuestionMaze[1][1]);
-    // const [animations] = MinCostPathAlgorithm(QuestionMaze, SIZE, SIZE);
-    const animations = [];
-    SolutionMaze[0][0] = QuestionMaze[0][0];
-    animations.push(0);
-    animations.push(0);
-    //console.log(animations);
-    for (let i = 1; i <= SIZE - 1; i++) {
-      SolutionMaze[i][0] = SolutionMaze[i - 1][0] + QuestionMaze[i][0];
-      animations.push(i);
-      animations.push(0);
-    }
-    for (let i = 1; i <= SIZE - 1; i++) {
-      SolutionMaze[0][i] = SolutionMaze[0][i - 1] + QuestionMaze[0][i];
-      animations.push(0);
-      animations.push(i);
-    }
-    for (let i = 1; i <= SIZE - 1; i++) {
-      for (let j = 1; j <= SIZE - 1; j++) {
-        SolutionMaze[i][j] =
-          Math.min(
-            SolutionMaze[i - 1][j - 1],
-            SolutionMaze[i - 1][j],
-            SolutionMaze[i][j - 1]
-          ) + QuestionMaze[i][j];
-
-        animations.push(i);
-        animations.push(j);
-      }
-    }
-    console.log(animations);
-    console.log(SolutionMaze[SIZE - 1][SIZE - 1]);
-
-    return;
   }
 
   render() {
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-sm-6'>
-            <div className='Rbox Rboard mt-2' id='QuestionBoard'></div>
-          </div>
-          <div className='col-sm-2'>
-            <div className='Rbox Rboard mt-2' id='SolutionBoard'></div>
-          </div>
-          <div className='but'>
-            <button
-              onClick={() => this.Algorithm()}
-              className='mr-5 ui blue button'
-            >
-              Visualize Algorithm
-            </button>
-            <button
-              onClick={() => this.boardReset()}
-              className='ui black button'
-            >
-              Reset
-            </button>
+      <div className='jumbotron-fluid bg-white'>
+        <br />
+        <br />
 
-            <br />
-            <br />
+        <div className='container'>
+          <div className='col-sm-4'>
+            <table>
+              <tbody>
+                <tr id='0'>
+                  <td id='00'></td>
+                  <td id='01'></td>
+                  <td id='02'></td>
+                </tr>
+                <tr id='1'>
+                  <td id='10'></td>
+                  <td id='11'></td>
+                  <td id='12'></td>
+                </tr>
+                <tr id='2'>
+                  <td id='20'></td>
+                  <td id='21'></td>
+                  <td id='22'></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <div className='col-sm-4'>
+            <table>
+              <tbody>
+                <tr id='4'>
+                  <td id='40'></td>
+                  <td id='41'></td>
+                  <td id='42'></td>
+                </tr>
+                <tr id='5'>
+                  <td id='50'></td>
+                  <td id='51'></td>
+                  <td id='52'></td>
+                </tr>
+                <tr id='6'>
+                  <td id='60'></td>
+                  <td id='61'></td>
+                  <td id='62'></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* <div> className='col-sm-5'> */}
+          <center>
+            {' '}
+            <button
+              className='mt-2 mr-5 ui yellow button generateButton'
+              onClick={() => this.generateMatrix()}
+            >
+              Generate Puzzle
+            </button>{' '}
+            <button
+              className='mt-2 mr-5 ui green button solveButton'
+              onClick={() => this.solveSudokuPuzzle()}
+            >
+              Solve
+            </button>{' '}
+          </center>
         </div>
       </div>
     );
