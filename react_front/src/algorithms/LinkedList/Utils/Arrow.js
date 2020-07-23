@@ -3,9 +3,11 @@ import './Arrow.css';
 
 export const Arrow = (props) => {
   const { direction } = props;
-  direction += 's';
   console.log(direction);
-  const arrowRect = <div className={direction}></div>;
+  let dir = '';
+  dir += direction + 's';
+  console.log(dir);
+  const arrowRect = <div className={dir}></div>;
   return (
     <div className='arrowContainer'>
       {direction === 'right' ? (
