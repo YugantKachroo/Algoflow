@@ -5,12 +5,11 @@ export function DijkstraND(grid, startNode, finishNode) {
   let N = unvisitedNodes.length;
   while (N--) {
     const closestNode = getClosestNeighbour(unvisitedNodes);
-    if (closestNode === null) {
-      return [visitedOrder, calculatePath(finishNode)];
-    }
-
     if (closestNode.isWall) {
       continue;
+    }
+    if (closestNode === null) {
+      return [visitedOrder, calculatePath(finishNode)];
     }
 
     if (closestNode.distance === Infinity) {
@@ -35,7 +34,7 @@ export function DijkstraND(grid, startNode, finishNode) {
         continue;
       }
       const neighbour = grid[nRow][nCol];
-      if (neighbour.isVisited === true) {
+      if (neighbour.isVisited === true || neighbour.isWall) {
         continue;
       } else {
         if (closestNode.distance + 1 < neighbour.distance) {

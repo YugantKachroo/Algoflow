@@ -6,6 +6,10 @@
   margin-left: 5px;
   font-family: monospace;
 }
+.labelNode1 {
+  color: black;
+  text-size-adjust: 100px;
+}
 .label {
   display: flex;
   justify-content: center;
@@ -19,6 +23,7 @@
 .pre {
   background: #ffd700c4;
 }
+
 .current {
   background: #37a737;
 }

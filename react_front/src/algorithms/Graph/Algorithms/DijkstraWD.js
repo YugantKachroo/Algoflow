@@ -4,12 +4,12 @@ export function DijkstraWD(grid, startNode, finishNode) {
   const unvisitedNodes = getAllNodes(grid);
   let N = unvisitedNodes.length;
   while (N--) {
+    if (closestNode.iswall) {
+      continue;
+    }
     const closestNode = getClosestNeighbour(unvisitedNodes);
     if (closestNode === null) {
       return [visitedOrder, calculatePath(finishNode)];
-    }
-    if (closestNode.iswall) {
-      continue;
     }
 
     if (closestNode.distance === Infinity) {
@@ -34,7 +34,7 @@ export function DijkstraWD(grid, startNode, finishNode) {
         continue;
       }
       const neighbour = grid[nRow][nCol];
-      if (neighbour.isVisited === true) {
+      if (neighbour.isVisited === true || neighbour.iswall) {
         continue;
       } else {
         if (closestNode.distance + 1 < neighbour.distance) {
