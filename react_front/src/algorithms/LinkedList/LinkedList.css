@@ -7,10 +7,10 @@ body {
   /* height: 100%; */
 }
 
-.ColorBody {
+/* .ColorBody {
   background-color: rgb(25, 25, 25);
-  height: 760px;
-}
+  height: 753px;
+} */
 
 /* root {
   background-color: rgb(25, 25, 25);
@@ -361,6 +361,10 @@ div.operations {
   position: fixed;
   bottom: 5%;
   width: 100%;
+}
+
+div.operations input {
+  background-color: lightgrey;
 }
 
 div.wrapper {

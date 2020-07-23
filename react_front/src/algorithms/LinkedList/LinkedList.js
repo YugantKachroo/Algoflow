@@ -3,19 +3,10 @@ import Bar from '../../components/Bar';
 import './LinkedList.css';
 
 export default class LinkedList extends Component {
-  colorChange() {
-    let theme = document.getElementById('theme-switcher');
-    let darkColor = 'black';
-    let lightColor = 'white';
-  }
-
   render() {
     return (
       <div className='ColorBody'>
         <Bar />
-        <div id='theme-switcher'>
-          <i onClick={this.colorChange} className='fas fa-adjust'></i>
-        </div>
         <div className='list' id='list'></div>
         <div className='errors'>
           <div className='error-message'>
@@ -54,7 +45,7 @@ export default class LinkedList extends Component {
                 </button>
               </div>
               <button className='remove-option' id='remove-index-btn'>
-                In1dex
+                Index
               </button>
               <button className='remove-option' id='remove-data-btn'>
                 Data
