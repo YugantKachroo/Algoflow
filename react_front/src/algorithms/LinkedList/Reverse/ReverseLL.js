@@ -1,4 +1,4 @@
-export const ReverseLL = (startNode) => {
+export function ReverseLL(startNode) {
   let prev = startNode;
   let current = prev.next;
   let succ = current.next;
@@ -12,4 +12,4 @@ export const ReverseLL = (startNode) => {
   current.next = prev;
   startNode = current;
   return startNode;
-};
+}

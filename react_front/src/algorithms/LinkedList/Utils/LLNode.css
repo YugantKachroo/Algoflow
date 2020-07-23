@@ -1,0 +1,28 @@
+.llNode {
+  display: flex;
+  width: 150px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 5px black;
+  animation: nodeAnimation;
+  animation-duration: 0.2s;
+}
+.llNode span {
+  font-size: 24px;
+  font-family: monospace;
+}
+@keyframes nodeAnimation {
+  0% {
+    background: darkgrey;
+    position: relative;
+    right: -50px;
+  }
+  100% {
+    background: white;
+    position: relative;
+    right: 0px;
+  }
+}

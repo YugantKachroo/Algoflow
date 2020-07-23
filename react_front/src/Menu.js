@@ -12,18 +12,26 @@ export default class Menu extends React.Component {
       <div className='container mt-20'>
         <br />
         <br />
-        <table class='ui selectable inverted violet table'>
+        <table className='ui selectable inverted violet table'>
           <thead>
             <tr>
               <th>Algorithm Category</th>
-              <th class='right aligned'>Link</th>
+              <th className='right aligned'>Link</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>Linked List</td>
+              <td className='right aligned'>
+                <NavLink to='/linkedlist'>
+                  <code>/linkedlist</code>
+                </NavLink>
+              </td>
+            </tr>
+            <tr>
               <td>Graph</td>
 
-              <td class='right aligned'>
+              <td className='right aligned'>
                 <NavLink to='/graph'>
                   <code>/graph</code>
                 </NavLink>
@@ -31,7 +39,7 @@ export default class Menu extends React.Component {
             </tr>
             <tr>
               <td>Backtracking</td>
-              <td class='right aligned'>
+              <td className='right aligned'>
                 <NavLink to='/backtracking'>
                   <code>/backtracking</code>
                 </NavLink>
@@ -39,7 +47,7 @@ export default class Menu extends React.Component {
             </tr>
             <tr>
               <td>Sorting</td>
-              <td class='right aligned'>
+              <td className='right aligned'>
                 <NavLink to='/sorting'>
                   <code>/sorting</code>
                 </NavLink>
@@ -47,7 +55,7 @@ export default class Menu extends React.Component {
             </tr>
             <tr>
               <td>Searching</td>
-              <td class='right aligned'>
+              <td className='right aligned'>
                 <NavLink to='/searching'>
                   <code>/searching</code>
                 </NavLink>
@@ -55,17 +63,9 @@ export default class Menu extends React.Component {
             </tr>
             <tr>
               <td>Dynamic Programming</td>
-              <td class='right aligned'>
+              <td className='right aligned'>
                 <NavLink to='/dp'>
                   <code>/dp</code>
-                </NavLink>
-              </td>
-            </tr>
-            <tr>
-              <td>Linked List</td>
-              <td class='right aligned'>
-                <NavLink to='/linkedlist'>
-                  <code>/linkedlist</code>
                 </NavLink>
               </td>
             </tr>

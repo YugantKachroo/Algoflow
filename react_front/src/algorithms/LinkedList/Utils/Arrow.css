@@ -1,0 +1,43 @@
+.arrowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  animation: arrowAnimation;
+  animation-duration: 0.5s;
+}
+.arrowContainer hr {
+  width: 40px;
+  height: 2px;
+  background: black;
+  border: none;
+}
+.rights {
+  height: 10px;
+  width: 10px;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  transform: rotate(45deg);
+  position: relative;
+  right: 12px;
+}
+.lefts {
+  height: 10px;
+  width: 10px;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  transform: rotate(-45deg);
+  position: relative;
+  left: 12px;
+}
+
+@keyframes arrowAnimation {
+  0% {
+    position: relative;
+    left: -50px;
+  }
+  100% {
+    position: relative;
+    left: 0px;
+  }
+}
