@@ -14,13 +14,13 @@ let pointers = document.getElementsByClassName('pointer1');
 export default class LinkedList extends Component {
   constructor(props) {
     super(props);
-    this.state = { addValue: '' };
+    this.state = { addValue: '', setIndex: '', setValue: '' };
     this.addHandleChange = this.addHandleChange.bind(this);
     this.ClickAdd = this.ClickAdd.bind(this);
   }
 
   componentDidMount() {
-    this.add(0, 2);
+    this.addfunction(0, 2);
   }
 
   async ClickAdd(event) {
@@ -33,7 +33,7 @@ export default class LinkedList extends Component {
     }
     //await console.log(nodes.length);
 
-    this.add(nodes.length, this.state.addValue);
+    this.addfunction(nodes.length, this.state.addValue);
     //console.log(this.state.addValue);
   }
 
@@ -63,7 +63,7 @@ export default class LinkedList extends Component {
     // console.log(this.state.addValue);
   }
 
-  async add(i, data) {
+  async addfunction(i, data) {
     if (
       this.checkInputErrors(i, 'Index') ||
       this.checkInputErrors(data, 'Data')
@@ -148,6 +148,30 @@ export default class LinkedList extends Component {
     }, pointerAnimationTimeout);
   }
 
+  setValueHandleChange(event) {
+    const temp = event.target.value;
+    this.setState({ setValue: temp });
+  }
+
+  setIndexHandleChange(event) {
+    const temp = event.target.value;
+    this.setState({ setIndex: temp });
+  }
+
+  async ClickSet(event) {
+    event.preventDefault();
+    if (this.state.setValue === '') {
+      alert('Enter a number');
+      return;
+    }
+    if (this.state.setIndex === '') {
+      alert('Enter an index');
+      return;
+    }
+
+    this.setfunction(this.state.setIndex, this.state.setValue);
+  }
+
   render() {
     return (
       <div>
@@ -161,7 +185,7 @@ export default class LinkedList extends Component {
         <div className='operations'>
           <div className='wrapper'>
             <div>
-              <button className='button' id='set-btn'>
+              <button onClick={this.ClickSet} className='button' id='set-btn'>
                 Set
               </button>
               <input type='number' placeholder='Index' />
@@ -171,8 +195,18 @@ export default class LinkedList extends Component {
               <button className='button' id='insert-btn'>
                 Insert
               </button>
-              <input type='number' placeholder='Index' />
-              <input type='number' placeholder='Data' />
+              <input
+                value={this.state.setIndex}
+                onClick={this.setIndexHandleChange}
+                type='number'
+                placeholder='Index'
+              />
+              <input
+                value={this.state.setValue}
+                onClick={this.setValueHandleChange}
+                type='number'
+                placeholder='Data'
+              />
             </div>
             <div>
               <button onClick={this.ClickAdd} className='button' id='add-btn'>
