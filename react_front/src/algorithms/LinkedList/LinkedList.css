@@ -263,7 +263,7 @@ div.node1 {
 } */
 
 .deleteNode-animation {
-  animation-name: deleteNode;
+  animation-name: deleteNode1;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -273,17 +273,17 @@ div.node1 {
   animation-play-state: running;
 }
 
-@keyframes deleteNode {
+/* @keyframes deleteNode {
   50% {
     transform: scale(1.3);
   }
   100% {
     transform: scale(0);
   }
-}
+} */
 
 .moveLeftNode-animation {
-  animation-name: moveLeftNode;
+  animation-name: moveLeftNode1;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -292,7 +292,7 @@ div.node1 {
   animation-fill-mode: forwards;
   animation-play-state: running;
 }
-@keyframes moveLeftNode {
+/* @keyframes moveLeftNode {
   0% {
     transform: translateX(200%);
   }
@@ -302,7 +302,7 @@ div.node1 {
   100% {
     transform: translateX(0%);
   }
-}
+} */
 
 .moveRightNode-animation {
   animation-name: moveRightNode1;
@@ -462,7 +462,7 @@ div.pointer1 img {
 } */
 
 .deletePointer-animation {
-  animation-name: deletePointer;
+  animation-name: deletePointer1;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -471,7 +471,7 @@ div.pointer1 img {
   animation-fill-mode: forwards;
   animation-play-state: running;
 }
-
+/* 
 @keyframes deletePointer {
   50% {
     transform: scale(1.3);
@@ -479,7 +479,7 @@ div.pointer1 img {
   100% {
     transform: scale(0);
   }
-}
+} */
 
 /* ----------------------------------------------------------------- */
 /* Operations */

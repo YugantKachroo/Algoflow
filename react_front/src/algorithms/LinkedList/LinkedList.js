@@ -7,8 +7,6 @@ import GreenPointer from './pointer2.png';
 import './File.css';
 
 let nodeAnimationTimeout: 1000;
-let pointerAnimationTimeout: 800;
-let deleteTimeout: 1000;
 let errorCircle = '<i class="fas fa-exclamation-circle"></i> ';
 let nodes = document.getElementsByClassName('node1');
 let pointers = document.getElementsByClassName('pointer1');
@@ -22,7 +20,7 @@ export default class LinkedList extends Component {
       setValue: '',
       insertIndex: '',
       insertValue: '',
-      deleteValue: '',
+      removeIndex: '',
       disabled: false,
     };
     this.addHandleChange = this.addHandleChange.bind(this);
@@ -31,8 +29,10 @@ export default class LinkedList extends Component {
     this.setIndexHandleChange = this.setIndexHandleChange.bind(this);
     this.insertValueHandleChange = this.insertValueHandleChange.bind(this);
     this.insertIndexHandleChange = this.insertIndexHandleChange.bind(this);
+    this.removeIndexHandleChange = this.removeIndexHandleChange.bind(this);
     this.ClickSet = this.ClickSet.bind(this);
     this.ClickInsert = this.ClickInsert.bind(this);
+    this.ClickRemove = this.ClickRemove.bind(this);
   }
 
   componentDidMount() {
@@ -117,10 +117,8 @@ export default class LinkedList extends Component {
       setTimeout(() => {
         let img2 = document.createElement('img');
         img2.src = GreenPointer;
-        //console.log(img1.src);
         pointers[i].removeChild(pointers[i].firstChild);
         pointers[i].appendChild(img2);
-        //console.log(pointers[i].firstChild);
       }, i * 1000);
       let count = 0;
       count = i;
@@ -137,10 +135,8 @@ export default class LinkedList extends Component {
         for (let i = 0; i <= count; i++) {
           let img1 = document.createElement('img');
           img1.src = Pointer;
-          //console.log(img1.src);
           pointers[i].removeChild(pointers[i].firstChild);
           pointers[i].appendChild(img1);
-          console.log(pointers[i].firstChild);
         }
       }, count * 2000);
     }
@@ -159,10 +155,8 @@ export default class LinkedList extends Component {
         nodes[i].classList.add('animateClass1');
         let img = document.createElement('img');
         img.src = RedPointer;
-        //console.log(img.src);
         pointers[i].removeChild(pointers[i].firstChild);
         pointers[i].appendChild(img);
-        //console.log(pointers[i].firstChild);
       }, i * 1000);
       this.animateNode(i);
       this.animatePointer(i);
@@ -246,10 +240,8 @@ export default class LinkedList extends Component {
       for (let i = 0; i <= ind - 1; i++) {
         let img1 = document.createElement('img');
         img1.src = Pointer;
-        //console.log(img1.src);
         pointers[i].removeChild(pointers[i].firstChild);
         pointers[i].appendChild(img1);
-        console.log(pointers[i].firstChild);
       }
     }, ind * 1000 * 2);
   }
@@ -285,6 +277,74 @@ export default class LinkedList extends Component {
     this.addfunction(this.state.insertIndex, this.state.insertValue);
   }
 
+  removeIndexHandleChange(event) {
+    const temp = event.target.value;
+    this.setState({ removeIndex: temp });
+  }
+
+  async ClickRemove() {
+    if (
+      this.state.removeIndex === '' ||
+      this.state.removeIndex >= nodes.length
+    ) {
+      alert('Enter index between 0 and number of nodes');
+      return;
+    }
+
+    this.removefunction(this.state.removeIndex);
+  }
+
+  async removefunction(ind) {
+    if (
+      this.handleEmptyListError() ||
+      this.checkInputErrors(ind, 'Index', true)
+    )
+      return;
+
+    await this.animateNodes(0, ind - 1);
+    await this.deleteNode(ind);
+    setTimeout(() => {
+      for (let i = 0; i <= ind; i++) {
+        let img1 = document.createElement('img');
+        img1.src = Pointer;
+        pointers[i].removeChild(pointers[i].firstChild);
+        pointers[i].appendChild(img1);
+        nodes[ind].classList.remove('animateClass');
+        for (let i = 0; i <= ind; i++) {
+          nodes[i].classList.remove('animateClass1');
+        }
+      }
+    }, ind * 3000);
+  }
+
+  async deleteNode(ind) {
+    nodes[ind].firstChild.classList.add('deleteNode-animation');
+    pointers[ind].firstChild.classList.add('deletePointer-animation');
+    await setTimeout(() => {
+      let img2 = document.createElement('img');
+      img2.src = GreenPointer;
+      pointers[ind].removeChild(pointers[ind].firstChild);
+      pointers[ind].appendChild(img2);
+      nodes[ind].classList.add('animateClass');
+    }, ind * 1000);
+    await setTimeout(() => {
+      let list = document.getElementById('list');
+      list.removeChild(nodes[ind]);
+      list.removeChild(pointers[ind]);
+    }, ind * 1500);
+  }
+
+  handleEmptyListError() {
+    let error = document.getElementById('error');
+    if (nodes.length === 0) {
+      error.innerHTML = errorCircle + ' List is empty';
+      error.firstChild.style.animation = 'highlightNode .8s ease';
+      return true;
+    }
+    error.innerHTML = null;
+    return false;
+  }
+
   render() {
     const { disabled } = this.state;
     return (
@@ -304,7 +364,7 @@ export default class LinkedList extends Component {
                 value={this.state.setIndex}
                 onChange={this.setIndexHandleChange}
                 type='number'
-                placeholder='Index'
+                placeholder='Index (0 based)'
               />
               <input
                 value={this.state.setValue}
@@ -327,7 +387,7 @@ export default class LinkedList extends Component {
                 value={this.state.insertIndex}
                 onChange={this.insertIndexHandleChange}
                 type='number'
-                placeholder='Index'
+                placeholder='Index (0 based)'
               />
               <input
                 value={this.state.insertValue}
@@ -368,14 +428,15 @@ export default class LinkedList extends Component {
               <br />
               <br />
               <input
-                value={this.state.deleteValue}
-                // onChange={this.setIndexHandleChange}
+                value={this.state.removeIndex}
+                onChange={this.removeIndexHandleChange}
                 type='number'
-                placeholder='Index'
+                placeholder='Index (0 based)'
               />
               <br />
               <button
                 disabled={disabled}
+                onClick={this.ClickRemove}
                 className='ui red button'
                 id='remove-btn'
               >
