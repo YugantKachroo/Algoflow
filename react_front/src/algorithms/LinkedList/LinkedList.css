@@ -576,22 +576,6 @@ div.remove:hover {
   display: none;
 } */
 
-button#remove-btn {
-  width: 70%;
-  background: linear-gradient(to right, #ff002b, #9f0000);
-}
-
-button#remove-settings {
-  width: 30%;
-  font-size: 1.3rem;
-  background: #9f0000;
-}
-
-button#remove-btn:hover,
-button#remove-settings:hover {
-  transform: none;
-}
-
 @keyframes removeAnimationOn {
   100% {
     transform: rotate(-90deg);

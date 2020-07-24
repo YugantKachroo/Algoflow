@@ -108,6 +108,7 @@ export default class LinkedList extends Component {
     pointer.appendChild(img);
     let list = document.getElementById('list');
     if (i === nodes.length) {
+      //await this.animateNodes(0, nodes.length - 1);
       if (i === 0) {
         list.appendChild(node);
       } else {
@@ -115,6 +116,7 @@ export default class LinkedList extends Component {
         list.appendChild(node);
       }
     } else {
+      await this.setState({ disabled: true });
       this.animateNodes(0, i - 1);
       //await this.animateNodesBeforeInsert(i, nodes.length);
       setTimeout(() => {
@@ -125,12 +127,13 @@ export default class LinkedList extends Component {
       let count = 0;
       count = i;
       //console.log(count);
-      await this.setState({ disabled: false });
+
       setTimeout(() => {
         for (let i = 0; i <= count; i++) {
           nodes[i].classList.remove('animateClass1');
           nodes[i].classList.remove('animateClass');
         }
+        this.setState({ disabled: false });
       }, count * 2000);
     }
 
