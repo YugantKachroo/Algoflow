@@ -194,10 +194,12 @@ export default class LinkedList extends Component {
       nodes[ind].firstChild.innerHTML = data;
       nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
     }, numberAnimationTimeOut);
+    // nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
+    // nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
 
     setTimeout(() => {
-      nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
-      nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+      nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
+      nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
     }, numberAnimationTimeOut * 2);
   }
 
@@ -215,7 +217,7 @@ export default class LinkedList extends Component {
           <div className='wrapper'>
             <div>
               <button onClick={this.ClickSet} className='button' id='set-btn'>
-                Set
+                Update
               </button>
               <input
                 value={this.state.setIndex}
