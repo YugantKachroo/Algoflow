@@ -538,9 +538,9 @@ button.button:hover {
   transform: scale(1.03);
 }
 
-div.remove input {
+/* div.remove input {
   display: none;
-}
+} */
 
 /* ----------------------------------------------------------------- */
 /* Remove Button */
@@ -559,9 +559,9 @@ div.remove:hover {
   transform: scale(1.03);
 }
 
-div.wrapper > div:nth-child(4) input {
+/* div.wrapper > div:nth-child(4) input {
   display: none;
-}
+} */
 
 button#remove-btn {
   width: 70%;

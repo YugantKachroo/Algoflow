@@ -7,7 +7,6 @@ import './File.css';
 let nodeAnimationTimeout: 1000;
 let pointerAnimationTimeout: 800;
 let deleteTimeout: 1000;
-let numberAnimationTimeOut = 1000;
 let errorCircle = '<i class="fas fa-exclamation-circle"></i> ';
 let nodes = document.getElementsByClassName('node1');
 let pointers = document.getElementsByClassName('pointer1');
@@ -240,7 +239,11 @@ export default class LinkedList extends Component {
                 placeholder='Data'
               />
               <br />
-              <button onClick={this.ClickSet} className='button' id='set-btn'>
+              <button
+                onClick={this.ClickSet}
+                className='ui blue button'
+                id='set-btn'
+              >
                 Update
               </button>
             </div>
@@ -248,7 +251,7 @@ export default class LinkedList extends Component {
               <input type='number' placeholder='Index' />
               <input type='number' placeholder='Data' />
               <br />
-              <button className='button' id='insert-btn'>
+              <button className='ui green button' id='insert-btn'>
                 Insert
               </button>
             </div>
@@ -262,27 +265,25 @@ export default class LinkedList extends Component {
                 placeholder='Data'
               />
               <br />
-              <button onClick={this.ClickAdd} className='button' id='add-btn'>
+              <button
+                onClick={this.ClickAdd}
+                className='ui pink button'
+                id='add-btn'
+              >
                 Add
               </button>
             </div>
             <div>
-              <div className='remove'>
-                <button className='button' id='remove-btn'>
-                  Remove
-                </button>
-                <button className='button' id='remove-settings'>
-                  <i className='fas fa-cog'></i>
-                </button>
-              </div>
-              <button className='remove-option' id='remove-index-btn'>
-                Index
-              </button>
-              <button className='remove-option' id='remove-data-btn'>
-                Data
-              </button>
-              <input type='number' placeholder='Index' />
-              <input type='number' placeholder='Data' />
+              <br />
+              <br />
+              <input
+                value={this.state.setIndex}
+                onChange={this.setIndexHandleChange}
+                type='number'
+                placeholder='Index'
+              />
+              <br />
+              <button className='ui red button'>Remove</button>
             </div>
           </div>
         </div>
