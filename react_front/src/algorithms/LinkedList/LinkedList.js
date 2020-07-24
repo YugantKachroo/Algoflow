@@ -7,6 +7,7 @@ import './File.css';
 let nodeAnimationTimeout: 1000;
 let pointerAnimationTimeout: 800;
 let deleteTimeout: 1000;
+let numberAnimationTimeOut = 1000;
 let errorCircle = '<i class="fas fa-exclamation-circle"></i> ';
 let nodes = document.getElementsByClassName('node1');
 let pointers = document.getElementsByClassName('pointer1');
@@ -17,6 +18,9 @@ export default class LinkedList extends Component {
     this.state = { addValue: '', setIndex: '', setValue: '' };
     this.addHandleChange = this.addHandleChange.bind(this);
     this.ClickAdd = this.ClickAdd.bind(this);
+    this.setValueHandleChange = this.setValueHandleChange.bind(this);
+    this.setIndexHandleChange = this.setIndexHandleChange.bind(this);
+    this.ClickSet = this.ClickSet.bind(this);
   }
 
   componentDidMount() {
@@ -156,6 +160,7 @@ export default class LinkedList extends Component {
   setIndexHandleChange(event) {
     const temp = event.target.value;
     this.setState({ setIndex: temp });
+    console.log(temp);
   }
 
   async ClickSet(event) {
@@ -170,6 +175,30 @@ export default class LinkedList extends Component {
     }
 
     this.setfunction(this.state.setIndex, this.state.setValue);
+  }
+
+  async setfunction(ind, data) {
+    console.log(1);
+    if (
+      this.checkInputErrors(ind, 'Index', true) ||
+      this.checkInputErrors(data, 'Data')
+    ) {
+      return;
+    }
+
+    await this.animateNodes(0, ind - 1);
+
+    nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+
+    setTimeout(() => {
+      nodes[ind].firstChild.innerHTML = data;
+      nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
+    }, numberAnimationTimeOut);
+
+    setTimeout(() => {
+      nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
+      nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+    }, numberAnimationTimeOut * 2);
   }
 
   render() {
@@ -188,25 +217,25 @@ export default class LinkedList extends Component {
               <button onClick={this.ClickSet} className='button' id='set-btn'>
                 Set
               </button>
-              <input type='number' placeholder='Index' />
-              <input type='number' placeholder='Data' />
-            </div>
-            <div>
-              <button className='button' id='insert-btn'>
-                Insert
-              </button>
               <input
                 value={this.state.setIndex}
-                onClick={this.setIndexHandleChange}
+                onChange={this.setIndexHandleChange}
                 type='number'
                 placeholder='Index'
               />
               <input
                 value={this.state.setValue}
-                onClick={this.setValueHandleChange}
+                onChange={this.setValueHandleChange}
                 type='number'
                 placeholder='Data'
               />
+            </div>
+            <div>
+              <button className='button' id='insert-btn'>
+                Insert
+              </button>
+              <input type='number' placeholder='Index' />
+              <input type='number' placeholder='Data' />
             </div>
             <div>
               <button onClick={this.ClickAdd} className='button' id='add-btn'>

@@ -338,6 +338,17 @@ div.node1 p.number1 {
   color: #fff;
 }
 
+.fadeNumberOut-animation {
+  animation-name: fadeNumberOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
 @keyframes fadeNumberOut {
   70% {
     transform: scale(1.7);
@@ -345,6 +356,17 @@ div.node1 p.number1 {
   100% {
     transform: scale(0);
   }
+}
+
+.fadeNumberIn-animation {
+  animation-name: fadeNumberIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 @keyframes fadeNumberIn {
