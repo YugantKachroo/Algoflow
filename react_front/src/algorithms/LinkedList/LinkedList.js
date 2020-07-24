@@ -295,6 +295,7 @@ export default class LinkedList extends Component {
   }
 
   async removefunction(ind) {
+    await this.setState({ disabled: true });
     if (
       this.handleEmptyListError() ||
       this.checkInputErrors(ind, 'Index', true)
@@ -314,7 +315,8 @@ export default class LinkedList extends Component {
           nodes[i].classList.remove('animateClass1');
         }
       }
-    }, ind * 3000);
+      this.setState({ disabled: false });
+    }, ind * 1500);
   }
 
   async deleteNode(ind) {
