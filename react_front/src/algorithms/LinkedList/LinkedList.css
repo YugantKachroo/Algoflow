@@ -341,6 +341,7 @@ div.node1 p.number1 {
 .fadeNumberOut-animation {
   animation-name: fadeNumberOut;
   animation-duration: 1s;
+  font-size: 1.6rem;
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;
@@ -361,6 +362,7 @@ div.node1 p.number1 {
 .fadeNumberIn-animation {
   animation-name: fadeNumberIn;
   animation-duration: 1s;
+  font-size: 1.6rem;
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;

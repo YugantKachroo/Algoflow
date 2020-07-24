@@ -63,6 +63,10 @@ export default class LinkedList extends Component {
 
   addHandleChange(event) {
     const temp = event.target.value;
+    if (temp > 100) {
+      alert('Enter value less than 100');
+      return;
+    }
     this.setState({ addValue: temp });
     // console.log(this.state.addValue);
   }
@@ -154,6 +158,10 @@ export default class LinkedList extends Component {
 
   setValueHandleChange(event) {
     const temp = event.target.value;
+    if (temp > 100) {
+      alert('Enter value less than 100');
+      return;
+    }
     this.setState({ setValue: temp });
   }
 
@@ -216,9 +224,6 @@ export default class LinkedList extends Component {
         <div className='operations'>
           <div className='wrapper'>
             <div>
-              <button onClick={this.ClickSet} className='button' id='set-btn'>
-                Update
-              </button>
               <input
                 value={this.state.setIndex}
                 onChange={this.setIndexHandleChange}
@@ -231,24 +236,32 @@ export default class LinkedList extends Component {
                 type='number'
                 placeholder='Data'
               />
+              <br />
+              <button onClick={this.ClickSet} className='button' id='set-btn'>
+                Update
+              </button>
             </div>
             <div>
+              <input type='number' placeholder='Index' />
+              <input type='number' placeholder='Data' />
+              <br />
               <button className='button' id='insert-btn'>
                 Insert
               </button>
-              <input type='number' placeholder='Index' />
-              <input type='number' placeholder='Data' />
             </div>
             <div>
-              <button onClick={this.ClickAdd} className='button' id='add-btn'>
-                Add
-              </button>
+              <br />
+              <br />
               <input
                 type='number'
                 value={this.state.addValue}
                 onChange={this.addHandleChange}
                 placeholder='Data'
               />
+              <br />
+              <button onClick={this.ClickAdd} className='button' id='add-btn'>
+                Add
+              </button>
             </div>
             <div>
               <div className='remove'>
