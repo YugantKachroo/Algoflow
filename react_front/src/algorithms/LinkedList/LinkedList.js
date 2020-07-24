@@ -1,8 +1,37 @@
 import React, { Component } from 'react';
 import Bar from '../../components/Bar';
 import './LinkedList.css';
+import Pointer from './pointer.png';
+
+let animations = {
+  nodeAnimationTimeout: 1000,
+  pointerAnimationTimeout: 800,
+  deleteTimeout: 1000,
+};
 
 export default class LinkedList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { addValue: '' };
+    this.addHandleChange = this.addHandleChange.bind(this);
+    this.ClickAdd = this.ClickAdd.bind(this);
+  }
+
+  ClickAdd() {
+    //let userInput = this.getUserInput(this.parentNode);
+    let nodes = [];
+    nodes = document.getElementsByClassName('node');
+    console.log(this.state.addValue);
+
+    //this.add(nodes.length, userInput.data);
+  }
+
+  addHandleChange(event) {
+    const temp = event.target.value;
+    this.setState({ addValue: temp });
+    // console.log(temp);
+  }
+
   render() {
     return (
       <div className='ColorBody'>
@@ -30,10 +59,15 @@ export default class LinkedList extends Component {
               <input type='number' placeholder='Data' />
             </div>
             <div>
-              <button className='button' id='add-btn'>
+              <button onClick={this.ClickAdd} className='button' id='add-btn'>
                 Add
               </button>
-              <input type='number' placeholder='Data' />
+              <input
+                type='number'
+                value={this.state.addValue}
+                onChange={this.addHandleChange}
+                placeholder='Data'
+              />
             </div>
             <div>
               <div className='remove'>
