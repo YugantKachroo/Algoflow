@@ -3,7 +3,7 @@
 /* ----------------------------------------------------------------- */
 
 body {
-  background-color: rgb(25, 25, 25);
+  background-color: rgb(25, 25, 25) !important;
   /* height: 100%; */
 }
 
@@ -208,11 +208,11 @@ div.list {
 /* Node */
 /* ----------------------------------------------------------------- */
 
-div.node {
+div.node1 {
   /* var(--nodes-size) */
   background: #8900e8;
-  max-width: 10px;
-  max-height: 10px;
+  width: 60px;
+  height: 60px;
   text-align: center;
   border-radius: 50%;
 }
@@ -272,8 +272,9 @@ div.node {
 /* Number */
 /* ----------------------------------------------------------------- */
 
-div.node p.number {
+div.node1 p.number1 {
   margin: 0;
+  text-align: center;
   line-height: var(--nodes-size);
   font-family: 'Oswald', sans-serif;
   font-size: 1.6rem;

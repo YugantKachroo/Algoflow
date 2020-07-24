@@ -64,9 +64,9 @@ export default class LinkedList extends Component {
       return;
 
     let node = document.createElement('div');
-    node.classList.add('node');
+    node.classList.add('node1');
     let number = document.createElement('p');
-    number.classList.add('number');
+    number.classList.add('number1');
     let text = document.createTextNode(data);
     //console.log(data);
     number.appendChild(text);
@@ -161,7 +161,7 @@ export default class LinkedList extends Component {
 
   render() {
     return (
-      <div className='ColorBody'>
+      <div>
         <Bar />
         <div className='list' id='list'></div>
         <div className='errors'>
