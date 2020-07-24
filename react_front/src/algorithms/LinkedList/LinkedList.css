@@ -209,9 +209,10 @@ div.list {
 /* ----------------------------------------------------------------- */
 
 div.node {
+  /* var(--nodes-size) */
   background: #8900e8;
-  width: var(--nodes-size);
-  height: var(--nodes-size);
+  max-width: 10px;
+  max-height: 10px;
   text-align: center;
   border-radius: 50%;
 }
