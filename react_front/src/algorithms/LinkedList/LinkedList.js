@@ -21,18 +21,22 @@ export default class LinkedList extends Component {
     this.add(0, 2);
   }
 
-  ClickAdd(event) {
+  async ClickAdd(event) {
     event.preventDefault();
     let nodes = [];
-    nodes = document.getElementsByClassName('node');
-    console.log(nodes.length);
+    nodes = document.getElementsByClassName('node1');
+    await console.log(nodes.length);
+    if (this.state.addValue === '') {
+      alert('Enter a number');
+      return;
+    }
     this.add(nodes.length, this.state.addValue);
-    console.log(this.state.addValue);
+    //console.log(this.state.addValue);
   }
 
   checkInputErrors(input, type, endsAtLastNode = false) {
     let inputError = false;
-    let nodes = document.getElementsByClassName('node');
+    let nodes = document.getElementsByClassName('node1');
     let end = endsAtLastNode ? nodes.length - 1 : nodes.length;
     let error = document.getElementById('error');
 
@@ -94,13 +98,11 @@ export default class LinkedList extends Component {
       list.insertBefore(node, pointer);
     }
 
-    node.style.animation =
-      'grow ' + nodeAnimationTimeout / 1000 + 's ' + 'ease';
+    node.classList.add('grow-animation');
 
     setTimeout(() => {
       pointer.style.opacity = 1;
-      pointer.style.animation =
-        'slide ' + pointerAnimationTimeout / 1000 + 's ' + 'ease';
+      pointer.classList.add('slide-animation');
     }, nodeAnimationTimeout);
   }
 
@@ -113,11 +115,11 @@ export default class LinkedList extends Component {
 
   animateNode(i) {
     return new Promise((resolve) => {
-      let nodes = document.getElementsByClassName('node');
-      nodes[i].style.animation =
-        'highlightNode ' + nodeAnimationTimeout / 1000 + 's ' + 'ease';
+      let nodes = document.getElementsByClassName('node1');
+      nodes[i].classList.add('highlightNode-animation');
       setTimeout(() => {
-        nodes[i].style.animation = null;
+        nodes[i].classList.remove('highlightNode-animations');
+        // nodes[i].style.animation = null;
         resolve();
       }, nodeAnimationTimeout);
     });
@@ -126,10 +128,12 @@ export default class LinkedList extends Component {
   animatePointer(i) {
     return new Promise((resolve) => {
       let pointers = document.getElementsByClassName('pointer');
-      pointers[i].style.animation =
-        'highlightPointer ' + pointerAnimationTimeout / 1000 + 's ' + 'ease';
+      pointers[i].classList.add('highlightPointer-animation');
+      // pointers[i].style.animation =
+      //   'highlightPointer ' + pointerAnimationTimeout / 1000 + 's ' + 'ease';
       setTimeout(() => {
-        pointers[i].style.animation = null;
+        pointers[i].classList.remove('highlightPointer-animation');
+        // pointers[i].style.animation = null;
         resolve();
       }, pointerAnimationTimeout);
     });
@@ -138,7 +142,7 @@ export default class LinkedList extends Component {
   animateNodesBeforeInsert(from, to) {
     return new Promise((resolve) => {
       let pointers = document.getElementsByClassName('pointer');
-      let nodes = document.getElementsByClassName('node');
+      let nodes = document.getElementsByClassName('node1');
       for (let i = from; i < to; i++) {
         console.log('length3', nodes.length);
         console.log(1);
