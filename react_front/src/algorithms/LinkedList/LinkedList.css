@@ -3,9 +3,9 @@
 /* ----------------------------------------------------------------- */
 
 body {
-  background-color: rgb(25, 25, 25) !important;
-  position: relative !important;
-  --nodes-size: 70px !important;
+  /* background-color: rgb(25, 25, 25) !important; */
+  position: relative;
+  --nodes-size: 70px;
   /* height: 100%; */
 }
 
@@ -243,7 +243,7 @@ div.node1 {
 }
 
 .highlightNode-animation {
-  animation-name: grow;
+  animation-name: highlightNode;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -363,14 +363,14 @@ div.node1 p.number1 {
 /* Pointer */
 /* ----------------------------------------------------------------- */
 
-div.pointer {
+div.pointer1 {
   position: relative;
   width: var(--nodes-size);
   height: var(--nodes-size);
   z-index: -1;
 }
 
-div.pointer img {
+div.pointer1 img {
   width: 60px;
   position: absolute;
   top: 50%;
