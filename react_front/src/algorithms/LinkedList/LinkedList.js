@@ -40,24 +40,17 @@ export default class LinkedList extends Component {
 
   async ClickAdd(event) {
     event.preventDefault();
-    // let nodes = [];
-    // nodes = document.getElementsByClassName('node1');
     if (this.state.addValue === '') {
       alert('Enter a number');
       return;
     }
-    //await console.log(nodes.length);
-
     this.addfunction(nodes.length, this.state.addValue);
-    //console.log(this.state.addValue);
   }
 
   checkInputErrors(input, type, endsAtLastNode = false) {
     let inputError = false;
-    // let nodes = document.getElementsByClassName('node1');
     let end = endsAtLastNode ? nodes.length - 1 : nodes.length;
     let error = document.getElementById('error');
-
     if (isNaN(input)) {
       error.innerHTML = errorCircle + type + ' must be a number';
       inputError = true;
@@ -65,7 +58,6 @@ export default class LinkedList extends Component {
       error.innerHTML = errorCircle + 'Index Out Of Bounds';
       inputError = true;
     }
-
     if (inputError) error.firstChild.style.animation = 'highlightNode .8s ease';
     else error.innerHTML = null;
 
@@ -79,7 +71,6 @@ export default class LinkedList extends Component {
       return;
     }
     this.setState({ addValue: temp });
-    // console.log(this.state.addValue);
   }
 
   async addfunction(i, data) {
@@ -108,7 +99,6 @@ export default class LinkedList extends Component {
     pointer.appendChild(img);
     let list = document.getElementById('list');
     if (i === nodes.length) {
-      //await this.animateNodes(0, nodes.length - 1);
       if (i === 0) {
         list.appendChild(node);
       } else {
@@ -118,7 +108,6 @@ export default class LinkedList extends Component {
     } else {
       await this.setState({ disabled: true });
       this.animateNodes(0, i - 1);
-      //await this.animateNodesBeforeInsert(i, nodes.length);
       setTimeout(() => {
         list.insertBefore(pointer, nodes[i]);
         list.insertBefore(node, pointer);
@@ -126,7 +115,6 @@ export default class LinkedList extends Component {
       }, i * 1000);
       let count = 0;
       count = i;
-      //console.log(count);
 
       setTimeout(() => {
         for (let i = 0; i <= count; i++) {
@@ -134,6 +122,17 @@ export default class LinkedList extends Component {
           nodes[i].classList.remove('animateClass');
         }
         this.setState({ disabled: false });
+      }, count * 2000);
+
+      setTimeout(() => {
+        for (let i = 0; i <= count; i++) {
+          let img1 = document.createElement('img');
+          img1.src = Pointer;
+          console.log(img1.src);
+          pointers[i].removeChild(pointers[i].firstChild);
+          pointers[i].appendChild(img1);
+          console.log(pointers[i].firstChild);
+        }
       }, count * 2000);
     }
 
@@ -149,6 +148,12 @@ export default class LinkedList extends Component {
     for (let i = start; i <= end; i++) {
       setTimeout(() => {
         nodes[i].classList.add('animateClass1');
+        let img = document.createElement('img');
+        img.src = RedPointer;
+        //console.log(img.src);
+        pointers[i].removeChild(pointers[i].firstChild);
+        pointers[i].appendChild(img);
+        //console.log(pointers[i].firstChild);
       }, i * 1000);
       this.animateNode(i);
       this.animatePointer(i);
@@ -169,19 +174,6 @@ export default class LinkedList extends Component {
     }, i * 1000);
   }
 
-  animateNodesBeforeInsert(from, to) {
-    setTimeout(() => {
-      for (let i = from; i < to; i++) {
-        nodes[i].classList.add('moveRightNode-animation');
-        pointers[i].classList.add('moveRightNode-animation');
-        setTimeout(() => {
-          nodes[i].classList.remove('moveRightNode-animation');
-          pointers[i].classList.remove('moveRightNode-animation');
-        }, 1000);
-      }
-    }, 1000);
-  }
-
   setValueHandleChange(event) {
     const temp = event.target.value;
     if (temp > 100) {
@@ -194,7 +186,6 @@ export default class LinkedList extends Component {
   setIndexHandleChange(event) {
     const temp = event.target.value;
     this.setState({ setIndex: temp });
-    // console.log(temp);
   }
 
   async ClickSet(event) {
@@ -240,6 +231,17 @@ export default class LinkedList extends Component {
         nodes[i].classList.remove('animateClass1');
       }
       this.setState({ disabled: false });
+    }, ind * 1000 * 2);
+
+    setTimeout(() => {
+      for (let i = 0; i <= ind - 1; i++) {
+        let img1 = document.createElement('img');
+        img1.src = Pointer;
+        console.log(img1.src);
+        pointers[i].removeChild(pointers[i].firstChild);
+        pointers[i].appendChild(img1);
+        console.log(pointers[i].firstChild);
+      }
     }, ind * 1000 * 2);
   }
 
