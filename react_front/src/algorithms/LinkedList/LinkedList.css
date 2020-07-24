@@ -338,6 +338,14 @@ div.node1 p.number1 {
   color: #fff;
 }
 
+.animateClass {
+  background-color: green !important;
+}
+
+.animateClass1 {
+  background-color: red !important;
+}
+
 .fadeNumberOut-animation {
   animation-name: fadeNumberOut;
   animation-duration: 1s;

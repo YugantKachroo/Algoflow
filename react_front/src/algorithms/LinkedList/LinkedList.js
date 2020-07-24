@@ -14,7 +14,7 @@ let pointers = document.getElementsByClassName('pointer1');
 export default class LinkedList extends Component {
   constructor(props) {
     super(props);
-    this.state = { addValue: '', setIndex: '', setValue: '' };
+    this.state = { addValue: '', setIndex: '', setValue: '', deleteValue: '' };
     this.addHandleChange = this.addHandleChange.bind(this);
     this.ClickAdd = this.ClickAdd.bind(this);
     this.setValueHandleChange = this.setValueHandleChange.bind(this);
@@ -122,6 +122,9 @@ export default class LinkedList extends Component {
 
   async animateNodes(start, end) {
     for (let i = start; i <= end; i++) {
+      setTimeout(() => {
+        nodes[i].classList.add('animateClass1');
+      }, i * 1000);
       this.animateNode(i);
       this.animatePointer(i);
     }
@@ -203,13 +206,16 @@ export default class LinkedList extends Component {
     setTimeout(() => {
       nodes[ind].firstChild.innerHTML = data;
       nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
+      nodes[ind].classList.add('animateClass');
     }, ind * 1000);
-    // nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
-    // nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
 
     setTimeout(() => {
       nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
       nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
+      nodes[ind].classList.remove('animateClass');
+      for (let i = 0; i <= ind - 1; i++) {
+        nodes[i].classList.remove('animateClass1');
+      }
     }, ind * 1000 * 2);
   }
 
@@ -217,6 +223,7 @@ export default class LinkedList extends Component {
     return (
       <div>
         <Bar />
+        <br />
         <div className='list' id='list'></div>
         <div className='errors'>
           <div className='error-message'>
@@ -277,8 +284,8 @@ export default class LinkedList extends Component {
               <br />
               <br />
               <input
-                value={this.state.setIndex}
-                onChange={this.setIndexHandleChange}
+                value={this.state.deleteValue}
+                // onChange={this.setIndexHandleChange}
                 type='number'
                 placeholder='Index'
               />
