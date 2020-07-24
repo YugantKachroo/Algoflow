@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Bar from '../../components/Bar';
 import './LinkedList.css';
 import Pointer from './pointer.png';
+import RedPointer from './pointer1.png';
 import './File.css';
 
 let nodeAnimationTimeout: 1000;
@@ -14,12 +15,23 @@ let pointers = document.getElementsByClassName('pointer1');
 export default class LinkedList extends Component {
   constructor(props) {
     super(props);
-    this.state = { addValue: '', setIndex: '', setValue: '', deleteValue: '' };
+    this.state = {
+      addValue: '',
+      setIndex: '',
+      setValue: '',
+      insertIndex: '',
+      insertValue: '',
+      deleteValue: '',
+      disabled: false,
+    };
     this.addHandleChange = this.addHandleChange.bind(this);
     this.ClickAdd = this.ClickAdd.bind(this);
     this.setValueHandleChange = this.setValueHandleChange.bind(this);
     this.setIndexHandleChange = this.setIndexHandleChange.bind(this);
+    this.insertValueHandleChange = this.insertValueHandleChange.bind(this);
+    this.insertIndexHandleChange = this.insertIndexHandleChange.bind(this);
     this.ClickSet = this.ClickSet.bind(this);
+    this.ClickInsert = this.ClickInsert.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +94,7 @@ export default class LinkedList extends Component {
     let number = document.createElement('p');
     number.classList.add('number1');
     let text = document.createTextNode(data);
-    //console.log(data);
+
     number.appendChild(text);
     node.appendChild(number);
 
@@ -94,23 +106,33 @@ export default class LinkedList extends Component {
     img.src = Pointer;
 
     pointer.appendChild(img);
-    //let nodes = document.getElementsByClassName('node1');
     let list = document.getElementById('list');
-    // console.log(i);
-    // console.log(nodes.length);
-
-    // if (i === nodes.length) {
-    //   console.log(i);
-    //   await this.animateNodes(0, i - 1);
-    list.appendChild(node);
-    list.appendChild(pointer);
-    // } else {
-    //   console.log(2);
-    //   await this.animateNodes(0, i - 1);
-    //   await this.animateNodesBeforeInsert(i, nodes.length);
-    //   list.insertBefore(pointer, nodes[i]);
-    //   list.insertBefore(node, pointer);
-    // }
+    if (i === nodes.length) {
+      if (i === 0) {
+        list.appendChild(node);
+      } else {
+        list.appendChild(pointer);
+        list.appendChild(node);
+      }
+    } else {
+      this.animateNodes(0, i - 1);
+      //await this.animateNodesBeforeInsert(i, nodes.length);
+      setTimeout(() => {
+        list.insertBefore(pointer, nodes[i]);
+        list.insertBefore(node, pointer);
+        nodes[i].classList.add('animateClass');
+      }, i * 1000);
+      let count = 0;
+      count = i;
+      //console.log(count);
+      await this.setState({ disabled: false });
+      setTimeout(() => {
+        for (let i = 0; i <= count; i++) {
+          nodes[i].classList.remove('animateClass1');
+          nodes[i].classList.remove('animateClass');
+        }
+      }, count * 2000);
+    }
 
     await node.classList.add('grow-animation');
 
@@ -131,9 +153,7 @@ export default class LinkedList extends Component {
   }
 
   animateNode(i) {
-    //console.log(i * 1000);
     nodes[i].classList.add('highlightNode-animation');
-    //console.log(nodes[i]);
     setTimeout(() => {
       nodes[i].classList.remove('highlightNode-animation');
     }, i * 1000);
@@ -154,9 +174,9 @@ export default class LinkedList extends Component {
         setTimeout(() => {
           nodes[i].classList.remove('moveRightNode-animation');
           pointers[i].classList.remove('moveRightNode-animation');
-        }, pointerAnimationTimeout);
+        }, 1000);
       }
-    }, pointerAnimationTimeout);
+    }, 1000);
   }
 
   setValueHandleChange(event) {
@@ -180,8 +200,8 @@ export default class LinkedList extends Component {
       alert('Enter a number');
       return;
     }
-    if (this.state.setIndex === '') {
-      alert('Enter an index');
+    if (this.state.setIndex === '' || this.state.setIndex >= nodes.length) {
+      alert('Enter index between 0 and number of nodes');
       return;
     }
 
@@ -189,7 +209,7 @@ export default class LinkedList extends Component {
   }
 
   async setfunction(ind, data) {
-    //console.log(1);
+    await this.setState({ disabled: true });
     if (
       this.checkInputErrors(ind, 'Index', true) ||
       this.checkInputErrors(data, 'Data')
@@ -216,10 +236,43 @@ export default class LinkedList extends Component {
       for (let i = 0; i <= ind - 1; i++) {
         nodes[i].classList.remove('animateClass1');
       }
+      this.setState({ disabled: false });
     }, ind * 1000 * 2);
   }
 
+  insertValueHandleChange(event) {
+    const temp = event.target.value;
+    if (temp > 100) {
+      alert('Enter value less than 100');
+      return;
+    }
+    this.setState({ insertValue: temp });
+  }
+
+  insertIndexHandleChange(event) {
+    const temp = event.target.value;
+    this.setState({ insertIndex: temp });
+  }
+
+  async ClickInsert(event) {
+    event.preventDefault();
+    if (this.state.insertValue === '') {
+      alert('Enter a number');
+      return;
+    }
+    if (
+      this.state.insertIndex === '' ||
+      this.state.insertIndex >= nodes.length
+    ) {
+      alert('Enter index between 0 and number of nodes');
+      return;
+    }
+
+    this.addfunction(this.state.insertIndex, this.state.insertValue);
+  }
+
   render() {
+    const { disabled } = this.state;
     return (
       <div>
         <Bar />
@@ -247,6 +300,7 @@ export default class LinkedList extends Component {
               />
               <br />
               <button
+                disabled={disabled}
                 onClick={this.ClickSet}
                 className='ui blue button'
                 id='set-btn'
@@ -255,10 +309,25 @@ export default class LinkedList extends Component {
               </button>
             </div>
             <div>
-              <input type='number' placeholder='Index' />
-              <input type='number' placeholder='Data' />
+              <input
+                value={this.state.insertIndex}
+                onChange={this.insertIndexHandleChange}
+                type='number'
+                placeholder='Index'
+              />
+              <input
+                value={this.state.insertValue}
+                onChange={this.insertValueHandleChange}
+                type='number'
+                placeholder='Data'
+              />
               <br />
-              <button className='ui green button' id='insert-btn'>
+              <button
+                disabled={disabled}
+                onClick={this.ClickInsert}
+                className='ui green button'
+                id='insert-btn'
+              >
                 Insert
               </button>
             </div>
@@ -273,6 +342,7 @@ export default class LinkedList extends Component {
               />
               <br />
               <button
+                disabled={disabled}
                 onClick={this.ClickAdd}
                 className='ui pink button'
                 id='add-btn'
@@ -290,7 +360,13 @@ export default class LinkedList extends Component {
                 placeholder='Index'
               />
               <br />
-              <button className='ui red button'>Remove</button>
+              <button
+                disabled={disabled}
+                className='ui red button'
+                id='remove-btn'
+              >
+                Remove
+              </button>
             </div>
           </div>
         </div>

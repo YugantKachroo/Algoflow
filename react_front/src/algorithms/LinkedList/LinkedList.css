@@ -305,7 +305,7 @@ div.node1 {
 }
 
 .moveRightNode-animation {
-  animation-name: moveRightNode;
+  animation-name: moveRightNode1;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -315,14 +315,14 @@ div.node1 {
   animation-play-state: running;
 }
 
-@keyframes moveRightNode {
+/* @keyframes moveRightNode {
   50% {
     transform: translateX(250%);
   }
   100% {
     transform: translateX(200%);
   }
-}
+} */
 
 /* ----------------------------------------------------------------- */
 /* Number */
@@ -394,6 +394,11 @@ div.node1 p.number1 {
 /* ----------------------------------------------------------------- */
 /* Pointer */
 /* ----------------------------------------------------------------- */
+
+.pointer2 {
+  display: none;
+  visibility: hidden;
+}
 
 div.pointer1 {
   position: relative;
