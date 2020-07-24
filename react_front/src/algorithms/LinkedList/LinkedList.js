@@ -313,9 +313,14 @@ export default class LinkedList extends Component {
           pointers[i].removeChild(pointers[i].firstChild);
           pointers[i].appendChild(img1);
         }
+        console.log(nodes.length);
+        if (i >= nodes.length) {
+          pointers[i - 1].removeChild(pointers[i - 1].firstChild);
+        } else {
+          // nodes[ind].classList.remove('animateClass');
+        }
 
-        nodes[ind].classList.remove('animateClass');
-        for (let i = 0; i <= ind; i++) {
+        for (let i = 0; i < ind; i++) {
           nodes[i].classList.remove('animateClass1');
         }
       }
@@ -325,19 +330,29 @@ export default class LinkedList extends Component {
 
   async deleteNode(ind) {
     nodes[ind].firstChild.classList.add('deleteNode-animation');
-    pointers[ind].firstChild.classList.add('deletePointer-animation');
-    await setTimeout(() => {
-      let img2 = document.createElement('img');
-      img2.src = GreenPointer;
-      pointers[ind].removeChild(pointers[ind].firstChild);
-      pointers[ind].appendChild(img2);
-      nodes[ind].classList.add('animateClass');
-    }, ind * 1000);
-    await setTimeout(() => {
-      let list = document.getElementById('list');
-      list.removeChild(nodes[ind]);
-      list.removeChild(pointers[ind]);
-    }, ind * 1500);
+    if (pointers[ind]) {
+      pointers[ind].firstChild.classList.add('deletePointer-animation');
+      await setTimeout(() => {
+        let img2 = document.createElement('img');
+        img2.src = GreenPointer;
+        pointers[ind].removeChild(pointers[ind].firstChild);
+        pointers[ind].appendChild(img2);
+        nodes[ind].classList.add('animateClass');
+      }, ind * 1000);
+      await setTimeout(() => {
+        let list = document.getElementById('list');
+        list.removeChild(nodes[ind]);
+        list.removeChild(pointers[ind]);
+      }, ind * 1500);
+    } else {
+      await setTimeout(() => {
+        nodes[ind].classList.add('animateClass');
+      }, ind * 1000);
+      await setTimeout(() => {
+        let list = document.getElementById('list');
+        list.removeChild(nodes[ind]);
+      }, ind * 1500);
+    }
   }
 
   handleEmptyListError() {
