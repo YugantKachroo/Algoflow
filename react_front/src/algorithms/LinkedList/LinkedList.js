@@ -308,8 +308,12 @@ export default class LinkedList extends Component {
       for (let i = 0; i <= ind; i++) {
         let img1 = document.createElement('img');
         img1.src = Pointer;
-        pointers[i].removeChild(pointers[i].firstChild);
-        pointers[i].appendChild(img1);
+        if (i === pointers.length) {
+        } else {
+          pointers[i].removeChild(pointers[i].firstChild);
+          pointers[i].appendChild(img1);
+        }
+
         nodes[ind].classList.remove('animateClass');
         for (let i = 0; i <= ind; i++) {
           nodes[i].classList.remove('animateClass1');
