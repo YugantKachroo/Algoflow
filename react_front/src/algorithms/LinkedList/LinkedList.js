@@ -353,6 +353,10 @@ export default class LinkedList extends Component {
       <div>
         <Bar />
         <br />
+        <center>
+          <h1>Linked List</h1>
+        </center>
+        <br />
         <div className='list' id='list'></div>
         <div className='errors'>
           <div className='error-message'>
