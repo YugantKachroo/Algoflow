@@ -123,24 +123,25 @@ export default class LinkedList extends Component {
 
   async animateNodes(start, end) {
     for (let i = start; i <= end; i++) {
-      await this.animateNode(i);
-      await this.animatePointer(i);
+      this.animateNode(i);
+      this.animatePointer(i);
     }
   }
 
   animateNode(i) {
+    //console.log(i * 1000);
     nodes[i].classList.add('highlightNode-animation');
-    console.log(nodes[i]);
+    //console.log(nodes[i]);
     setTimeout(() => {
       nodes[i].classList.remove('highlightNode-animation');
-    }, nodeAnimationTimeout);
+    }, i * 1000);
   }
 
   animatePointer(i) {
     pointers[i].classList.add('highlightPointer-animation');
     setTimeout(() => {
       pointers[i].classList.remove('highlightPointer-animation');
-    }, pointerAnimationTimeout);
+    }, i * 1000);
   }
 
   animateNodesBeforeInsert(from, to) {
@@ -168,7 +169,7 @@ export default class LinkedList extends Component {
   setIndexHandleChange(event) {
     const temp = event.target.value;
     this.setState({ setIndex: temp });
-    console.log(temp);
+    // console.log(temp);
   }
 
   async ClickSet(event) {
@@ -186,7 +187,7 @@ export default class LinkedList extends Component {
   }
 
   async setfunction(ind, data) {
-    console.log(1);
+    //console.log(1);
     if (
       this.checkInputErrors(ind, 'Index', true) ||
       this.checkInputErrors(data, 'Data')
@@ -196,19 +197,21 @@ export default class LinkedList extends Component {
 
     await this.animateNodes(0, ind - 1);
 
-    nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+    setTimeout(() => {
+      nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+    }, ind * 1000);
 
     setTimeout(() => {
       nodes[ind].firstChild.innerHTML = data;
       nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
-    }, numberAnimationTimeOut);
+    }, ind * 1000);
     // nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
     // nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
 
     setTimeout(() => {
       nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
       nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
-    }, numberAnimationTimeOut * 2);
+    }, ind * 1000 * 2);
   }
 
   render() {

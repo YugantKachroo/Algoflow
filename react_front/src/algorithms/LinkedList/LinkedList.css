@@ -243,7 +243,7 @@ div.node1 {
 }
 
 .highlightNode-animation {
-  animation-name: highlightNode;
+  animation-name: highlightNode1;
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -253,14 +253,14 @@ div.node1 {
   animation-play-state: running;
 }
 
-@keyframes highlightNode {
+/* @keyframes highlightNode {
   50% {
     transform: scale(1.3);
   }
   100% {
     transform: scale(1);
   }
-}
+} */
 
 .deleteNode-animation {
   animation-name: deleteNode;
@@ -426,9 +426,9 @@ div.pointer1 img {
 }
 
 .highlightPointer-animation {
-  animation-name: highlightPointer;
+  animation-name: highlightPointer1;
   animation-duration: 1s;
-  animation-timing-function: ease-out;
+  animation-timing-function: ease;
   animation-delay: 0;
   animation-direction: alternate;
   animation-iteration-count: 1;
@@ -436,7 +436,7 @@ div.pointer1 img {
   animation-play-state: running;
 }
 
-@keyframes highlightPointer {
+/* @keyframes highlightPointer1 {
   33% {
     transform: rotate(10deg);
   }
@@ -446,7 +446,7 @@ div.pointer1 img {
   100% {
     transform: rotate(0deg);
   }
-}
+} */
 
 .deletePointer-animation {
   animation-name: deletePointer;
