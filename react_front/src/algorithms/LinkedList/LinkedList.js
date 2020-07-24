@@ -3,6 +3,7 @@ import Bar from '../../components/Bar';
 import './LinkedList.css';
 import Pointer from './pointer.png';
 import RedPointer from './pointer1.png';
+import GreenPointer from './pointer2.png';
 import './File.css';
 
 let nodeAnimationTimeout: 1000;
@@ -113,6 +114,14 @@ export default class LinkedList extends Component {
         list.insertBefore(node, pointer);
         nodes[i].classList.add('animateClass');
       }, i * 1000);
+      setTimeout(() => {
+        let img2 = document.createElement('img');
+        img2.src = GreenPointer;
+        //console.log(img1.src);
+        pointers[i].removeChild(pointers[i].firstChild);
+        pointers[i].appendChild(img2);
+        //console.log(pointers[i].firstChild);
+      }, i * 1000);
       let count = 0;
       count = i;
 
@@ -128,7 +137,7 @@ export default class LinkedList extends Component {
         for (let i = 0; i <= count; i++) {
           let img1 = document.createElement('img');
           img1.src = Pointer;
-          console.log(img1.src);
+          //console.log(img1.src);
           pointers[i].removeChild(pointers[i].firstChild);
           pointers[i].appendChild(img1);
           console.log(pointers[i].firstChild);
@@ -237,7 +246,7 @@ export default class LinkedList extends Component {
       for (let i = 0; i <= ind - 1; i++) {
         let img1 = document.createElement('img');
         img1.src = Pointer;
-        console.log(img1.src);
+        //console.log(img1.src);
         pointers[i].removeChild(pointers[i].firstChild);
         pointers[i].appendChild(img1);
         console.log(pointers[i].firstChild);
