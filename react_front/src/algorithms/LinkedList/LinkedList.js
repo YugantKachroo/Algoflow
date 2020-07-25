@@ -111,7 +111,6 @@ export default class LinkedList extends Component {
 
       if (i == 0) {
         await this.setState({ disabled: true });
-        //console.log(this.state.disabled);
         setTimeout(() => {
           list.insertBefore(pointer, nodes[i]);
           list.insertBefore(node, pointer);
@@ -251,7 +250,6 @@ export default class LinkedList extends Component {
 
     if (ind == 0) {
       await this.setState({ disabled: true });
-      //console.log(this.state.disabled);
       setTimeout(() => {
         setTimeout(() => {
           nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
@@ -267,7 +265,6 @@ export default class LinkedList extends Component {
         nodes[ind].classList.remove('animateClass');
 
         this.setState({ disabled: false });
-        // console.log(this.state.disabled);
       }, (ind + 1) * 1000 * 2);
     } else {
       await this.animateNodes(0, ind - 1);
@@ -362,11 +359,6 @@ export default class LinkedList extends Component {
     await this.deleteNode(ind);
 
     if (ind == 0) {
-      // setTimeout(() => {
-      //   nodes[ind].classList.add('animateClass');
-      // }, ind * 1500);
-
-      //await console.log(nodes[ind].classList);
       setTimeout(() => {
         let img1 = document.createElement('img');
         img1.src = Pointer;
@@ -378,20 +370,15 @@ export default class LinkedList extends Component {
         for (let i = 0; i < ind; i++) {
           nodes[i].classList.remove('animateClass1');
         }
-        //nodes[ind].classList.remove('animateClass');
         this.setState({ disabled: false });
       }, (ind + 1) * 1500);
     } else if (ind == nodes.length - 1) {
-      //console.log(11);
       setTimeout(() => {
         for (let jj = 0; jj < ind - 1; jj++) {
           let img1 = document.createElement('img');
           img1.src = Pointer;
-          // if (ind >= nodes.length - 1) {
-          // } else {
           pointers[jj].removeChild(pointers[jj].firstChild);
           pointers[jj].appendChild(img1);
-          // }
         }
         pointers[ind - 1].removeChild(pointers[ind - 1].firstChild);
 
@@ -401,8 +388,8 @@ export default class LinkedList extends Component {
         let list = document.getElementById('list');
         list.removeChild(nodes[ind]);
         list.removeChild(pointers[ind - 1]);
-        //nodes[ind].classList.remove('animateClass');
         this.setState({ disabled: false });
+        //console.log(0);
       }, ind * 1500);
     } else {
       setTimeout(() => {
@@ -425,29 +412,12 @@ export default class LinkedList extends Component {
   }
 
   async deleteNode(ind) {
-    // console.log(ind);
     const tempValue = nodes.length - 1;
-    //console.log(tempValue);
     if (ind == tempValue && ind != 0) {
-      // console.log(ind);
-      // console.log(nodes.length);
       nodes[ind].firstChild.classList.add('deleteNode-animation');
       await setTimeout(() => {
         nodes[ind].classList.add('animateClass');
       }, ind * 1000);
-      await setTimeout(() => {
-        //nodes[ind].classList.remove('animateClass');
-        let list = document.getElementById('list');
-        list.removeChild(nodes[ind]);
-        list.removeChild(pointers[ind - 1]);
-
-        // if (pointers.length >= 1) {
-        //   pointers[ind - 1].firstChild.classList.add(
-        //     'deletePointer-animation'
-        //   );
-        //   list.removeChild(pointers[ind - 1]);
-        // }
-      }, (ind + 1) * 1500);
     } else if (ind == 0) {
       nodes[ind].firstChild.classList.add('deleteNode-animation');
 
@@ -459,7 +429,6 @@ export default class LinkedList extends Component {
           pointers[ind].removeChild(pointers[ind].firstChild);
           pointers[ind].appendChild(img2);
           nodes[ind].classList.add('animateClass');
-          // console.log(nodes[ind].classList);
         }, ind * 1000);
 
         setTimeout(() => {
@@ -477,7 +446,6 @@ export default class LinkedList extends Component {
           this.setState({ disabled: false });
         }, (ind + 1) * 1500);
         await setTimeout(() => {
-          // console.log(1);
           let list = document.getElementById('list');
           list.removeChild(nodes[ind]);
           list.removeChild(pointers[ind]);
@@ -490,12 +458,6 @@ export default class LinkedList extends Component {
         await setTimeout(() => {
           let list = document.getElementById('list');
           list.removeChild(nodes[ind]);
-          // if (pointers.length >= 1) {
-          //   pointers[ind - 1].firstChild.classList.add(
-          //     'deletePointer-animation'
-          //   );
-          //   list.removeChild(pointers[ind - 1]);
-          // }
         }, (ind + 1) * 1500);
       }
     } else {
@@ -508,7 +470,6 @@ export default class LinkedList extends Component {
           pointers[ind].removeChild(pointers[ind].firstChild);
           pointers[ind].appendChild(img2);
           nodes[ind].classList.add('animateClass');
-          //console.log(nodes[ind].classList);
         }, ind * 1000);
         await setTimeout(() => {
           let list = document.getElementById('list');
