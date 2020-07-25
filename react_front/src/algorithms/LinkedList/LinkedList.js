@@ -323,33 +323,82 @@ export default class LinkedList extends Component {
   }
 
   async deleteNode(ind) {
-    nodes[ind].firstChild.classList.add('deleteNode-animation');
     // console.log(pointers.length);
-    if (pointers.length >= 2) {
-      pointers[ind].firstChild.classList.add('deletePointer-animation');
-      await setTimeout(() => {
-        let img2 = document.createElement('img');
-        img2.src = GreenPointer;
-        pointers[ind].removeChild(pointers[ind].firstChild);
-        pointers[ind].appendChild(img2);
-        nodes[ind].classList.add('animateClass');
-      }, ind * 1000);
-      await setTimeout(() => {
-        let list = document.getElementById('list');
-        list.removeChild(nodes[ind]);
-        list.removeChild(pointers[ind]);
-      }, ind * 1500);
+    if (ind == 0) {
+      console.log(ind);
+      console.log(pointers.length);
+      nodes[ind].firstChild.classList.add('deleteNode-animation');
+
+      if (pointers.length >= 1) {
+        pointers[ind].firstChild.classList.add('deletePointer-animation');
+        await setTimeout(() => {
+          let img2 = document.createElement('img');
+          img2.src = GreenPointer;
+          pointers[ind].removeChild(pointers[ind].firstChild);
+          pointers[ind].appendChild(img2);
+          nodes[ind].classList.add('animateClass');
+          // console.log(nodes[ind].classList);
+        }, ind * 1000);
+        await setTimeout(() => {
+          let list = document.getElementById('list');
+          list.removeChild(nodes[ind]);
+          list.removeChild(pointers[ind]);
+        }, ind * 1500);
+      } else {
+        nodes[ind].firstChild.classList.add('deleteNode-animation');
+        await setTimeout(() => {
+          nodes[ind].classList.add('animateClass');
+        }, ind * 1000);
+        await setTimeout(() => {
+          let list = document.getElementById('list');
+          list.removeChild(nodes[ind]);
+          // if (pointers.length >= 1) {
+          //   pointers[ind - 1].firstChild.classList.add(
+          //     'deletePointer-animation'
+          //   );
+          //   list.removeChild(pointers[ind - 1]);
+          // }
+        }, ind * 1500);
+      }
     } else {
-      await setTimeout(() => {
-        nodes[ind].classList.add('animateClass');
-      }, ind * 1000);
-      await setTimeout(() => {
-        let list = document.getElementById('list');
-        list.removeChild(nodes[ind]);
-        if (pointers.length >= 1) {
-          list.removeChild(pointers[ind - 1]);
-        }
-      }, ind * 1500);
+      if (pointers.length >= 2) {
+        nodes[ind].firstChild.classList.add('deleteNode-animation');
+        pointers[ind].firstChild.classList.add('deletePointer-animation');
+        await setTimeout(() => {
+          let img2 = document.createElement('img');
+          img2.src = GreenPointer;
+          pointers[ind].removeChild(pointers[ind].firstChild);
+          pointers[ind].appendChild(img2);
+          nodes[ind].classList.add('animateClass');
+          console.log(nodes[ind].classList);
+        }, ind * 1000);
+        await setTimeout(() => {
+          let list = document.getElementById('list');
+          list.removeChild(nodes[ind]);
+          list.removeChild(pointers[ind]);
+        }, ind * 1500);
+      } else {
+        nodes[ind].firstChild.classList.add('deleteNode-animation');
+        await setTimeout(() => {
+          nodes[ind].classList.add('animateClass');
+          console.log(nodes[ind].classList);
+        }, ind * 1000);
+        await setTimeout(() => {
+          let list = document.getElementById('list');
+          list.removeChild(nodes[ind]);
+          if (pointers.length >= 1) {
+            if (ind !== 0) {
+              pointers[ind - 1].firstChild.classList.add(
+                'deletePointer-animation'
+              );
+              list.removeChild(pointers[ind - 1]);
+            } else {
+              pointers[ind].firstChild.classList.add('deletePointer-animation');
+              list.removeChild(pointers[ind]);
+            }
+          }
+        }, ind * 1500);
+      }
     }
   }
 
