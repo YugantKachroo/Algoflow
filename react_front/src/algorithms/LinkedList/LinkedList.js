@@ -413,7 +413,7 @@ export default class LinkedList extends Component {
           pointers[ind].removeChild(pointers[ind].firstChild);
           pointers[ind].appendChild(img2);
           nodes[ind].classList.add('animateClass');
-          console.log(nodes[ind].classList);
+          // console.log(nodes[ind].classList);
         }, ind * 1000);
 
         setTimeout(() => {
@@ -450,7 +450,7 @@ export default class LinkedList extends Component {
           //   );
           //   list.removeChild(pointers[ind - 1]);
           // }
-        }, ind * 1500);
+        }, (ind + 1) * 1500);
       }
     } else {
       if (pointers.length >= 2) {
