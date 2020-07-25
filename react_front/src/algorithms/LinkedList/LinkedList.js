@@ -108,37 +108,72 @@ export default class LinkedList extends Component {
       }
     } else {
       await this.setState({ disabled: true });
-      this.animateNodes(0, i - 1);
-      setTimeout(() => {
-        list.insertBefore(pointer, nodes[i]);
-        list.insertBefore(node, pointer);
-        nodes[i].classList.add('animateClass');
-      }, i * 1000);
-      setTimeout(() => {
-        let img2 = document.createElement('img');
-        img2.src = GreenPointer;
-        pointers[i].removeChild(pointers[i].firstChild);
-        pointers[i].appendChild(img2);
-      }, i * 1000);
-      let count = 0;
-      count = i;
 
-      setTimeout(() => {
-        for (let i = 0; i <= count; i++) {
-          nodes[i].classList.remove('animateClass1');
-          nodes[i].classList.remove('animateClass');
-        }
-        this.setState({ disabled: false });
-      }, count * 2000);
-
-      setTimeout(() => {
-        for (let i = 0; i <= count; i++) {
-          let img1 = document.createElement('img');
-          img1.src = Pointer;
+      if (i == 0) {
+        await this.setState({ disabled: true });
+        //console.log(this.state.disabled);
+        setTimeout(() => {
+          list.insertBefore(pointer, nodes[i]);
+          list.insertBefore(node, pointer);
+          nodes[i].classList.add('animateClass');
+        }, i * 1000);
+        setTimeout(() => {
+          let img2 = document.createElement('img');
+          img2.src = GreenPointer;
           pointers[i].removeChild(pointers[i].firstChild);
-          pointers[i].appendChild(img1);
-        }
-      }, count * 2000);
+          pointers[i].appendChild(img2);
+        }, i * 1000);
+        let count = 0;
+        count = i;
+        setTimeout(() => {
+          for (let i = 0; i <= count; i++) {
+            nodes[i].classList.remove('animateClass1');
+            nodes[i].classList.remove('animateClass');
+          }
+          this.setState({ disabled: false });
+        }, (count + 1) * 2000);
+
+        setTimeout(() => {
+          for (let i = 0; i <= count; i++) {
+            let img1 = document.createElement('img');
+            img1.src = Pointer;
+            pointers[i].removeChild(pointers[i].firstChild);
+            pointers[i].appendChild(img1);
+          }
+        }, (count + 1) * 2000);
+      } else {
+        this.animateNodes(0, i - 1);
+        setTimeout(() => {
+          list.insertBefore(pointer, nodes[i]);
+          list.insertBefore(node, pointer);
+          nodes[i].classList.add('animateClass');
+        }, i * 1000);
+        setTimeout(() => {
+          let img2 = document.createElement('img');
+          img2.src = GreenPointer;
+          pointers[i].removeChild(pointers[i].firstChild);
+          pointers[i].appendChild(img2);
+        }, i * 1000);
+        let count = 0;
+        count = i;
+
+        setTimeout(() => {
+          for (let i = 0; i <= count; i++) {
+            nodes[i].classList.remove('animateClass1');
+            nodes[i].classList.remove('animateClass');
+          }
+          this.setState({ disabled: false });
+        }, count * 2000);
+
+        setTimeout(() => {
+          for (let i = 0; i <= count; i++) {
+            let img1 = document.createElement('img');
+            img1.src = Pointer;
+            pointers[i].removeChild(pointers[i].firstChild);
+            pointers[i].appendChild(img1);
+          }
+        }, count * 2000);
+      }
     }
 
     await node.classList.add('grow-animation');
