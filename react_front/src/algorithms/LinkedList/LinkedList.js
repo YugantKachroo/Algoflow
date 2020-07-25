@@ -214,36 +214,57 @@ export default class LinkedList extends Component {
       return;
     }
 
-    await this.animateNodes(0, ind - 1);
+    if (ind == 0) {
+      await this.setState({ disabled: true });
+      //console.log(this.state.disabled);
+      setTimeout(() => {
+        setTimeout(() => {
+          nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+        }, ind * 1000);
+        nodes[ind].firstChild.innerHTML = data;
+        nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
+        nodes[ind].classList.add('animateClass');
+      }, ind * 1000);
 
-    setTimeout(() => {
-      nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
-    }, ind * 1000);
+      setTimeout(() => {
+        nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
+        nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
+        nodes[ind].classList.remove('animateClass');
 
-    setTimeout(() => {
-      nodes[ind].firstChild.innerHTML = data;
-      nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
-      nodes[ind].classList.add('animateClass');
-    }, ind * 1000);
+        this.setState({ disabled: false });
+        // console.log(this.state.disabled);
+      }, (ind + 1) * 1000 * 2);
+    } else {
+      await this.animateNodes(0, ind - 1);
+      setTimeout(() => {
+        nodes[ind].firstChild.classList.add('fadeNumberOut-animation');
+      }, ind * 1000);
 
-    setTimeout(() => {
-      nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
-      nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
-      nodes[ind].classList.remove('animateClass');
-      for (let i = 0; i <= ind - 1; i++) {
-        nodes[i].classList.remove('animateClass1');
-      }
-      this.setState({ disabled: false });
-    }, ind * 1000 * 2);
+      setTimeout(() => {
+        nodes[ind].firstChild.innerHTML = data;
+        nodes[ind].firstChild.classList.add('fadeNumberIn-animation');
+        nodes[ind].classList.add('animateClass');
+      }, ind * 1000);
 
-    setTimeout(() => {
-      for (let i = 0; i <= ind - 1; i++) {
-        let img1 = document.createElement('img');
-        img1.src = Pointer;
-        pointers[i].removeChild(pointers[i].firstChild);
-        pointers[i].appendChild(img1);
-      }
-    }, ind * 1000 * 2);
+      setTimeout(() => {
+        nodes[ind].firstChild.classList.remove('fadeNumberOut-animation');
+        nodes[ind].firstChild.classList.remove('fadeNumberIn-animation');
+        nodes[ind].classList.remove('animateClass');
+        for (let i = 0; i <= ind - 1; i++) {
+          nodes[i].classList.remove('animateClass1');
+        }
+        this.setState({ disabled: false });
+      }, ind * 1000 * 2);
+
+      setTimeout(() => {
+        for (let i = 0; i <= ind - 1; i++) {
+          let img1 = document.createElement('img');
+          img1.src = Pointer;
+          pointers[i].removeChild(pointers[i].firstChild);
+          pointers[i].appendChild(img1);
+        }
+      }, ind * 1000 * 2);
+    }
   }
 
   insertValueHandleChange(event) {
@@ -319,14 +340,14 @@ export default class LinkedList extends Component {
       }
 
       this.setState({ disabled: false });
-    }, ind * 1500);
+    }, ind * 2000);
   }
 
   async deleteNode(ind) {
     // console.log(pointers.length);
     if (ind == 0) {
-      console.log(ind);
-      console.log(pointers.length);
+      // console.log(ind);
+      //console.log(pointers.length);
       nodes[ind].firstChild.classList.add('deleteNode-animation');
 
       if (pointers.length >= 1) {
@@ -337,7 +358,7 @@ export default class LinkedList extends Component {
           pointers[ind].removeChild(pointers[ind].firstChild);
           pointers[ind].appendChild(img2);
           nodes[ind].classList.add('animateClass');
-          // console.log(nodes[ind].classList);
+          console.log(nodes[ind].classList);
         }, ind * 1000);
         await setTimeout(() => {
           let list = document.getElementById('list');
