@@ -360,29 +360,49 @@ export default class LinkedList extends Component {
 
     await this.animateNodes(0, ind - 1);
     await this.deleteNode(ind);
-    setTimeout(() => {
-      for (let i = 0; i < ind; i++) {
+
+    if (ind == 0) {
+      // setTimeout(() => {
+      //   nodes[ind].classList.add('animateClass');
+      // }, ind * 1500);
+
+      //await console.log(nodes[ind].classList);
+      setTimeout(() => {
         let img1 = document.createElement('img');
         img1.src = Pointer;
-        if (i >= nodes.length - 1) {
+        if (ind >= nodes.length - 1) {
         } else {
-          pointers[i].removeChild(pointers[i].firstChild);
-          pointers[i].appendChild(img1);
+          pointers[ind].removeChild(pointers[ind].firstChild);
+          pointers[ind].appendChild(img1);
         }
         for (let i = 0; i < ind; i++) {
           nodes[i].classList.remove('animateClass1');
         }
-      }
+        //nodes[ind].classList.remove('animateClass');
+        this.setState({ disabled: false });
+      }, (ind + 1) * 1500);
+    } else {
+      setTimeout(() => {
+        for (let i = 0; i < ind; i++) {
+          let img1 = document.createElement('img');
+          img1.src = Pointer;
+          if (i >= nodes.length - 1) {
+          } else {
+            pointers[i].removeChild(pointers[i].firstChild);
+            pointers[i].appendChild(img1);
+          }
+          for (let i = 0; i < ind; i++) {
+            nodes[i].classList.remove('animateClass1');
+          }
+        }
 
-      this.setState({ disabled: false });
-    }, ind * 2000);
+        this.setState({ disabled: false });
+      }, ind * 1500);
+    }
   }
 
   async deleteNode(ind) {
-    // console.log(pointers.length);
     if (ind == 0) {
-      // console.log(ind);
-      //console.log(pointers.length);
       nodes[ind].firstChild.classList.add('deleteNode-animation');
 
       if (pointers.length >= 1) {
@@ -395,11 +415,27 @@ export default class LinkedList extends Component {
           nodes[ind].classList.add('animateClass');
           console.log(nodes[ind].classList);
         }, ind * 1000);
+
+        setTimeout(() => {
+          let img1 = document.createElement('img');
+          img1.src = Pointer;
+          if (ind >= nodes.length - 1) {
+          } else {
+            pointers[ind].removeChild(pointers[ind].firstChild);
+            pointers[ind].appendChild(img1);
+          }
+          for (let i = 0; i < ind; i++) {
+            nodes[i].classList.remove('animateClass1');
+          }
+          nodes[ind].classList.remove('animateClass');
+          this.setState({ disabled: false });
+        }, (ind + 1) * 1500);
         await setTimeout(() => {
+          // console.log(1);
           let list = document.getElementById('list');
           list.removeChild(nodes[ind]);
           list.removeChild(pointers[ind]);
-        }, ind * 1500);
+        }, (ind + 1) * 1500);
       } else {
         nodes[ind].firstChild.classList.add('deleteNode-animation');
         await setTimeout(() => {
