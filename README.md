@@ -1,8 +1,7 @@
 # Algoflow
 Algorithm Visualizer
 
-#How to run this project?#
-Run the following commands
+#Run the following commands in order to execute the project#
 ```
 npm install
 npm start
