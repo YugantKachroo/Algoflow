@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@indutny/maze": "^1.0.0",
-    "@material-ui/core": gtrrth     "^4.10.2",
+    "@material-ui/core": "^4.10.2",
     "@reach/slider": "^0.10.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -38,9 +38,7 @@
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
-      "last 1 safari version"
-      "last 1 safari version"
+      "last 1 safari version",
     ]
   }
 }
